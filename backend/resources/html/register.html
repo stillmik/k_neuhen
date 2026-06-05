@@ -6,19 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>K-Neuhen Register</title>
 
-  <link rel="stylesheet" href="../static/css/register.css">
+  <link rel="stylesheet" href="/static/css/register.css?v=20260605-1">
 
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Teko:wght@600;700&display=swap" rel="stylesheet">
 
 </head>
-
-
-<script src="https://unpkg.com/lucide@latest"></script>
-<script>
-  lucide.createIcons();
-</script>
-
 
 <body>
   <main class="page">
@@ -34,7 +27,7 @@
           </h1>
 
           <p class="auth-subtitle">
-            Join <span>K-NEUHEN</span> and be part of the future.
+            Join <span>K-Neuhen</span> and be part of the future.
           </p>
 
           <p class="auth-subtitle">
@@ -44,6 +37,37 @@
         </section>
 
         <section class="auth-fields">
+
+          <div class="fields-row">
+
+            <div class="input-group">
+              <label for="given-name" class="input-label">
+                FIRST NAME
+              </label>
+
+              <div class="input-wrapper">
+                <input id="given-name" name="given-name" type="text" autocomplete="given-name" placeholder="Sawyer"
+                  class="auth-input">
+
+                <i data-lucide="user" class="input-icon"></i>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="family-name" class="input-label">
+                LAST NAME
+              </label>
+
+              <div class="input-wrapper">
+                <input id="family-name" name="family-name" type="text" autocomplete="family-name" placeholder="Hero"
+                  class="auth-input">
+
+                <i data-lucide="user" class="input-icon"></i>
+              </div>
+            </div>
+
+          </div>
+
         </section>
 
         <section class="auth-actions">
@@ -56,6 +80,11 @@
 
     </section>
   </main>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+  </script>
 </body>
 
 
