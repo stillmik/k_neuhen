@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-[#0d0d0d] text-white overflow-x-hidden;
+  }
+}
+
+@layer components {
+  /* Mimics the radiating light in watermarked_img_7203887373086655036.png */
+  .neon-card-glow {
+    position: absolute;
+    inset: -20px;
+    background: radial-gradient(circle at center, var(--glow-color) 0%, transparent 70%);
+    opacity: 0.15;
+    filter: blur(40px);
+    z-index: -1;
+    transition: opacity 0.3s ease;
+  }
+
+  .product-card:hover .neon-card-glow {
+    opacity: 0.4;
+  }
+}

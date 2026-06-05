@@ -1,0 +1,135 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+        radial-gradient(circle at top left, rgba(183, 255, 0, 0.08), transparent 25%),
+        radial-gradient(circle at bottom right, rgba(0, 174, 255, 0.08), transparent 25%),
+        #06070b;
+    color: white;
+    padding: 24px;
+}
+
+.login-box {
+    width: min(460px, 100%);
+    background: rgba(12, 16, 24, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 28px;
+    padding: 24px 28px 20px;
+    box-shadow:
+        0 0 40px rgba(0, 255, 170, 0.08),
+        0 0 80px rgba(0, 174, 255, 0.06);
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 18px;
+}
+
+.logo h1 {
+    font-size: 34px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.logo .k {
+    color: #b7ff00;
+}
+
+.subtitle {
+    margin-top: 8px;
+    color: #9ba7bd;
+    font-size: 13px;
+}
+
+.form-group {
+    margin-bottom: 11px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #dce4f5;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+input {
+    width: 100%;
+    padding: 13px 16px;
+    border-radius: 13px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: #0e131d;
+    color: white;
+    outline: none;
+}
+
+input:focus {
+    border-color: rgba(183, 255, 0, 0.4);
+    box-shadow: 0 0 16px rgba(183, 255, 0, 0.14);
+}
+
+.error-text {
+    min-height: 14px;
+    margin-top: 5px;
+    color: #ff5c7a;
+    font-size: 12px;
+    opacity: 0;
+}
+
+.error-text.active {
+    opacity: 1;
+}
+
+.input-error {
+    border-color: rgba(255, 92, 122, 0.5);
+}
+
+.login-btn {
+    width: 100%;
+    margin-top: 6px;
+    padding: 13px;
+    border: none;
+    border-radius: 15px;
+    background: linear-gradient(135deg, #b7ff00, #78ff00);
+    color: black;
+    font-weight: 800;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.google-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 14px;
+    padding: 13px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.03);
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.bottom-text {
+    margin-top: 14px;
+    text-align: center;
+    color: #94a0b6;
+    font-size: 14px;
+}
+
+.bottom-text a {
+    color: #b7ff00;
+    text-decoration: none;
+    font-weight: 700;
+}
