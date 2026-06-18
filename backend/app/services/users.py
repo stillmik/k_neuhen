@@ -2,9 +2,9 @@ import re
 
 from sqlalchemy.orm import Session
 
-from auth import hash_password, verify_password
-from models import SiteUser
-from schemas import NewSiteUser
+from app.models import SiteUser
+from app.schemas import NewSiteUser
+from app.security import hash_password, verify_password
 
 
 def normalize_text(value: str) -> str:

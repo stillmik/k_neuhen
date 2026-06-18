@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>K-Neuhen Register</title>
+
+  <link rel="stylesheet" href="/static/css/register.css?v=20260605-1">
+
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Teko:wght@600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+  <main class="page">
+    <section class="auth-card">
+      <section class="auth-content">
+        
+        <section class="auth-header">
+          <h1 class="auth-title">
+            <span class="auth-title-white">CREATE</span>
+            <span class="auth-title-accent">ACCOUNT</span>
+          </h1>
+          <p class="auth-subtitle">
+            Join <span>K-Neuhen</span> and be part of the future.
+          </p>
+          <p class="auth-subtitle">
+            Build your identity.
+          </p>
+        </section>
+
+        <section class="auth-fields">
+          
+          <div class="fields-row">
+            <div class="input-group">
+              <label for="given-name" class="input-label">
+                FIRST NAME
+              </label>
+
+              <div class="input-wrapper">
+                <input id="given-name" name="given-name" type="text" autocomplete="given-name" placeholder="Sawyer"
+                  class="auth-input">
+                <i data-lucide="user" class="input-icon"></i>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="family-name" class="input-label">
+                LAST NAME
+              </label>
+
+              <div class="input-wrapper">
+                <input id="family-name" name="family-name" type="text" autocomplete="family-name" placeholder="Hero"
+                  class="auth-input">
+                <i data-lucide="user" class="input-icon"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="fields-row">
+            <div class="input-group">
+              <label for="email" class="input-label">
+                EMAIL
+              </label>
+
+              <div class="input-wrapper">
+                <input id="email" name="email" type="email" autocomplete="email" placeholder="laker@gmail.com"
+                  class="auth-input">
+                <i data-lucide="mail" class="input-icon"></i>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="phone" class="input-label">
+                PHONE NUMBER
+              </label>
+
+              <div class="input-wrapper">
+                <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="+48 148 822 811"
+                  class="auth-input">
+                <i data-lucide="phone" class="input-icon"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="fields-row">
+
+            <div class="input-group">
+              <label for="password" class="input-label">
+                PASSWORD
+              </label>
+              <div class="input-wrapper">
+                <input id="password" name="password" type="password" autocomplete="new-password"
+                  placeholder="••••••••••••" class="auth-input">
+                <i data-lucide="lock" class="input-icon"></i>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="confirm-password" class="input-label">
+                CONFIRM PASSWORD
+              </label>
+              <div class="input-wrapper">
+                <input id="confirm-password" name="confirm-password" type="password" autocomplete="new-password"
+                  placeholder="••••••••••••" class="auth-input">
+                <i data-lucide="lock" class="input-icon"></i>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="auth-actions">
+          <button type="submit" class="create-account-btn">
+            <span>CREATE ACCOUNT</span>
+            <i data-lucide="arrow-right" class="create-account-icon"></i>
+          </button>
+
+          <div class="continue-with">
+            <div class="continue-line"></div>
+            <span class="continue-text">
+              or continue with
+            </span>
+            <div class="continue-line"></div>
+          </div>
+
+          <button type="button" class="google-btn">
+            <img src="/static/images/google_logo.svg" alt="Google" class="google-btn-logo">
+            <span class="google-btn-text">
+              CONTINUE WITH GOOGLE
+            </span>
+          </button>
+
+          <p class="auth-footer-text">
+            Already have an account?
+            <a href="/login" class="auth-signin-link">
+              Sign In
+              <i data-lucide="arrow-right" class="signin-arrow"></i>
+            </a>
+          </p>
+
+        </section>
+      </section>
+    </section>
+  </main>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+
+
+</html>

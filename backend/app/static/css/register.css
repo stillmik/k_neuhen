@@ -37,7 +37,6 @@ body::before {
   position: relative;
   isolation: isolate;
   width: min(550px, calc(100vw - 48px));
-  min-height: min(650px, calc(100vh - 48px));
 
   border-radius: 32px;
   background:
@@ -98,12 +97,14 @@ body::before {
 .auth-content {
   position: relative;
   z-index: 1;
-
   flex: 1;
   display: flex;
   flex-direction: column;
   min-height: 100%;
-  padding: 40px 48px;
+  padding-top: 40px;
+  padding-left: 48px;
+  padding-right: 48px;
+  padding-bottom: 40px;
   gap: 32px;
   /*POPKA*/
 }
@@ -180,11 +181,9 @@ body::before {
 
 .auth-fields {
   width: 100%;
-}
-
-
-.auth-fields {
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .input-group {
@@ -297,4 +296,214 @@ body::before {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
+}
+
+.auth-actions {
+  width: 100%;
+}
+
+.create-account-btn {
+  width: 100%;
+  height: 50px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  border: none;
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+
+  color: white;
+
+  background:
+    linear-gradient(
+      90deg,
+      #4058ff 0%,
+      #5968ff 45%,
+      #8f66ff 100%
+    );
+
+  box-shadow:
+    0 0 10px rgba(82, 104, 255, 0.35),
+    0 0 22px rgba(114, 106, 255, 0.20),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.25s ease,
+    filter 0.25s ease;
+}
+
+.create-account-btn:hover {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 0 14px rgba(82, 104, 255, 0.42),
+    0 0 28px rgba(114, 106, 255, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+.create-account-btn:active {
+  transform: translateY(1px);
+}
+
+.create-account-icon {
+  width: 22px;
+  height: 22px;
+
+  stroke-width: 2.4;
+
+  filter:
+    drop-shadow(0 0 4px rgba(255, 255, 255, 0.18));
+
+  transition:
+    transform 0.25s ease;
+}
+
+.create-account-btn:hover .create-account-icon {
+  transform: translateX(4px);
+}
+
+.continue-with {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 8px;
+  margin-bottom: 8px;
+
+  width: 100%;
+}
+
+.continue-line {
+  flex: 1;
+  height: 1px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(108, 118, 255, 0.28),
+    transparent
+  );
+}
+
+.continue-text {
+  flex-shrink: 0;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 400;
+
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.google-btn {
+  width: 100%;
+  height: 50px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  background: rgba(5, 8, 18, 0.45);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease,
+    transform 0.2s ease;
+}
+
+.google-btn:hover {
+  background: rgba(8, 12, 24, 0.62);
+
+  border-color: rgba(120, 130, 255, 0.22);
+
+  box-shadow:
+    0 0 8px rgba(90, 110, 255, 0.08),
+    inset 0 0 0 1px rgba(120, 130, 255, 0.05);
+}
+
+.google-btn:active {
+  transform: translateY(1px);
+}
+
+.google-btn-logo {
+  width: 26px;
+  height: 26px;
+
+  flex-shrink: 0;
+}
+
+.google-btn-text {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+
+  color: rgba(255, 255, 255, 0.96);
+}
+
+.auth-footer-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 0.4rem;
+
+  width: 100%;
+
+  margin-top: 12px;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 400;
+
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.auth-signin-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+
+  color: #8e8bff;
+  text-decoration: none;
+
+  transition:
+    color 0.25s ease,
+    text-shadow 0.25s ease;
+}
+
+.auth-signin-link:hover {
+  color: #a7a4ff;
+
+  text-shadow:
+    0 0 8px rgba(142, 139, 255, 0.45);
+}
+
+.signin-arrow {
+  width: 14px;
+  height: 14px;
+
+  stroke-width: 2.4;
+
+  transition: transform 0.25s ease;
+}
+
+.auth-signin-link:hover .signin-arrow {
+  transform: translateX(3px);
 }

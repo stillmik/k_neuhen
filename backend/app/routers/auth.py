@@ -2,15 +2,15 @@ from fastapi import APIRouter, Form, Request
 from fastapi.responses import RedirectResponse
 from sqlalchemy.orm import Session
 
-from app.python.services.google_oauth import google_ready, oauth
-from app.python.services.users import (
+from app.database import SessionLocal
+from app.schemas import NewSiteUser
+from app.services.google_oauth import google_ready, oauth
+from app.services.users import (
     authenticate_local_user,
     create_local_user,
     get_or_create_google_user,
     validate_registration,
 )
-from database import SessionLocal
-from schemas import NewSiteUser
 
 
 router = APIRouter(prefix="")
