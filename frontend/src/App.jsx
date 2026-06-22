@@ -1,16 +1,50 @@
-import HexBackground from "./components/HexBackground";
+import "./App.css";
+import { Search, ShoppingCart, UserRound } from "lucide-react";
+import StoneBackground from "./components/StoneBackground";
 
 
-const HEX_CONFIG = {
-  side: 58, // len of hexagon side in px.
-  gap: 7, // width of channels between tiles in px.
-  depth: 14, // how much tiles differ in height.
-  surface: "#202224",
-  channel: "#070808",
-  glow: "#d72f16",
-};
+function App() {
+  return (
+    <div className="page">
+      <header className="header">
+        <a className="logo" href="/" aria-label="K-Neuhen home">
+          <span className="logoAccent">K</span>
+          <span>-Neuhen</span>
+        </a>
 
+        <nav className="nav" aria-label="Primary navigation">
+          <a className="active" href="#new">New In</a>
+          <a href="#men">Men</a>
+          <a href="#women">Women</a>
+          <a href="#collections">Collections</a>
+          <a href="#sale">Sale</a>
+        </nav>
 
-export default function App() {
-  return <HexBackground {...HEX_CONFIG} />;
+        <div className="actions">
+          <button className="iconButton" type="button" aria-label="Search">
+            <Search aria-hidden="true" />
+          </button>
+          <button className="iconButton" type="button" aria-label="Account">
+            <UserRound aria-hidden="true" />
+          </button>
+          <button
+            className="iconButton cartButton"
+            type="button"
+            aria-label="Cart, 2 items"
+          >
+            <ShoppingCart aria-hidden="true" />
+            <span className="cartCount">2</span>
+          </button>
+        </div>
+      </header>
+
+      <main className="stoneHero">
+        <StoneBackground />
+      </main>
+
+      <div className="scrollTest" aria-hidden="true" />
+    </div>
+  );
 }
+
+export default App;
