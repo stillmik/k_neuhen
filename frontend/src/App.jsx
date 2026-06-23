@@ -1,54 +1,108 @@
+import { useEffect, useMemo, useRef } from "react";
 import "./App.css";
 import { Search, ShoppingCart, UserRound } from "lucide-react";
-import StoneBackground from "./components/StoneBackground";
 
+// Navigation data keeps labels, links, and state ids in one readable place.
+const navItems = [
+  { id: "home", label: "Home", href: "#home" },
+  { id: "shop", label: "Shop", href: "#shop" },
+  { id: "new-arrivals", label: "New Arrivals", href: "#new-arrivals" },
+  { id: "collections", label: "Collections", href: "#collections" },
+  { id: "about-us", label: "About Us", href: "#about-us" },
+];
+
+const HEXAGON_ROWS = 64;
+const HEXAGONS_PER_ROW = 80;
 
 function App() {
+  const cursorGlowRef = useRef(null);
+
+  const hexagonRows = useMemo(
+    () =>
+      Array.from({ length: HEXAGON_ROWS }, (_, rowIndex) => ({
+        id: `row-${rowIndex}`,
+        cells: Array.from(
+          { length: HEXAGONS_PER_ROW },
+          (_, cellIndex) => `hexagon-${rowIndex}-${cellIndex}`
+        ),
+      })),
+    []
+  );
+
+  useEffect(() => {
+    const glow = cursorGlowRef.current;
+    if (!glow) return;
+
+    const onPointerMove = (event) => {
+      glow.style.left = `${event.clientX}px`;
+      glow.style.top = `${event.clientY}px`;
+      glow.style.opacity = "1";
+    };
+
+    const onPointerLeave = () => {
+      glow.style.opacity = "0";
+    };
+
+    window.addEventListener("pointermove", onPointerMove);
+    document.addEventListener("mouseleave", onPointerLeave);
+
+    return () => {
+      window.removeEventListener("pointermove", onPointerMove);
+      document.removeEventListener("mouseleave", onPointerLeave);
+    };
+  }, []);
+
   return (
     <div className="page">
-      {/* The only real interface section currently implemented. */}
-      <header className="header">
-        {/* The green K is isolated so it can be colored without affecting the brand name. */}
-        <a className="logo" href="/" aria-label="K-Neuhen home">
-          <span className="logoAccent">K</span>
-          <span>-Neuhen</span>
+      <div className="cursorGlow" ref={cursorGlowRef} aria-hidden="true" />
+
+      <main className="hexagonBackground" aria-hidden="true">
+        {hexagonRows.map((row) => (
+          <div className="hexagonRow" key={row.id}>
+            {row.cells.map((cellId) => (
+              <div className="hexagon" key={cellId} />
+            ))}
+          </div>
+        ))}
+      </main>
+
+      {/* Header is the only visible content section right now. */}
+      <header className="siteHeader">
+        {/* Left logo: neon K plus the K-Neuhen brand name. */}
+        <a className="brand" href="/" aria-label="K-Neuhen home">
+          <span className="brandText">
+            <span className="brandK">K</span>
+            <span>-Neuhen</span>
+          </span>
         </a>
 
-        {/* Desktop navigation; CSS hides it on narrow screens without adding a burger. */}
-        <nav className="nav" aria-label="Primary navigation">
-          <a className="active" href="#new">New In</a>
-          <a href="#men">Men</a>
-          <a href="#women">Women</a>
-          <a href="#collections">Collections</a>
-          <a href="#sale">Sale</a>
+        {/* Center navigation mirrors the reference order; links turn green only on hover. */}
+        <nav className="primaryNav" aria-label="Primary navigation">
+          {navItems.map((item) => (
+            <a key={item.id} href={item.href}>
+              {item.label}
+            </a>
+          ))}
         </nav>
 
-        {/* Icons come from lucide-react and inherit their color from each button. */}
-        <div className="actions">
-          <button className="iconButton" type="button" aria-label="Search">
+        {/* Right controls use lucide-react icons, matching the thin white strokes in the screenshot. */}
+        <div className="headerActions">
+          <button className="headerIconButton" type="button" aria-label="Search">
             <Search aria-hidden="true" />
           </button>
-          <button className="iconButton" type="button" aria-label="Account">
+          <button className="headerIconButton" type="button" aria-label="Account">
             <UserRound aria-hidden="true" />
           </button>
           <button
-            className="iconButton cartButton"
+            className="headerIconButton cartButton"
             type="button"
-            aria-label="Cart, 2 items"
+            aria-label="Cart, 0 items"
           >
             <ShoppingCart aria-hidden="true" />
-            <span className="cartCount">2</span>
+            <span className="cartBadge">0</span>
           </button>
         </div>
       </header>
-
-      {/* The hero currently contains only the decorative background component. */}
-      <main className="stoneHero">
-        <StoneBackground />
-      </main>
-
-      {/* Temporary empty height used to test page scrolling before real sections exist. */}
-      <div className="scrollTest" aria-hidden="true" />
     </div>
   );
 }

@@ -1,206 +1,288 @@
-/* Root page colors and minimum document height. */
+/* Global visual tokens for the neon fashion header and hexagon background. */
+:root {
+  --page-black: #050707;
+  --hexagon-dark: #111;
+  --text-main: #f4f6f5;
+  --text-soft: #d8dddd;
+  --neon: #39ff14;
+  --neon-glow: rgba(57, 255, 20, 0.56);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  background: #000;
+  overflow: hidden;
+}
+
+button,
+a {
+  font: inherit;
+}
+
+/* Page holds the animated hexagon layer, cursor glow, and header. */
 .page {
+  position: relative;
   min-height: 100dvh;
-  color: #f4f4f5;
-  background: #030607;
+  overflow: hidden;
+  isolation: isolate;
+  color: var(--text-main);
+  background: #000;
+}
+
+/* Cursor glow from the zip, converted from #cursor into a React-controlled layer. */
+.cursorGlow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 400px;
+  height: 400px;
+  pointer-events: none;
+  background-color: #0f0;
+  border-radius: 50%;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  filter: blur(50px);
+  animation: cursor-glow-animation 4s linear infinite;
+  transition: opacity 220ms ease;
+  z-index: 1;
+}
+
+@keyframes cursor-glow-animation {
+  0% {
+    filter: hue-rotate(0deg) blur(50px);
+  }
+
+  100% {
+    filter: hue-rotate(360deg) blur(50px);
+  }
+}
+
+/* Hexagon background from the zip, renamed so it does not collide with generic .container classes. */
+.hexagonBackground {
+  position: absolute;
+  inset: 0;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.hexagonRow {
+  display: inline-flex;
+  margin-top: -11px;
+  margin-left: -12.5px;
+}
+
+.hexagonRow:nth-child(even) {
+  margin-left: 0.5px;
+}
+
+.hexagon {
+  position: relative;
+  width: 25px;
+  height: 27.5px;
+  flex: 0 0 auto;
+  margin: 0.2px;
+  background-color: var(--hexagon-dark);
+  clip-path: polygon(
+    50% 0%,
+    100% 25%,
+    100% 75%,
+    50% 100%,
+    0% 75%,
+    0% 25%
+  );
+  transition: background-color 2s ease, filter 2s ease;
+}
+
+.hexagon::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 50%;
+  pointer-events: none;
+  background-color: rgba(255, 255, 255, 0.02);
+  z-index: 1;
 }
 
 /*
- * Header layout uses a three-column grid:
- * brand | centered navigation | action icons.
- * Equal flexible side columns keep the navigation visually centered.
+ * Header layout:
+ * left logo | centered navigation | right icons.
+ * Header sits above the animated hexagon background.
  */
-.header {
+.siteHeader {
   position: relative;
+  z-index: 10;
   width: 100%;
-  height: 80px;
-  /* clamp(minimum, responsive value, maximum) prevents extreme side padding. */
-  padding: 0 clamp(30px, 7vw, 104px);
+  height: 82px;
+  padding: 0 clamp(26px, 4.7vw, 58px);
   display: grid;
   grid-template-columns: minmax(220px, 1fr) auto minmax(220px, 1fr);
   align-items: center;
-  gap: 44px;
-  background: #171a1b;
-  /* The bright line visually separates navigation from the hero. */
-  border-bottom: 2px solid #8cff00;
-  box-shadow: 0 3px 14px rgba(140, 255, 0, 0.2);
-  z-index: 10;
+  gap: 28px;
+  background: rgba(26, 29, 30, 0.88);
+  backdrop-filter: blur(3px);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
-/* Hero is a clipping container for the cover-style SVG background. */
-.stoneHero {
-  position: relative;
-  min-height: max(620px, calc(100dvh - 98px));
-  overflow: hidden;
-  /* Creates a local stacking context for future hero layers. */
-  isolation: isolate;
-  background: #070a0b;
-}
-
-/* Stretch the SVG over the hero; its preserveAspectRatio handles cover cropping. */
-.stoneBackground {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-/* Temporary fake section: change 230vh to control how far the test page scrolls. */
-.scrollTest {
-  min-height: 230vh;
-  background:
-    linear-gradient(180deg, rgba(18, 23, 24, 0.44), transparent 180px),
-    #030607;
-}
-
-/* Brand is inline-flex so the colored K and white suffix behave as one wordmark. */
-.logo {
+/* Brand groups the wordmark into one compact logo area. */
+.brand {
+  justify-self: start;
   display: inline-flex;
   width: max-content;
   align-items: center;
-  color: #f5f7f4;
-  font-size: clamp(23px, 2.25vw, 34px);
-  font-weight: 850;
-  letter-spacing: 0.045em;
-  line-height: 1;
+  gap: 12px;
+  color: var(--text-main);
   text-decoration: none;
 }
 
-/* Neon treatment is deliberately limited to the first letter. */
-.logoAccent {
-  color: #8cff00;
-  text-shadow: 0 0 14px rgba(140, 255, 0, 0.5);
+/* Main logo text is compact, bright, and slightly spaced like a futuristic wordmark. */
+.brandText {
+  color: var(--text-main);
+  font-size: 33px;
+  font-weight: 850;
+  letter-spacing: 0.15em;
+  line-height: 1;
+  text-shadow: 0 0 14px rgba(255, 255, 255, 0.08);
 }
 
-/* Desktop navigation is horizontally aligned in the center grid column. */
-.nav {
+/* Only K is neon green, as requested. */
+.brandK {
+  color: var(--neon);
+  text-shadow: 0 0 12px var(--neon-glow);
+}
+
+/* Center navigation keeps the same order and slim uppercase style as the screenshot. */
+.primaryNav {
   display: flex;
+  justify-self: center;
   align-items: center;
-  gap: clamp(28px, 3.4vw, 54px);
+  justify-content: center;
+  gap: clamp(28px, 3.1vw, 46px);
 }
 
-/* Shared navigation-link typography and interaction transition. */
-.nav a {
-  color: #f2f3f1;
-  font-size: clamp(13px, 1.25vw, 17px);
-  font-weight: 650;
-  letter-spacing: 0.02em;
+/* Shared nav-link typography. */
+.primaryNav a {
+  color: var(--text-soft);
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.035em;
   line-height: 1;
   text-decoration: none;
   text-transform: uppercase;
   white-space: nowrap;
-  transition: color 160ms ease;
+  transition: color 160ms ease, text-shadow 160ms ease;
 }
 
-/* Both the current page and hovered links use the brand accent. */
-.nav a.active,
-.nav a:hover {
-  color: #8cff00;
+/* Links become neon green only while the user hovers them. */
+.primaryNav a:hover {
+  color: var(--neon);
+  text-shadow: 0 0 12px rgba(57, 255, 20, 0.34);
 }
 
-/* Right-side header controls. */
-.actions {
+/* Right icon group aligns to the far right. */
+.headerActions {
   justify-self: end;
   display: flex;
   align-items: center;
-  gap: clamp(14px, 2vw, 30px);
+  gap: 24px;
 }
 
-/* Transparent square hit area around each Lucide icon. */
-.iconButton {
+/* Transparent icon buttons preserve the clean floating-header look. */
+.headerIconButton {
   position: relative;
   display: grid;
-  width: 38px;
-  height: 44px;
+  width: 27px;
+  height: 36px;
   padding: 0;
   place-items: center;
-  color: #f7f8f6;
+  color: var(--text-main);
   background: transparent;
   border: 0;
-  border-radius: 4px;
   cursor: pointer;
   transition: color 160ms ease, transform 160ms ease;
 }
 
-/* Lucide icons are SVG strokes, so stroke-width controls their visual weight. */
-.iconButton svg {
-  width: 29px;
-  height: 29px;
-  stroke-width: 1.8;
+/* Lucide SVG sizing and stroke weight are tuned to the thin reference icons. */
+.headerIconButton svg {
+  width: 22px;
+  height: 22px;
+  stroke-width: 1.75;
 }
 
-.iconButton:hover {
-  color: #8cff00;
+/* Small hover response without changing the composition. */
+.headerIconButton:hover {
+  color: var(--neon);
   transform: translateY(-1px);
 }
 
-/* Small absolute-positioned badge anchored to the cart button. */
-.cartCount {
+/* Cart badge sits above the cart icon and shows 0, matching the requested header state. */
+.cartBadge {
   position: absolute;
-  top: 0;
-  right: -4px;
+  top: 3px;
+  right: -8px;
   display: grid;
-  min-width: 21px;
-  height: 21px;
-  padding: 0 5px;
+  min-width: 14px;
+  height: 14px;
+  padding: 0 4px;
   place-items: center;
-  color: #101310;
-  background: #8cff00;
-  border: 2px solid #171a1b;
+  color: #061006;
+  background: var(--neon);
   border-radius: 999px;
-  font-size: 11px;
+  font-size: 9px;
   font-weight: 900;
   line-height: 1;
+  box-shadow: 0 0 10px rgba(57, 255, 20, 0.72);
 }
 
-/* Keyboard-only focus indicator for accessible navigation. */
-.logo:focus-visible,
-.nav a:focus-visible,
-.iconButton:focus-visible {
-  outline: 2px solid #a4ff3f;
+/* Keyboard focus state for accessibility while keeping the visual language neon. */
+.brand:focus-visible,
+.primaryNav a:focus-visible,
+.headerIconButton:focus-visible {
+  outline: 2px solid var(--neon);
   outline-offset: 5px;
 }
 
-/* Tablet/mobile: keep brand and actions, remove the navigation without a burger. */
-@media (max-width: 980px) {
-  .header {
+/* Tablet: no burger yet, just hide center nav so the logo/icons remain clean. */
+@media (max-width: 860px) {
+  .siteHeader {
     grid-template-columns: 1fr auto;
-    height: 82px;
-    padding: 0 24px;
+    height: 76px;
+    padding: 0 22px;
   }
 
-  .nav {
+  .primaryNav {
     display: none;
-  }
-
-  .stoneHero {
-    min-height: max(560px, calc(100dvh - 82px));
   }
 }
 
-/* Small phones: reduce spacing and icon sizes so the header still fits. */
+/* Small phones: compress logo and icon spacing without adding new UI. */
 @media (max-width: 480px) {
-  .header {
+  .siteHeader {
     padding: 0 16px;
+    gap: 12px;
+  }
+
+  .brandText {
+    font-size: 24px;
+    letter-spacing: 0.1em;
+  }
+
+  .headerActions {
     gap: 10px;
   }
 
-  .logo {
-    font-size: 20px;
-  }
-
-  .actions {
-    gap: 4px;
-  }
-
-  .iconButton {
-    width: 36px;
-    height: 40px;
-  }
-
-  .iconButton svg {
-    width: 24px;
-    height: 24px;
+  .headerIconButton svg {
+    width: 20px;
+    height: 20px;
   }
 }
