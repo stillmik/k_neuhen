@@ -20,7 +20,7 @@ body,
 
 body {
   min-height: 100dvh;
-  overflow: hidden;
+  overflow: auto;
   background: #050606;
 }
 

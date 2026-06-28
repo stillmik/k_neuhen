@@ -1,50 +1,69 @@
 :root {
+  /* Desktop system controls. The layout scales from 1200px to 1920px, then locks. */
+  --container-min: 1120px;
+  --container-max: 1660px;
+  --container-pad: clamp(40px, 5.2vw, 100px);
+  --hero-left: 40%;
+  --hero-right: 60%;
+  --hero-min-height: clamp(650px, 47vw, 820px);
+  --product-card-width: clamp(196px, 15.9vw, 292px);
+  --product-gap: clamp(18px, 2.1vw, 34px);
   --lime: #88ff00;
   --lime-hot: #b6ff12;
   --cyan: #00b7ff;
-  --text: #dedede;
-  --text-soft: #b9b9b9;
-  --void: #070808;
+  --red: #ff3530;
+  --purple: #b54cff;
+  --yellow: #ffd234;
+  --text: #f1f1f1;
+  --text-soft: #c1c1c1;
 }
 
 .page {
   position: relative;
   min-height: 100dvh;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: auto;
   color: var(--text);
   background:
-    radial-gradient(circle at 88% 0%, rgba(255, 255, 255, 0.1), transparent 15rem),
-    radial-gradient(circle at 36% 16%, rgba(255, 255, 255, 0.045), transparent 22rem),
-    radial-gradient(circle at 50% 55%, rgba(0, 255, 98, 0.035), transparent 30rem),
+    radial-gradient(circle at 88% 0%, rgba(255, 255, 255, 0.11), transparent 17rem),
+    radial-gradient(circle at 42% 18%, rgba(255, 255, 255, 0.05), transparent 24rem),
+    radial-gradient(circle at 55% 58%, rgba(0, 255, 98, 0.04), transparent 34rem),
     linear-gradient(120deg, #090a0a 0%, #111313 42%, #060707 100%);
   font-family: "Bahnschrift", "Agency FB", "Segoe UI Condensed", "Arial Narrow", system-ui, sans-serif;
 }
 
-.page::before {
-  position: absolute;
+.backgroundTexture {
+  position: fixed;
   inset: 0;
   pointer-events: none;
-  content: "";
-  opacity: 0.46;
   background:
     linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
     linear-gradient(0deg, rgba(255, 255, 255, 0.026) 1px, transparent 1px);
   background-size: 3px 3px;
   mix-blend-mode: overlay;
+  opacity: 0.45;
+}
+
+.desktopShell {
+  position: relative;
+  z-index: 1;
+  width: min(calc(100% - (var(--container-pad) * 2)), var(--container-max));
+  min-width: var(--container-min);
+  margin: 0 auto;
+  padding-bottom: clamp(42px, 4vw, 72px);
 }
 
 .siteHeader {
   position: relative;
   z-index: 5;
-  height: 92px;
-  width: 100%;
+  height: clamp(78px, 6.4vw, 104px);
 }
 
 .primaryNav {
   position: absolute;
   inset: 0;
   display: grid;
-  grid-template-columns: 1fr minmax(520px, 1fr) 330px;
+  grid-template-columns: minmax(330px, 35%) minmax(500px, 45%) minmax(210px, 20%);
   align-items: start;
   pointer-events: none;
 }
@@ -52,27 +71,27 @@
 .navCluster {
   display: flex;
   align-items: center;
-  height: 72px;
-  padding-top: 34px;
+  height: clamp(66px, 5.1vw, 78px);
+  padding-top: clamp(27px, 2.4vw, 36px);
   pointer-events: auto;
 }
 
 .navClusterLeft {
   justify-self: start;
-  gap: clamp(42px, 4.1vw, 78px);
-  padding-left: clamp(70px, 7.7vw, 112px);
+  gap: clamp(36px, 4vw, 76px);
+  padding-left: clamp(24px, 4.4vw, 76px);
 }
 
 .navClusterRight {
   grid-column: 2;
   justify-self: center;
-  gap: clamp(46px, 4.2vw, 76px);
+  gap: clamp(36px, 4vw, 76px);
 }
 
 .primaryNav a {
   position: relative;
   color: var(--text-soft);
-  font-size: 18px;
+  font-size: clamp(15px, 1.18vw, 21px);
   font-stretch: condensed;
   font-weight: 700;
   letter-spacing: 0;
@@ -91,8 +110,8 @@
 .primaryNav a::after {
   position: absolute;
   left: 50%;
-  bottom: -20px;
-  width: 58px;
+  bottom: clamp(-21px, -1.3vw, -15px);
+  width: clamp(48px, 4vw, 68px);
   height: 2px;
   pointer-events: none;
   content: "";
@@ -121,7 +140,8 @@
 }
 
 .primaryNav a:focus-visible,
-.headerActions button:focus-visible {
+.headerActions button:focus-visible,
+.shopButton:focus-visible {
   outline: 2px solid var(--cyan);
   outline-offset: 6px;
 }
@@ -129,10 +149,9 @@
 .cornerPanel {
   position: absolute;
   top: 0;
-  right: 0;
-  width: min(270px, 20vw);
-  min-width: 235px;
-  height: 92px;
+  right: calc(var(--container-pad) * -1);
+  width: clamp(228px, 18.7vw, 300px);
+  height: clamp(78px, 6.4vw, 104px);
 }
 
 .cornerPanelFrame {
@@ -178,18 +197,18 @@
 
 .headerActions {
   position: absolute;
-  top: 18px;
-  right: clamp(30px, 3.7vw, 54px);
+  top: clamp(15px, 1.3vw, 22px);
+  right: clamp(28px, 3.5vw, 58px);
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: clamp(20px, 2vw, 32px);
 }
 
 .headerActions button {
   position: relative;
   display: grid;
-  width: 31px;
-  height: 36px;
+  width: clamp(27px, 2.25vw, 35px);
+  height: clamp(32px, 2.55vw, 40px);
   padding: 0;
   place-items: center;
   color: rgba(242, 242, 242, 0.92);
@@ -210,14 +229,14 @@
 }
 
 .headerActions svg {
-  width: 27px;
-  height: 27px;
+  width: clamp(23px, 1.9vw, 30px);
+  height: clamp(23px, 1.9vw, 30px);
   stroke-width: 1.55;
 }
 
 .cartButton svg {
-  width: 30px;
-  height: 30px;
+  width: clamp(26px, 2.15vw, 34px);
+  height: clamp(26px, 2.15vw, 34px);
 }
 
 .cartBadge {
@@ -225,15 +244,15 @@
   top: -1px;
   right: -7px;
   display: grid;
-  min-width: 16px;
-  height: 16px;
+  min-width: clamp(14px, 1.1vw, 18px);
+  height: clamp(14px, 1.1vw, 18px);
   padding: 0 4px;
   place-items: center;
   color: #072600;
   background: var(--lime);
   border-radius: 999px;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 10px;
+  font-size: clamp(9px, 0.72vw, 11px);
   font-weight: 800;
   line-height: 1;
   box-shadow:
@@ -241,21 +260,162 @@
     0 0 16px rgba(136, 255, 0, 0.4);
 }
 
-.headerReferenceArea {
+.heroSection {
   position: relative;
-  min-height: calc(100dvh - 92px);
+  display: grid;
+  grid-template-columns: minmax(0, var(--hero-left)) minmax(0, var(--hero-right));
+  min-height: var(--hero-min-height);
+  margin-top: clamp(16px, 1.7vw, 34px);
 }
 
-.heroDivider {
+.heroCopy {
+  position: relative;
+  z-index: 2;
+  padding-left: clamp(18px, 3.4vw, 58px);
+  padding-top: clamp(28px, 4.1vw, 76px);
+}
+
+.eyebrow {
+  margin: 0 0 clamp(8px, 0.8vw, 14px);
+  color: var(--lime);
+  font-size: clamp(18px, 1.65vw, 28px);
+  font-weight: 500;
+  line-height: 1;
+  text-transform: uppercase;
+  text-shadow: 0 0 14px rgba(136, 255, 0, 0.32);
+}
+
+.heroTitle {
+  margin: 0;
+  max-width: 9ch;
+  color: transparent;
+  background:
+    linear-gradient(180deg, #fff 0%, #bababa 42%, #fff 54%, #777 100%);
+  background-clip: text;
+  font-family: Impact, "Arial Black", "Bahnschrift", sans-serif;
+  font-size: clamp(66px, 7vw, 126px);
+  font-weight: 900;
+  letter-spacing: 0;
+  line-height: 0.92;
+  text-shadow:
+    0 5px 0 rgba(255, 255, 255, 0.06),
+    0 12px 22px rgba(0, 0, 0, 0.9);
+}
+
+.heroTitle span {
+  background: linear-gradient(180deg, #39ff62, #00d94f);
+  background-clip: text;
+}
+
+.heroSubtitle {
+  margin: clamp(22px, 1.8vw, 30px) 0 0;
+  color: #c8c8c8;
+  font-size: clamp(18px, 1.5vw, 27px);
+  font-family: "Segoe UI", system-ui, sans-serif;
+  font-weight: 500;
+  line-height: 1.55;
+}
+
+.shopButton {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(14px, 1.4vw, 22px);
+  width: clamp(198px, 17vw, 286px);
+  height: clamp(52px, 4.4vw, 76px);
+  margin-top: clamp(30px, 3vw, 54px);
+  clip-path: polygon(12% 0, 100% 0, 88% 100%, 0 100%);
+  color: #f4f4f4;
+  border: 2px solid var(--lime);
+  font-size: clamp(18px, 1.55vw, 27px);
+  font-style: italic;
+  font-weight: 800;
+  text-decoration: none;
+  text-transform: uppercase;
+  box-shadow:
+    inset 0 0 18px rgba(136, 255, 0, 0.1),
+    0 0 16px rgba(136, 255, 0, 0.22);
+}
+
+.shopButton svg {
+  width: 1em;
+  height: 1em;
+  color: var(--lime);
+}
+
+.saleBadge {
+  position: relative;
+  width: min(100%, clamp(430px, 38vw, 660px));
+  margin-top: clamp(44px, 4vw, 72px);
+  padding: clamp(24px, 2vw, 34px) clamp(34px, 3vw, 54px);
+  clip-path: polygon(9% 0, 91% 0, 100% 28%, 100% 72%, 91% 100%, 9% 100%, 0 72%, 0 28%);
+  border: 2px solid var(--red);
+  background:
+    radial-gradient(circle at 70% 18%, rgba(255, 84, 74, 0.12), transparent 26%),
+    linear-gradient(180deg, rgba(22, 24, 24, 0.92), rgba(7, 8, 8, 0.82));
+  box-shadow:
+    0 0 18px rgba(255, 53, 48, 0.25),
+    inset 0 0 32px rgba(255, 53, 48, 0.08);
+  text-align: center;
+}
+
+.saleBadgeTop,
+.saleBadgeBottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(16px, 1.6vw, 28px);
+  color: #f94b42;
+  font-size: clamp(13px, 1vw, 18px);
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+
+.saleBadgeTop span,
+.saleBadgeBottom span {
+  width: clamp(48px, 4vw, 76px);
+  height: 1px;
+  background: currentColor;
+}
+
+.saleBadgeMain {
+  margin: clamp(12px, 1.2vw, 20px) 0 clamp(6px, 0.8vw, 12px);
+  color: #f1f1f1;
+  font-size: clamp(34px, 3.6vw, 66px);
+  font-family: Impact, "Arial Black", sans-serif;
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+  text-shadow:
+    0 3px 0 rgba(255, 255, 255, 0.06),
+    0 9px 14px rgba(0, 0, 0, 0.9);
+}
+
+.saleBadgeMain strong {
+  color: var(--red);
+  font-size: 1.42em;
+  font-weight: 900;
+}
+
+.saleBadgeBottom {
+  color: #bdbdbd;
+  font-size: clamp(12px, 0.9vw, 16px);
+}
+
+.heroVisual {
+  position: relative;
+  min-width: 0;
+}
+
+.heroNeonLayer {
   position: absolute;
-  top: -92px;
-  left: 34.75vw;
-  width: calc(100vw - 34.75vw);
-  height: min(66vw, 742px);
-  min-height: 600px;
-  pointer-events: none;
-  opacity: 0.96;
+  inset: clamp(-112px, -6.2vw, -76px) calc(var(--container-pad) * -1) auto auto;
+  width: min(100%, clamp(700px, 58vw, 1040px));
+  height: clamp(560px, 48vw, 790px);
   overflow: visible;
+  pointer-events: none;
 }
 
 .heroDividerShade {
@@ -274,7 +434,6 @@
 .heroDividerGlow {
   stroke: rgba(0, 255, 96, 0.56);
   stroke-width: 6;
-  filter: url(#limeDividerGlow);
 }
 
 .heroDividerCore {
@@ -303,90 +462,293 @@
   stroke-dashoffset: -980;
 }
 
-@media (max-width: 1180px) {
-  .primaryNav {
-    grid-template-columns: 1fr 1fr 270px;
-  }
+.hoodieGroup {
+  position: absolute;
+  right: clamp(18px, 4vw, 88px);
+  top: clamp(66px, 4.8vw, 92px);
+  z-index: 2;
+  width: clamp(520px, 46vw, 850px);
+  height: clamp(430px, 36vw, 670px);
+}
 
-  .navClusterLeft {
-    gap: 34px;
-    padding-left: 36px;
-  }
+.hoodie {
+  position: absolute;
+  bottom: 0;
+  filter:
+    drop-shadow(0 28px 32px rgba(0, 0, 0, 0.8))
+    drop-shadow(0 0 28px rgba(255, 255, 255, 0.05));
+}
 
-  .navClusterRight {
-    gap: 34px;
-  }
+.hoodieBlack {
+  left: 2%;
+  z-index: 2;
+  width: 52%;
+  height: 94%;
+  --hoodie-base: #070908;
+  --hoodie-light: #1b1e1c;
+  --hoodie-accent: #73c900;
+}
 
-  .primaryNav a {
-    font-size: 15px;
-  }
+.hoodiePurple {
+  right: 0;
+  width: 45%;
+  height: 88%;
+  --hoodie-base: #22083a;
+  --hoodie-light: #542077;
+  --hoodie-accent: #9352ff;
+}
 
-  .heroDivider {
-    left: 35.5vw;
-    width: calc(100vw - 35.5vw);
-    height: 650px;
+.hoodieHood {
+  position: absolute;
+  top: 0;
+  left: 23%;
+  width: 55%;
+  height: 25%;
+  border-radius: 48% 48% 28% 28%;
+  background:
+    radial-gradient(circle at 50% 26%, var(--hoodie-accent), transparent 33%),
+    linear-gradient(120deg, var(--hoodie-light), var(--hoodie-base) 62%);
+  box-shadow: inset 0 -16px 24px rgba(0, 0, 0, 0.72);
+}
+
+.hoodieBody {
+  position: absolute;
+  left: 10%;
+  bottom: 0;
+  width: 80%;
+  height: 83%;
+  border-radius: 28% 28% 9% 9% / 20% 20% 5% 5%;
+  background:
+    radial-gradient(circle at 48% 24%, rgba(255, 255, 255, 0.08), transparent 31%),
+    linear-gradient(100deg, rgba(255, 255, 255, 0.08), transparent 28%),
+    linear-gradient(145deg, var(--hoodie-light), var(--hoodie-base) 55%);
+  box-shadow:
+    inset -18px 0 30px rgba(0, 0, 0, 0.55),
+    inset 18px 0 28px rgba(255, 255, 255, 0.035);
+}
+
+.hoodiePocket {
+  position: absolute;
+  left: 29%;
+  bottom: 12%;
+  width: 44%;
+  height: 18%;
+  border: 2px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px 12px 20px 20px;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.drawstring {
+  position: absolute;
+  top: 18%;
+  width: 2px;
+  height: 27%;
+  background: var(--hoodie-accent);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--hoodie-accent), transparent 45%);
+}
+
+.drawstringLeft {
+  left: 44%;
+}
+
+.drawstringRight {
+  left: 55%;
+}
+
+.bolt {
+  position: absolute;
+  width: 24%;
+  height: 38%;
+  background: var(--hoodie-accent);
+  clip-path: polygon(46% 0, 100% 0, 63% 40%, 100% 40%, 26% 100%, 50% 54%, 7% 54%);
+  filter: drop-shadow(0 0 12px color-mix(in srgb, var(--hoodie-accent), transparent 55%));
+}
+
+.boltLeft {
+  left: 4%;
+  top: 26%;
+  transform: rotate(-13deg);
+}
+
+.boltRight {
+  right: 2%;
+  top: 34%;
+  transform: rotate(12deg);
+}
+
+.productDrops {
+  position: relative;
+  z-index: 3;
+  margin-top: clamp(10px, 1.4vw, 28px);
+  padding-inline: clamp(8px, 1.2vw, 20px);
+}
+
+.productDrops h2 {
+  margin: 0 0 clamp(18px, 1.7vw, 30px);
+  color: #f1f1f1;
+  font-size: clamp(22px, 1.9vw, 34px);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.productDrops h2 span {
+  color: var(--cyan);
+  text-shadow: 0 0 12px rgba(0, 183, 255, 0.42);
+}
+
+.productGrid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, var(--product-card-width)));
+  justify-content: space-between;
+  gap: var(--product-gap);
+}
+
+.productCard {
+  position: relative;
+  width: var(--product-card-width);
+  min-width: 0;
+  aspect-ratio: 1 / 1.02;
+  overflow: hidden;
+  clip-path: polygon(8% 0, 92% 0, 100% 8%, 100% 92%, 92% 100%, 8% 100%, 0 92%, 0 8%);
+  background:
+    radial-gradient(circle at 50% 38%, rgba(255, 255, 255, 0.12), transparent 42%),
+    linear-gradient(145deg, rgba(35, 35, 40, 0.95), rgba(5, 6, 6, 0.92));
+  border: 2px solid currentColor;
+  box-shadow:
+    0 0 16px color-mix(in srgb, currentColor, transparent 70%),
+    inset 0 0 28px rgba(255, 255, 255, 0.04);
+}
+
+.productCard-red {
+  color: #ff4b59;
+}
+
+.productCard-purple {
+  color: #c14dff;
+}
+
+.productCard-cyan {
+  color: #19caff;
+}
+
+.productCard-yellow {
+  color: #ffd43e;
+}
+
+.productCard-green {
+  color: #8cff21;
+}
+
+.productArt {
+  position: absolute;
+  left: 50%;
+  top: 10%;
+  width: 58%;
+  height: 66%;
+  transform: translateX(-50%);
+  color: currentColor;
+}
+
+.productArt span {
+  position: absolute;
+  inset: 0;
+  border-radius: 34% 34% 10% 10% / 22% 22% 8% 8%;
+  background:
+    radial-gradient(circle at 50% 18%, color-mix(in srgb, currentColor, white 46%), transparent 20%),
+    linear-gradient(145deg, color-mix(in srgb, currentColor, white 34%), color-mix(in srgb, currentColor, black 42%));
+  filter: drop-shadow(0 18px 16px rgba(0, 0, 0, 0.6));
+}
+
+.productArt-jacket span,
+.productArt-tee span,
+.productArt-crew span {
+  border-radius: 16% 16% 7% 7%;
+}
+
+.productArt-cargo span {
+  width: 52%;
+  margin: 0 auto;
+  border-radius: 8% 8% 16% 16%;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08), transparent 20%),
+    linear-gradient(145deg, #222, #050505);
+}
+
+.productStripes {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  width: 30%;
+  height: 28%;
+  background: repeating-linear-gradient(45deg, transparent 0 13px, currentColor 14px 20px);
+  filter: drop-shadow(0 0 10px currentColor);
+  opacity: 0.95;
+}
+
+.productLabel {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: clamp(44px, 4vw, 62px);
+  padding: 0 clamp(16px, 1.5vw, 24px);
+  color: #fff;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.76));
+}
+
+.productLabel h3 {
+  margin: 0;
+  font-size: clamp(15px, 1.25vw, 21px);
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.productLabel svg {
+  flex: 0 0 auto;
+  width: clamp(22px, 1.7vw, 30px);
+  height: clamp(22px, 1.7vw, 30px);
+}
+
+@media (min-width: 1921px) {
+  .desktopShell {
+    width: var(--container-max);
   }
 }
 
-@media (max-width: 860px) {
-  .siteHeader {
-    height: 86px;
+@media (max-width: 1320px) {
+  :root {
+    --container-pad: clamp(28px, 3.3vw, 44px);
+    --hero-min-height: 660px;
+    --product-card-width: clamp(190px, 16.25vw, 215px);
+    --product-gap: 18px;
   }
 
   .primaryNav {
-    grid-template-columns: 1fr 235px;
+    grid-template-columns: minmax(300px, 35%) minmax(450px, 45%) minmax(190px, 20%);
   }
 
+  .navClusterLeft,
   .navClusterRight {
-    display: none;
+    gap: clamp(30px, 3.1vw, 42px);
   }
 
-  .navClusterLeft {
-    gap: clamp(20px, 5vw, 34px);
-    padding-left: 22px;
+  .heroCopy {
+    padding-left: 18px;
   }
 
-  .cornerPanel {
-    width: 235px;
-    height: 86px;
+  .saleBadge {
+    width: min(100%, 500px);
   }
 
-  .headerActions {
-    top: 17px;
-    right: 24px;
-    gap: 18px;
+  .heroNeonLayer {
+    width: clamp(690px, 58vw, 760px);
   }
 
-  .headerActions svg {
-    width: 24px;
-    height: 24px;
-  }
-
-  .heroDivider {
-    left: 32vw;
-    width: calc(100vw - 32vw);
-    height: 560px;
-    min-height: 520px;
-  }
-}
-
-@media (max-width: 620px) {
-  .primaryNav {
-    display: none;
-  }
-
-  .cornerPanel {
-    width: 100%;
-    min-width: 0;
-  }
-
-  .headerActions {
-    right: 24px;
-  }
-
-  .heroDivider {
-    left: 22vw;
-    width: 110vw;
-    opacity: 0.64;
+  .hoodieGroup {
+    right: 18px;
+    width: clamp(520px, 45vw, 590px);
   }
 }
