@@ -7,7 +7,6 @@
   text-rendering: optimizeLegibility;
     --stage-min: 1200px;
   --container-max: 1660px;
-  --container-pad: clamp(64px, 5.2vw, 100px);
 }
 
 * {

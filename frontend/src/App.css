@@ -14,6 +14,7 @@
   --product-card-width: clamp(196px, 15.9vw, 292px);
   --product-gap: clamp(18px, 2.1vw, 34px);
 
+
   /* Shared color tokens for neon accents and text. */
   --lime: #88ff00;
   --lime-hot: #b6ff12;
