@@ -3,10 +3,11 @@
   --container-min: 1120px;
   --container-max: 1660px;
   --container-pad: clamp(40px, 5.2vw, 100px);
+  --container-shift-x: 0px;
   --hero-left: 40%;
   --hero-right: 60%;
   --hero-min-height: clamp(650px, 47vw, 820px);
-  --content-left-inset: clamp(18px, 3.4vw, 58px);
+  --content-left-inset: clamp(18px, calc(18px + ((100vw - 1200px) * 0.08)), 58px);
   --product-card-width: clamp(196px, 15.9vw, 292px);
   --product-gap: clamp(18px, 2.1vw, 34px);
 
@@ -57,6 +58,7 @@
   min-width: var(--container-min);
   margin: 0 auto;
   padding-bottom: clamp(42px, 4vw, 72px);
+  transform: translateX(var(--container-shift-x));
 }
 
 /* Header keeps nav and the right action panel aligned to the desktop container. */
@@ -657,8 +659,26 @@
   height: clamp(22px, 1.7vw, 30px);
 }
 
-/* Ultrawide behavior: content width locks while the background keeps expanding. */
+/* Standard desktop bridge: starts the left nudge smoothly after compressed desktop. */
+@media (min-width: 1321px) and (max-width: 1500px) {
+  :root {
+    --container-shift-x: clamp(-40px, calc((100vw - 1320px) * -0.22), 0px);
+  }
+}
+
+/* Large desktop only: stronger left nudge without affecting compressed screens. */
+@media (min-width: 1501px) {
+  :root {
+    --container-shift-x: clamp(-72px, -3vw, -40px);
+  }
+}
+
+/* Ultrawide behavior: content width locks, but left spacing does not grow again. */
 @media (min-width: 1921px) {
+  :root {
+    --container-shift-x: calc(-58px - ((100vw - 1920px) / 2));
+  }
+
   .desktopShell {
     width: var(--container-max);
   }
