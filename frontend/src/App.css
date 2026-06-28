@@ -13,6 +13,9 @@
   --content-left-inset: clamp(0px, 0.45vw, 10px);
   --product-card-width: clamp(196px, 15.9vw, 292px);
   --product-gap: clamp(18px, 2.1vw, 34px);
+  --corner-panel-width: clamp(228px, 18.7vw, 300px);
+  --header-left-gap: var(--content-left-inset);
+  --header-right-gap: clamp(64px, 5vw, 120px);
 
 
   /* Shared color tokens for neon accents and text. */
@@ -75,12 +78,13 @@
 .primaryNav {
   position: absolute;
   inset: 0;
-  display: grid;
-  grid-template-columns: minmax(330px, 35%) minmax(500px, 45%) minmax(210px, 20%);
-  align-items: start;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-left: var(--header-left-gap);
+  padding-right: calc((var(--corner-panel-width) - var(--container-pad)) + var(--header-right-gap));
   pointer-events: none;
 }
-
 /* Shared navigation row behavior. */
 .navCluster {
   display: flex;
@@ -92,18 +96,14 @@
 
 /* Left navigation group: HOME / JEWELRY / ACCESORIES. */
 .navClusterLeft {
-  justify-self: start;
   gap: clamp(36px, 4vw, 76px);
-  padding-left: var(--content-left-inset);
+  padding-left: 0;
 }
-
 /* Center navigation group: SALES / CLOTHING / ABOUT US / CONTACT. */
 .navClusterRight {
-  grid-column: 2;
-  justify-self: center;
+  margin-left: auto;
   gap: clamp(36px, 4vw, 76px);
 }
-
 /* Navigation link typography and hover transition. */
 .primaryNav a {
   position: relative;
@@ -171,7 +171,7 @@
   position: absolute;
   top: 0;
   right: calc(var(--container-pad) * -1);
-  width: clamp(228px, 18.7vw, 300px);
+  width: var(--corner-panel-width);
   height: clamp(78px, 6.4vw, 104px);
 }
 
@@ -651,12 +651,9 @@
     --container-pad: 64px;
     --hero-min-height: 660px;
     --content-left-inset: 18px;
+    --header-edge-gap: 24px;
     --product-card-width: clamp(190px, 16.25vw, 215px);
     --product-gap: 18px;
-  }
-
-  .primaryNav {
-    grid-template-columns: minmax(300px, 35%) minmax(450px, 45%) minmax(190px, 20%);
   }
 
   .navClusterLeft,
