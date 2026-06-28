@@ -136,9 +136,6 @@ function SiteHeader({ renderNavLink }) {
             filter="url(#cyanGlow)"
             d="M0 0 V38 L30 66 H120 L151 92 H270"
           />
-          <path className="circuitLine circuitLineOne" d="M230 10 C206 18 214 40 190 45" />
-          <path className="circuitLine circuitLineTwo" d="M263 23 C242 32 248 51 222 58" />
-          <path className="circuitLine circuitLineThree" d="M252 2 C226 10 232 29 204 34" />
         </svg>
 
         <div className="headerActions">

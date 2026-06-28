@@ -4,10 +4,13 @@
   --container-max: 1660px;
   --container-pad: clamp(40px, 5.2vw, 100px);
   --container-shift-x: 0px;
+  --nav-top: clamp(26px, 2vw, 34px);
+  --actions-top: clamp(12px, 1vw, 18px);
+  --actions-right: clamp(64px, 5vw, 104px);
   --hero-left: 40%;
   --hero-right: 60%;
   --hero-min-height: clamp(650px, 47vw, 820px);
-  --content-left-inset: clamp(18px, calc(18px + ((100vw - 1200px) * 0.08)), 58px);
+  --content-left-inset: clamp(0px, 0.45vw, 10px);
   --product-card-width: clamp(196px, 15.9vw, 292px);
   --product-gap: clamp(18px, 2.1vw, 34px);
 
@@ -58,7 +61,6 @@
   min-width: var(--container-min);
   margin: 0 auto;
   padding-bottom: clamp(42px, 4vw, 72px);
-  transform: translateX(var(--container-shift-x));
 }
 
 /* Header keeps nav and the right action panel aligned to the desktop container. */
@@ -81,9 +83,9 @@
 /* Shared navigation row behavior. */
 .navCluster {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   height: clamp(66px, 5.1vw, 78px);
-  padding-top: clamp(27px, 2.4vw, 36px);
+  padding-top: var(--nav-top);
   pointer-events: auto;
 }
 
@@ -201,28 +203,11 @@
   stroke-linejoin: miter;
 }
 
-/* Small green circuit traces inside the panel. */
-.circuitLine {
-  fill: none;
-  stroke: rgba(0, 255, 95, 0.45);
-  stroke-width: 1;
-  stroke-linecap: round;
-  filter: drop-shadow(0 0 6px rgba(0, 255, 95, 0.42));
-}
-
-.circuitLineTwo {
-  opacity: 0.72;
-}
-
-.circuitLineThree {
-  opacity: 0.48;
-}
-
 /* Header icon row inside the blue panel. */
 .headerActions {
   position: absolute;
-  top: clamp(15px, 1.3vw, 22px);
-  right: clamp(28px, 3.5vw, 58px);
+  top: var(--actions-top);
+  right: var(--actions-right);
   display: flex;
   align-items: center;
   gap: clamp(20px, 2vw, 32px);
@@ -657,31 +642,6 @@
   flex: 0 0 auto;
   width: clamp(22px, 1.7vw, 30px);
   height: clamp(22px, 1.7vw, 30px);
-}
-
-/* Standard desktop bridge: starts the left nudge smoothly after compressed desktop. */
-@media (min-width: 1321px) and (max-width: 1500px) {
-  :root {
-    --container-shift-x: clamp(-40px, calc((100vw - 1320px) * -0.22), 0px);
-  }
-}
-
-/* Large desktop only: stronger left nudge without affecting compressed screens. */
-@media (min-width: 1501px) {
-  :root {
-    --container-shift-x: clamp(-72px, -3vw, -40px);
-  }
-}
-
-/* Ultrawide behavior: content width locks, but left spacing does not grow again. */
-@media (min-width: 1921px) {
-  :root {
-    --container-shift-x: calc(-58px - ((100vw - 1920px) / 2));
-  }
-
-  .desktopShell {
-    width: var(--container-max);
-  }
 }
 
 /* Compressed desktop range: tighter gaps and smaller product cards. */
