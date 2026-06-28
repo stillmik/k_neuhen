@@ -462,118 +462,13 @@
   stroke-dashoffset: -980;
 }
 
-.hoodieGroup {
+.heroImageSlot {
   position: absolute;
   right: clamp(18px, 4vw, 88px);
   top: clamp(66px, 4.8vw, 92px);
   z-index: 2;
   width: clamp(520px, 46vw, 850px);
   height: clamp(430px, 36vw, 670px);
-}
-
-.hoodie {
-  position: absolute;
-  bottom: 0;
-  filter:
-    drop-shadow(0 28px 32px rgba(0, 0, 0, 0.8))
-    drop-shadow(0 0 28px rgba(255, 255, 255, 0.05));
-}
-
-.hoodieBlack {
-  left: 2%;
-  z-index: 2;
-  width: 52%;
-  height: 94%;
-  --hoodie-base: #070908;
-  --hoodie-light: #1b1e1c;
-  --hoodie-accent: #73c900;
-}
-
-.hoodiePurple {
-  right: 0;
-  width: 45%;
-  height: 88%;
-  --hoodie-base: #22083a;
-  --hoodie-light: #542077;
-  --hoodie-accent: #9352ff;
-}
-
-.hoodieHood {
-  position: absolute;
-  top: 0;
-  left: 23%;
-  width: 55%;
-  height: 25%;
-  border-radius: 48% 48% 28% 28%;
-  background:
-    radial-gradient(circle at 50% 26%, var(--hoodie-accent), transparent 33%),
-    linear-gradient(120deg, var(--hoodie-light), var(--hoodie-base) 62%);
-  box-shadow: inset 0 -16px 24px rgba(0, 0, 0, 0.72);
-}
-
-.hoodieBody {
-  position: absolute;
-  left: 10%;
-  bottom: 0;
-  width: 80%;
-  height: 83%;
-  border-radius: 28% 28% 9% 9% / 20% 20% 5% 5%;
-  background:
-    radial-gradient(circle at 48% 24%, rgba(255, 255, 255, 0.08), transparent 31%),
-    linear-gradient(100deg, rgba(255, 255, 255, 0.08), transparent 28%),
-    linear-gradient(145deg, var(--hoodie-light), var(--hoodie-base) 55%);
-  box-shadow:
-    inset -18px 0 30px rgba(0, 0, 0, 0.55),
-    inset 18px 0 28px rgba(255, 255, 255, 0.035);
-}
-
-.hoodiePocket {
-  position: absolute;
-  left: 29%;
-  bottom: 12%;
-  width: 44%;
-  height: 18%;
-  border: 2px solid rgba(255, 255, 255, 0.05);
-  border-radius: 12px 12px 20px 20px;
-  background: rgba(0, 0, 0, 0.18);
-}
-
-.drawstring {
-  position: absolute;
-  top: 18%;
-  width: 2px;
-  height: 27%;
-  background: var(--hoodie-accent);
-  box-shadow: 0 0 10px color-mix(in srgb, var(--hoodie-accent), transparent 45%);
-}
-
-.drawstringLeft {
-  left: 44%;
-}
-
-.drawstringRight {
-  left: 55%;
-}
-
-.bolt {
-  position: absolute;
-  width: 24%;
-  height: 38%;
-  background: var(--hoodie-accent);
-  clip-path: polygon(46% 0, 100% 0, 63% 40%, 100% 40%, 26% 100%, 50% 54%, 7% 54%);
-  filter: drop-shadow(0 0 12px color-mix(in srgb, var(--hoodie-accent), transparent 55%));
-}
-
-.boltLeft {
-  left: 4%;
-  top: 26%;
-  transform: rotate(-13deg);
-}
-
-.boltRight {
-  right: 2%;
-  top: 34%;
-  transform: rotate(12deg);
 }
 
 .productDrops {
@@ -747,7 +642,7 @@
     width: clamp(690px, 58vw, 760px);
   }
 
-  .hoodieGroup {
+  .heroImageSlot {
     right: 18px;
     width: clamp(520px, 45vw, 590px);
   }

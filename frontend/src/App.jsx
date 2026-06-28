@@ -58,27 +58,8 @@ function App() {
 
           <div className="heroVisual" aria-label="Featured hoodies">
             <NeonHeroFrame />
-            <div className="hoodieGroup">
-              <div className="hoodie hoodieBlack">
-                <div className="hoodieHood" />
-                <div className="hoodieBody">
-                  <span className="bolt boltLeft" />
-                  <span className="bolt boltRight" />
-                </div>
-                <div className="hoodiePocket" />
-                <span className="drawstring drawstringLeft" />
-                <span className="drawstring drawstringRight" />
-              </div>
-
-              <div className="hoodie hoodiePurple">
-                <div className="hoodieHood" />
-                <div className="hoodieBody">
-                  <span className="bolt boltRight" />
-                </div>
-                <div className="hoodiePocket" />
-                <span className="drawstring drawstringLeft" />
-                <span className="drawstring drawstringRight" />
-              </div>
+            <div className="heroImageSlot">
+              {/* Place the final hoodie group image here later. */}
             </div>
           </div>
         </section>
