@@ -5,6 +5,7 @@ import "./App.css";
 const leftNavItems = ["Home", "Jewelry", "Accesories"];
 const rightNavItems = ["Sales", "Clothing", "About Us", "Contact"];
 
+// Product data controls card text, accent color class, and temporary product shape.
 const products = [
   { name: "Lavender Hoodie", accent: "red", type: "hoodie" },
   { name: "Pink Drop", accent: "purple", type: "jacket" },
@@ -14,8 +15,10 @@ const products = [
 ];
 
 function App() {
+  // Stores the clicked navigation item so the green underline stays on it.
   const [activeNavItem, setActiveNavItem] = useState("Home");
 
+  // Shared renderer for both left and right navigation groups.
   const renderNavLink = (item) => (
     <a
       key={item}
@@ -29,57 +32,64 @@ function App() {
 
   return (
     <main className="page">
+      {/* Full-screen decorative texture. It stays outside the content container. */}
       <div className="backgroundTexture" aria-hidden="true" />
 
-      <div className="desktopShell">
-        <SiteHeader renderNavLink={renderNavLink} />
+      {/* Main desktop container. Width limits are controlled in App.css variables. */}
+      <div className="desktopStage">
+        <div className="desktopShell">
+          <SiteHeader renderNavLink={renderNavLink} />
 
-        <section className="heroSection" aria-label="New collection">
-          <div className="heroCopy">
-            <p className="eyebrow">New Collection</p>
-            <h1 className="heroTitle">
-              <span>K</span>-Neuhen
-            </h1>
-            <p className="heroSubtitle">
-              Streetwear that speaks louder.
-              <br />
-              Bold designs. Premium comfort.
-              <br />
-              Unleash your style.
-            </p>
+          {/* Hero section: left copy/sale area + right visual slot/neon geometry. */}
+          <section className="heroSection" aria-label="New collection">
+            <div className="heroCopy">
+              <p className="eyebrow">New Collection</p>
+              <h1 className="heroTitle">
+                <span>K</span>-Neuhen
+              </h1>
+              <p className="heroSubtitle">
+                Streetwear that speaks louder.
+                <br />
+                Bold designs. Premium comfort.
+                <br />
+                Unleash your style.
+              </p>
 
-            <a className="shopButton" href="#new-drops">
-              Shop Now
-              <ArrowRight aria-hidden="true" />
-            </a>
+              <a className="shopButton" href="#new-drops">
+                Shop Now
+                <ArrowRight aria-hidden="true" />
+              </a>
 
-            <SaleBadge />
-          </div>
-
-          <div className="heroVisual" aria-label="Featured hoodies">
-            <NeonHeroFrame />
-            <div className="heroImageSlot">
-              {/* Place the final hoodie group image here later. */}
+              <SaleBadge />
             </div>
-          </div>
-        </section>
 
-        <section id="new-drops" className="productDrops" aria-label="New drops">
-          <h2>
-            Explore <span>New Drops</span>
-          </h2>
+            <div className="heroVisual" aria-label="Featured hoodies">
+              <NeonHeroFrame />
+              <div className="heroImageSlot">
+                {/* Put the final hoodie group image here later. Keep the slot sizing in CSS. */}
+              </div>
+            </div>
+          </section>
 
-          <div className="productGrid">
-            {products.map((product) => (
-              <ProductCard key={product.name} product={product} />
-            ))}
-          </div>
-        </section>
+          {/* Desktop product row. CSS keeps five cards in one flexible row. */}
+          <section id="new-drops" className="productDrops" aria-label="New drops">
+            <h2>
+              Explore <span>New Drops</span>
+            </h2>
+
+            <div className="productGrid">
+              {products.map((product) => (
+                <ProductCard key={product.name} product={product} />
+              ))}
+            </div>
+          </section>
+        </div>
       </div>
     </main>
   );
 }
 
+// Top navigation and the angled blue action panel from the reference design.
 function SiteHeader({ renderNavLink }) {
   return (
     <header className="siteHeader">
@@ -89,6 +99,7 @@ function SiteHeader({ renderNavLink }) {
       </nav>
 
       <div className="cornerPanel" aria-label="Shop actions">
+        {/* SVG frame gives the top-right panel its angled cyber shape and glow. */}
         <svg
           className="cornerPanelFrame"
           viewBox="0 0 270 92"
@@ -147,6 +158,7 @@ function SiteHeader({ renderNavLink }) {
   );
 }
 
+// Scalable green divider behind the future hoodie image.
 function NeonHeroFrame() {
   return (
     <svg className="heroNeonLayer" viewBox="0 0 900 680" preserveAspectRatio="none" aria-hidden="true">
@@ -186,6 +198,7 @@ function NeonHeroFrame() {
   );
 }
 
+// Red polygon sale badge under the CTA.
 function SaleBadge() {
   return (
     <aside className="saleBadge" aria-label="Limited sale up to 40 percent off on selected hoodies">
@@ -206,6 +219,7 @@ function SaleBadge() {
   );
 }
 
+// Product card shell. The current product art is placeholder CSS until real images exist.
 function ProductCard({ product }) {
   return (
     <article className={`productCard productCard-${product.accent}`}>
