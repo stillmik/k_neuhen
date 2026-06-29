@@ -15,8 +15,7 @@
   --hero-right: 60%;
   --hero-min-height: clamp(610px, 49cqw, 660px);
   --content-left-inset: clamp(10px, 1.4cqw, 18px);
-  --product-card-width: clamp(184px, 14.9cqw, 195px);
-  --product-gap: clamp(16px, 1.5cqw, 20px);
+  --product-gap: 28px;
   --corner-panel-width: clamp(220px, 18cqw, 246px);
   --header-left-gap: var(--content-left-inset);
   --header-right-gap: clamp(44px, 4.2cqw, 58px);
@@ -568,15 +567,15 @@
 /* Five-card desktop row. Card width and gap are controlled by root variables. */
 .productGrid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, var(--product-card-width)));
-  justify-content: space-between;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  justify-content: stretch;
   gap: var(--product-gap);
 }
 
 /* Shared cyber card shell. */
 .productCard {
   position: relative;
-  width: var(--product-card-width);
+  width: 100%;
   min-width: 0;
   aspect-ratio: 1 / 1.02;
   overflow: hidden;
@@ -693,8 +692,6 @@
     --container-pad: 84px;
     --hero-min-height: clamp(630px, 48cqw, 685px);
     --content-left-inset: clamp(8px, 1.1cqw, 18px);
-    --product-card-width: clamp(198px, 15cqw, 210px);
-    --product-gap: clamp(18px, 1.6cqw, 20px);
     --corner-panel-width: clamp(238px, 18cqw, 258px);
     --header-right-gap: clamp(52px, 4.2cqw, 64px);
     --nav-group-gap: clamp(40px, 3.6cqw, 52px);
@@ -706,8 +703,6 @@
   :root {
     --container-pad: 88px;
     --hero-min-height: clamp(650px, 47cqw, 705px);
-    --product-card-width: clamp(210px, 15.2cqw, 222px);
-    --product-gap: clamp(20px, 1.65cqw, 23px);
     --corner-panel-width: clamp(252px, 18.1cqw, 266px);
     --header-right-gap: clamp(60px, 4.3cqw, 72px);
     --nav-group-gap: clamp(46px, 3.7cqw, 58px);
@@ -719,8 +714,6 @@
   :root {
     --container-pad: 92px;
     --hero-min-height: clamp(680px, 46.5cqw, 735px);
-    --product-card-width: clamp(226px, 15.4cqw, 240px);
-    --product-gap: clamp(22px, 1.7cqw, 25px);
     --corner-panel-width: clamp(264px, 18.1cqw, 280px);
     --header-right-gap: clamp(66px, 4.25cqw, 80px);
     --nav-group-gap: clamp(50px, 3.7cqw, 64px);
@@ -733,8 +726,6 @@
     --container-pad: 104px;
     --hero-min-height: clamp(720px, 45.6cqw, 790px);
     --content-left-inset: clamp(6px, 0.8cqw, 14px);
-    --product-card-width: clamp(252px, 15.4cqw, 270px);
-    --product-gap: clamp(24px, 1.65cqw, 30px);
     --corner-panel-width: clamp(280px, 17.8cqw, 294px);
     --header-right-gap: clamp(72px, 4.25cqw, 92px);
     --nav-group-gap: clamp(56px, 3.7cqw, 70px);
@@ -747,8 +738,6 @@
     --container-pad: 116px;
     --hero-min-height: clamp(760px, 43cqw, 820px);
     --content-left-inset: clamp(0px, 0.45cqw, 10px);
-    --product-card-width: clamp(278px, 15.2cqw, 292px);
-    --product-gap: clamp(28px, 1.75cqw, 34px);
     --corner-panel-width: clamp(292px, 15.8cqw, 304px);
     --header-right-gap: clamp(84px, 4.4cqw, 104px);
     --nav-group-gap: clamp(62px, 3.7cqw, 76px);
