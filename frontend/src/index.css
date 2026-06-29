@@ -19,6 +19,7 @@ body,
 #root {
   /* Root elements fill the viewport so .page can own the full background. */
   width: 100%;
+  min-width: var(--stage-min);
   min-height: 100%;
   margin: 0;
 }
@@ -35,6 +36,7 @@ body {
   width: clamp(var(--stage-min), 100vw, var(--stage-max));
   min-width: var(--stage-min);
   max-width: var(--stage-max);
+  margin-inline: auto;
   background: transparent;
 }
 
