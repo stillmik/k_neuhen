@@ -115,25 +115,25 @@ function App() {
               </a>
 
               <SaleBadge />
+
+              {/* Desktop product row. CSS keeps five cards in one flexible row. */}
+              <section id="new-drops" className="productDrops" aria-label="New drops">
+                <h2>
+                  Explore <span>New Drops</span>
+                </h2>
+
+                <div className="productGrid">
+                  {products.map((product) => (
+                    <ProductCard key={product.name} product={product} />
+                  ))}
+                </div>
+              </section>
             </div>
 
             <div className="heroVisual" aria-label="Featured hoodies">
               <div className="heroImageSlot">
                 {/* Put the final hoodie group image here later. Keep the slot sizing in CSS. */}
               </div>
-            </div>
-          </section>
-
-          {/* Desktop product row. CSS keeps five cards in one flexible row. */}
-          <section id="new-drops" className="productDrops" aria-label="New drops">
-            <h2>
-              Explore <span>New Drops</span>
-            </h2>
-
-            <div className="productGrid">
-              {products.map((product) => (
-                <ProductCard key={product.name} product={product} />
-              ))}
             </div>
           </section>
         </div>

@@ -296,8 +296,14 @@
 .heroCopy {
   position: relative;
   z-index: 2;
+  grid-column: 1 / -1;
   padding-left: var(--content-left-inset);
   padding-top: clamp(28px, 4.1cqw, 76px);
+}
+
+/* Hero text stack stays in the left column while product drops can use the full shell width. */
+.heroCopy > :not(.productDrops) {
+  max-width: calc(var(--hero-left) - var(--content-left-inset));
 }
 
 /* Small green "NEW COLLECTION" label. */
@@ -461,6 +467,8 @@
 .heroVisual {
   position: relative;
   z-index: 2;
+  grid-column: 2;
+  grid-row: 1;
   min-width: 0;
 }
 
@@ -539,8 +547,8 @@
 .productDrops {
   position: relative;
   z-index: 3;
-  margin-top: clamp(10px, 1.4cqw, 28px);
-  padding-inline: var(--content-left-inset) 0;
+  margin-top: 48px;
+  padding-inline: 0;
 }
 
 /* Product section heading. */
