@@ -3,11 +3,10 @@
     Layout presets.
     Each media block below represents one target screen width:
     1280, 1366, 1440, 1536, 1728, 1920.
-    Change --layout-width first if you want the whole fixed content box wider/narrower.
-    --container-pad is the outside breathing room; the background still covers 100vw.
+    --container-pad is the only intended outside gap.
+    The stage itself is clamped to 1280..1920 in index.css.
   */
-  --layout-width: 1120px;
-  --container-pad: clamp(40px, 4.8vw, 64px);
+  --container-pad: 80px;
   --container-shift-x: 0px;
   --nav-top: clamp(20px, 1.8vw, 27px);
   --actions-top: clamp(10px, 0.95vw, 15px);
@@ -16,8 +15,8 @@
   --hero-right: 60%;
   --hero-min-height: clamp(610px, 49vw, 660px);
   --content-left-inset: clamp(10px, 1.4vw, 18px);
-  --product-card-width: clamp(184px, 15.8vw, 205px);
-  --product-gap: clamp(16px, 1.5vw, 18px);
+  --product-card-width: clamp(184px, 14.9vw, 195px);
+  --product-gap: clamp(16px, 1.5vw, 20px);
   --corner-panel-width: clamp(220px, 18vw, 246px);
   --header-left-gap: var(--content-left-inset);
   --header-right-gap: clamp(44px, 4.2vw, 58px);
@@ -39,8 +38,10 @@
 /* Full page background. Content width is controlled by .desktopShell, not by this layer. */
 .page {
   position: relative;
+  width: 100%;
+  min-width: var(--stage-min);
   min-height: 100dvh;
-  overflow-x: auto;
+  overflow-x: clip;
   overflow-y: auto;
   color: var(--text);
   background:
@@ -64,14 +65,14 @@
   opacity: 0.45;
 }
 
-/* Main centered desktop container. It shrinks with the viewport and locks at --layout-width. */
+/* Main desktop container. It starts after --container-pad and fills the remaining staged width. */
 .desktopShell {
   position: relative;
   z-index: 1;
-  width: min(calc(100% - (var(--container-pad) * 2)), var(--layout-width));
+  width: calc(100% - (var(--container-pad) * 2));
   min-width: 0;
-  max-width: var(--layout-width);
-  margin: 0 auto;
+  max-width: none;
+  margin: 0 0 0 var(--container-pad);
   padding-bottom: clamp(42px, 4vw, 72px);
   transform: translateX(var(--container-shift-x));
 }
@@ -681,11 +682,10 @@
 /* 1366 layout profile. It starts just above the 1280-ish desktop range. */
 @media (min-width: 1324px) {
   :root {
-    --layout-width: 1210px;
-    --container-pad: clamp(52px, 4.8vw, 68px);
+    --container-pad: 84px;
     --hero-min-height: clamp(630px, 48vw, 685px);
     --content-left-inset: clamp(8px, 1.1vw, 18px);
-    --product-card-width: clamp(205px, 15.9vw, 220px);
+    --product-card-width: clamp(198px, 15vw, 210px);
     --product-gap: clamp(18px, 1.6vw, 20px);
     --corner-panel-width: clamp(238px, 18vw, 258px);
     --header-right-gap: clamp(52px, 4.2vw, 64px);
@@ -696,10 +696,9 @@
 /* 1440 layout profile. */
 @media (min-width: 1404px) {
   :root {
-    --layout-width: 1280px;
-    --container-pad: clamp(60px, 5vw, 76px);
+    --container-pad: 88px;
     --hero-min-height: clamp(650px, 47vw, 705px);
-    --product-card-width: clamp(218px, 16vw, 232px);
+    --product-card-width: clamp(210px, 15.2vw, 222px);
     --product-gap: clamp(20px, 1.65vw, 23px);
     --corner-panel-width: clamp(252px, 18.1vw, 266px);
     --header-right-gap: clamp(60px, 4.3vw, 72px);
@@ -710,10 +709,9 @@
 /* 1536 layout profile. */
 @media (min-width: 1489px) {
   :root {
-    --layout-width: 1370px;
-    --container-pad: clamp(64px, 4.9vw, 82px);
+    --container-pad: 92px;
     --hero-min-height: clamp(680px, 46.5vw, 735px);
-    --product-card-width: clamp(232px, 16.1vw, 252px);
+    --product-card-width: clamp(226px, 15.4vw, 240px);
     --product-gap: clamp(22px, 1.7vw, 25px);
     --corner-panel-width: clamp(264px, 18.1vw, 280px);
     --header-right-gap: clamp(66px, 4.25vw, 80px);
@@ -724,11 +722,10 @@
 /* 1728 layout profile. */
 @media (min-width: 1633px) {
   :root {
-    --layout-width: 1536px;
-    --container-pad: clamp(72px, 4.9vw, 92px);
+    --container-pad: 104px;
     --hero-min-height: clamp(720px, 45.6vw, 790px);
     --content-left-inset: clamp(6px, 0.8vw, 14px);
-    --product-card-width: clamp(252px, 16vw, 278px);
+    --product-card-width: clamp(252px, 15.4vw, 270px);
     --product-gap: clamp(24px, 1.65vw, 30px);
     --corner-panel-width: clamp(280px, 17.8vw, 294px);
     --header-right-gap: clamp(72px, 4.25vw, 92px);
@@ -739,41 +736,13 @@
 /* 1920 layout profile. */
 @media (min-width: 1825px) {
   :root {
-    --layout-width: 1660px;
-    --container-pad: clamp(86px, 5.2vw, 104px);
+    --container-pad: 116px;
     --hero-min-height: clamp(760px, 43vw, 820px);
     --content-left-inset: clamp(0px, 0.45vw, 10px);
-    --product-card-width: clamp(278px, 15.3vw, 292px);
+    --product-card-width: clamp(278px, 15.2vw, 292px);
     --product-gap: clamp(28px, 1.75vw, 34px);
     --corner-panel-width: clamp(292px, 15.8vw, 304px);
     --header-right-gap: clamp(84px, 4.4vw, 104px);
     --nav-group-gap: clamp(62px, 3.7vw, 76px);
-  }
-}
-
-/* Extra compression below 1280: keeps the desktop composition usable instead of hard-overflowing. */
-@media (max-width: 1279px) {
-  :root {
-    --container-pad: clamp(28px, 4vw, 48px);
-    --layout-width: 100%;
-    --hero-min-height: clamp(560px, 52vw, 620px);
-    --product-card-width: clamp(154px, 15.8vw, 184px);
-    --product-gap: clamp(12px, 1.4vw, 16px);
-    --corner-panel-width: clamp(198px, 17vw, 220px);
-    --header-right-gap: clamp(32px, 3.6vw, 44px);
-    --nav-group-gap: clamp(24px, 3vw, 34px);
-  }
-
-  .saleBadge {
-    width: min(100%, 500px);
-  }
-
-  .heroNeonLayer {
-    height: clamp(530px, 50vw, 720px);
-  }
-
-  .heroImageSlot {
-    right: 18px;
-    width: clamp(480px, 45vw, 590px);
   }
 }
