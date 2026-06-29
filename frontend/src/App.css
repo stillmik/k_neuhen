@@ -15,7 +15,10 @@
   --product-gap: clamp(18px, 2.1vw, 34px);
   --corner-panel-width: clamp(228px, 18.7vw, 300px);
   --header-left-gap: var(--content-left-inset);
-  --header-right-gap: clamp(64px, 5vw, 120px);
+  --header-right-gap: clamp(64px, 5vw, 120px); 
+  --header-right-gap: clamp(42px, 4.2vw, 120px);
+  --neon-start-x: 36%;
+  --nav-group-gap: clamp(28px, 3.2vw, 76px);
 
 
   /* Shared color tokens for neon accents and text. */
@@ -279,6 +282,7 @@
   grid-template-columns: minmax(0, var(--hero-left)) minmax(0, var(--hero-right));
   min-height: var(--hero-min-height);
   margin-top: clamp(16px, 1.7vw, 34px);
+  overflow: visible;
 }
 
 /* Left hero content: eyebrow, title, subtitle, CTA, and sale badge. */
@@ -303,25 +307,45 @@
 /* Main reflective brand title. */
 .heroTitle {
   margin: 0;
-  max-width: 9ch;
+  max-width: 9.5ch;
   color: transparent;
   background:
-    linear-gradient(180deg, #fff 0%, #bababa 42%, #fff 54%, #777 100%);
+    linear-gradient(
+      180deg,
+      #ffffff 0%,
+      #fdfdfd 22%,
+      #f3f3f3 44%,
+      #ffffff 58%,
+      #ededed 78%,
+      #dcdcdc 100%
+    );
+  -webkit-background-clip: text;
   background-clip: text;
-  font-family: Impact, "Arial Black", "Bahnschrift", sans-serif;
-  font-size: clamp(66px, 7vw, 126px);
+  font-family: "Arial Black", "Bahnschrift", Impact, sans-serif;
+  font-size: clamp(58px, 6.2vw, 112px);
   font-weight: 900;
-  letter-spacing: 0;
+  letter-spacing: -0.035em;
   line-height: 0.92;
+  -webkit-text-stroke: 0.3px rgba(255, 255, 255, 0.12);
   text-shadow:
-    0 5px 0 rgba(255, 255, 255, 0.06),
-    0 12px 22px rgba(0, 0, 0, 0.9);
+    0 0 7px rgba(255, 255, 255, 0.12);
 }
 
-/* Green reflective K inside the title. */
 .heroTitle span {
-  background: linear-gradient(180deg, #39ff62, #00d94f);
+  background:
+    linear-gradient(
+      180deg,
+      #6aff86 0%,
+      #39f865 28%,
+      #1fea56 56%,
+      #12da4a 78%,
+      #10cb45 100%
+    );
+  -webkit-background-clip: text;
   background-clip: text;
+  -webkit-text-stroke: 0.3px rgba(118, 255, 148, 0.12);
+  text-shadow:
+    0 0 9px rgba(0, 255, 82, 0.16);
 }
 
 /* Hero supporting copy under the title. */
@@ -429,14 +453,17 @@
 /* Right hero side: neon layer and future hoodie image slot live here. */
 .heroVisual {
   position: relative;
+  z-index: 2;
   min-width: 0;
 }
 
 /* Scalable SVG neon divider behind the hoodie image slot. */
 .heroNeonLayer {
   position: absolute;
-  inset: clamp(-112px, -6.2vw, -76px) calc(var(--container-pad) * -1) auto auto;
-  width: min(100%, clamp(700px, 58vw, 1040px));
+  z-index: 1;
+  top: clamp(-112px, -6.2vw, -76px);
+  left: var(--neon-start-x);
+  width: calc(100% - var(--neon-start-x) + var(--container-pad));
   height: clamp(560px, 48vw, 790px);
   overflow: visible;
   pointer-events: none;
@@ -666,7 +693,7 @@
   }
 
   .heroNeonLayer {
-    width: clamp(690px, 58vw, 760px);
+    height: clamp(530px, 50vw, 720px);
   }
 
   .heroImageSlot {

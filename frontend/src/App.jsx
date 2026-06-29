@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { ArrowRight, Search, ShoppingCart, UserRound } from "lucide-react";
 import "./App.css";
 
@@ -18,17 +18,67 @@ function App() {
   // Stores the clicked navigation item so the green underline stays on it.
   const [activeNavItem, setActiveNavItem] = useState("Home");
 
+  // Used to calculate where the green hoodie border should start.
+  // The start point is always the midpoint between ACCESORIES and SALES.
+  const desktopShellRef = useRef(null);
+
+  useLayoutEffect(() => {
+    const updateNeonStart = () => {
+      const shell = desktopShellRef.current;
+      if (!shell) return;
+
+      const accessories = shell.querySelector('[data-nav-item="accesories"]');
+      const sales = shell.querySelector('[data-nav-item="sales"]');
+
+      if (!accessories || !sales) return;
+
+      const shellRect = shell.getBoundingClientRect();
+      const accessoriesRect = accessories.getBoundingClientRect();
+      const salesRect = sales.getBoundingClientRect();
+
+      const midpoint =
+        accessoriesRect.right + (salesRect.left - accessoriesRect.right) / 2;
+
+      shell.style.setProperty("--neon-start-x", `${midpoint - shellRect.left}px`);
+    };
+
+    updateNeonStart();
+
+    const frameId = window.requestAnimationFrame(updateNeonStart);
+
+    window.addEventListener("resize", updateNeonStart);
+
+    const resizeObserver = new ResizeObserver(updateNeonStart);
+
+    if (desktopShellRef.current) {
+      resizeObserver.observe(desktopShellRef.current);
+    }
+
+    document.fonts?.ready?.then(updateNeonStart);
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+      window.removeEventListener("resize", updateNeonStart);
+      resizeObserver.disconnect();
+    };
+  }, []);
+
   // Shared renderer for both left and right navigation groups.
-  const renderNavLink = (item) => (
-    <a
-      key={item}
-      className={item === activeNavItem ? "active" : undefined}
-      href={`#${item.toLowerCase().replaceAll(" ", "-")}`}
-      onClick={() => setActiveNavItem(item)}
-    >
-      {item}
-    </a>
-  );
+  const renderNavLink = (item) => {
+    const navKey = item.toLowerCase().replaceAll(" ", "-");
+
+    return (
+      <a
+        key={item}
+        data-nav-item={navKey}
+        className={item === activeNavItem ? "active" : undefined}
+        href={`#${navKey}`}
+        onClick={() => setActiveNavItem(item)}
+      >
+        {item}
+      </a>
+    );
+  };
 
   return (
     <main className="page">
@@ -37,16 +87,20 @@ function App() {
 
       {/* Main desktop container. Width limits are controlled in App.css variables. */}
       <div className="desktopStage">
-        <div className="desktopShell">
+        <div className="desktopShell" ref={desktopShellRef}>
           <SiteHeader renderNavLink={renderNavLink} />
 
           {/* Hero section: left copy/sale area + right visual slot/neon geometry. */}
           <section className="heroSection" aria-label="New collection">
+            <NeonHeroFrame />
+
             <div className="heroCopy">
               <p className="eyebrow">New Collection</p>
+
               <h1 className="heroTitle">
                 <span>K</span>-Neuhen
               </h1>
+
               <p className="heroSubtitle">
                 Streetwear that speaks louder.
                 <br />
@@ -64,7 +118,6 @@ function App() {
             </div>
 
             <div className="heroVisual" aria-label="Featured hoodies">
-              <NeonHeroFrame />
               <div className="heroImageSlot">
                 {/* Put the final hoodie group image here later. Keep the slot sizing in CSS. */}
               </div>
@@ -94,8 +147,13 @@ function SiteHeader({ renderNavLink }) {
   return (
     <header className="siteHeader">
       <nav className="primaryNav" aria-label="Primary navigation">
-        <div className="navCluster navClusterLeft">{leftNavItems.map(renderNavLink)}</div>
-        <div className="navCluster navClusterRight">{rightNavItems.map(renderNavLink)}</div>
+        <div className="navCluster navClusterLeft">
+          {leftNavItems.map(renderNavLink)}
+        </div>
+
+        <div className="navCluster navClusterRight">
+          {rightNavItems.map(renderNavLink)}
+        </div>
       </nav>
 
       <div className="cornerPanel" aria-label="Shop actions">
@@ -122,6 +180,7 @@ function SiteHeader({ renderNavLink }) {
                 <feMergeNode in="SourceGraphic" />
               </feMerge>
             </filter>
+
             <linearGradient id="panelFade" x1="0%" x2="82%" y1="14%" y2="80%">
               <stop offset="0%" stopColor="#ffffff" stopOpacity="0.2" />
               <stop offset="50%" stopColor="#172329" stopOpacity="0.64" />
@@ -142,9 +201,11 @@ function SiteHeader({ renderNavLink }) {
           <button type="button" aria-label="Search">
             <Search aria-hidden="true" />
           </button>
+
           <button type="button" aria-label="Account">
             <UserRound aria-hidden="true" />
           </button>
+
           <button className="cartButton" type="button" aria-label="Cart, 1 item">
             <ShoppingCart aria-hidden="true" />
             <span className="cartBadge">1</span>
@@ -158,13 +219,19 @@ function SiteHeader({ renderNavLink }) {
 // Scalable green divider behind the future hoodie image.
 function NeonHeroFrame() {
   return (
-    <svg className="heroNeonLayer" viewBox="0 0 900 680" preserveAspectRatio="none" aria-hidden="true">
+    <svg
+      className="heroNeonLayer"
+      viewBox="0 0 900 680"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+    >
       <defs>
         <linearGradient id="hoodiePanelShade" x1="0%" x2="100%" y1="0%" y2="100%">
           <stop offset="0%" stopColor="#111614" stopOpacity="0.08" />
           <stop offset="46%" stopColor="#121817" stopOpacity="0.2" />
           <stop offset="100%" stopColor="#050606" stopOpacity="0.58" />
         </linearGradient>
+
         <filter id="limeDividerGlow" x="-8%" y="-8%" width="116%" height="116%">
           <feGaussianBlur stdDeviation="3.8" result="blur" />
           <feColorMatrix
@@ -198,15 +265,20 @@ function NeonHeroFrame() {
 // Red polygon sale badge under the CTA.
 function SaleBadge() {
   return (
-    <aside className="saleBadge" aria-label="Limited sale up to 40 percent off on selected hoodies">
+    <aside
+      className="saleBadge"
+      aria-label="Limited sale up to 40 percent off on selected hoodies"
+    >
       <div className="saleBadgeTop">
         <span />
         Limited Sale
         <span />
       </div>
+
       <div className="saleBadgeMain">
         Up To <strong>40%</strong> Off
       </div>
+
       <div className="saleBadgeBottom">
         <span />
         On Selected Hoodies
@@ -223,7 +295,9 @@ function ProductCard({ product }) {
       <div className={`productArt productArt-${product.type}`} aria-hidden="true">
         <span />
       </div>
+
       <div className="productStripes" aria-hidden="true" />
+
       <div className="productLabel">
         <h3>{product.name}</h3>
         <ArrowRight aria-hidden="true" />
