@@ -291,6 +291,8 @@ function ProductCard({ product }) {
         <img src={product.image} alt="" aria-hidden="true" loading="lazy" />
       </div>
 
+      <span className="productTextDivider" aria-hidden="true" />
+
       <div className="productLabel">
         <h3>{product.name}</h3>
         <div className="productMeta">

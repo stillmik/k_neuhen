@@ -682,10 +682,10 @@
 .productArt {
   position: absolute;
   left: 50%;
-  top: 5%;
+  top: 4%;
   z-index: 2;
-  width: 78%;
-  height: 70%;
+  width: 76%;
+  height: 62%;
   transform: translateX(-50%);
 }
 
@@ -695,6 +695,17 @@
   height: 100%;
   object-fit: contain;
   filter: drop-shadow(0 18px 16px rgba(0, 0, 0, 0.6));
+}
+
+.productTextDivider {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: clamp(52px, 4.5cqw, 70px);
+  z-index: 2;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.92;
 }
 
 /* Bottom metadata block: item name on top, type and price on the second row. */
