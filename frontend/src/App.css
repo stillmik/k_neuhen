@@ -372,88 +372,99 @@
   line-height: 1.55;
 }
 
-/* Angled neon CTA button. */
+/* Simple compressed category-card style CTA. */
 .shopButton {
+  --shop-button-shape: polygon(8% 0, 92% 0, 100% 22%, 100% 78%, 92% 100%, 8% 100%, 0 78%, 0 22%);
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: clamp(14px, 1.25cqw, 20px);
-  width: clamp(190px, 15.4cqw, 252px);
-  height: clamp(48px, 3.85cqw, 64px);
+  gap: clamp(12px, 1cqw, 16px);
+  width: clamp(178px, 14.4cqw, 232px);
+  height: clamp(42px, 3.25cqw, 54px);
   margin-top: clamp(30px, 3cqw, 54px);
-  clip-path: polygon(15px 0, calc(100% - 15px) 0, 100% 15px, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px), 0 15px);
-  color: #021019;
-  background:
-    linear-gradient(180deg, rgba(214, 248, 255, 0.72) 0 8%, transparent 9% 100%),
-    linear-gradient(180deg, #65dcff 0%, #19bfff 52%, #0099e8 100%);
+  color: #f4f4f4;
+  background: transparent;
   border: 0;
-  font-family: "Arial Black", "Bahnschrift", Impact, sans-serif;
-  font-size: clamp(14px, 1.08cqw, 18px);
+  font-family: "Bahnschrift", "Segoe UI Condensed", "Arial Narrow", system-ui, sans-serif;
+  font-size: clamp(13px, 0.95cqw, 16px);
   font-style: normal;
-  font-weight: 900;
-  letter-spacing: 0;
+  font-weight: 800;
+  letter-spacing: 0.08em;
   text-decoration: none;
   text-transform: uppercase;
-  text-shadow: 0 1px 0 rgba(190, 244, 255, 0.48);
-  box-shadow:
-    0 0 0 3px #03111a,
-    0 0 0 5px rgba(0, 185, 255, 0.5),
-    0 0 18px rgba(0, 190, 255, 0.48);
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
   transition:
-    background 140ms ease,
-    box-shadow 140ms ease,
-    filter 140ms ease,
-    transform 140ms ease;
+    color 150ms ease,
+    transform 150ms ease;
 }
 
 .shopButton::before {
-  position: absolute;
-  inset: 7px 8px;
-  clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px), 0 10px);
-  background: transparent;
-  box-shadow: inset 0 0 0 3px rgba(3, 13, 18, 0.96);
   content: "";
-  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  clip-path: var(--shop-button-shape);
+  background: var(--lime);
+  box-shadow: none;
+  transition:
+    background 150ms ease,
+    box-shadow 150ms ease;
+}
+
+/* Inner cutout keeps the full angled outline visible, including the corners. */
+.shopButton::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  z-index: 0;
+  clip-path: var(--shop-button-shape);
+  background: #12140f;
+  box-shadow: none;
+  transition:
+    background 150ms ease,
+    box-shadow 150ms ease;
 }
 
 .shopButton:hover {
-  background:
-    linear-gradient(180deg, rgba(230, 252, 255, 0.86) 0 10%, transparent 11% 100%),
-    linear-gradient(180deg, #8be8ff 0%, #2ed2ff 52%, #00a8f2 100%);
-  box-shadow:
-    0 0 0 3px #03111a,
-    0 0 0 5px rgba(33, 205, 255, 0.72),
-    0 0 24px rgba(0, 190, 255, 0.72);
-  filter: brightness(1.08);
+  color: var(--lime);
   transform: translateY(-1px);
 }
 
+.shopButton:hover::before {
+  box-shadow: none;
+}
+
+.shopButton:hover::after {
+  background: #17170f;
+  box-shadow: none;
+}
+
 .shopButton:active {
-  background:
-    linear-gradient(180deg, rgba(0, 96, 150, 0.28) 0 100%),
-    linear-gradient(180deg, #008fd5 0%, #11baf2 54%, #64ddff 100%);
-  box-shadow:
-    0 0 0 3px #03111a,
-    0 0 0 5px rgba(0, 139, 210, 0.64),
-    inset 0 3px 8px rgba(0, 0, 0, 0.34),
-    0 0 12px rgba(0, 190, 255, 0.44);
-  filter: brightness(0.96);
   transform: translateY(1px);
+}
+
+.shopButton:active::before {
+  box-shadow: none;
+}
+
+.shopButton:active::after {
+  background: #0d0f0b;
+  box-shadow: none;
 }
 
 .shopButton svg {
   position: relative;
-  z-index: 1;
-  width: 1.05em;
-  height: 1.05em;
+  z-index: 2;
+  width: 1.2em;
+  height: 1.2em;
   color: currentColor;
-  stroke-width: 3;
+  stroke-width: 2.2;
 }
 
 .shopButton span {
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 /* Red sale badge block. */
