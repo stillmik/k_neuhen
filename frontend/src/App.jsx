@@ -110,7 +110,7 @@ function App() {
               </p>
 
               <a className="shopButton" href="#new-drops">
-                Shop Now
+                <span>Shop Now</span>
                 <ArrowRight aria-hidden="true" />
               </a>
 
