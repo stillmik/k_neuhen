@@ -12,11 +12,11 @@ const rightNavItems = ["Sales", "Clothing", "About Us", "Contact"];
 
 // Product data controls card text, accent color class, and real product image.
 const products = [
-  { name: "Lavender Hoodie", price: "$69", accent: "red", image: lavenderHoodieImage },
-  { name: "Pink Drop", price: "$79", accent: "purple", image: pinkDropImage },
-  { name: "Black Street", price: "$59", accent: "cyan", image: blackStreetImage },
-  { name: "Cargo Fit", price: "$89", accent: "gold", image: cargoFitImage },
-  { name: "Neon Crew", price: "$49", accent: "green", image: neonCrewImage },
+  { name: "Lavender Hoodie", type: "hoodie", price: "$69", accent: "red", image: lavenderHoodieImage },
+  { name: "Pink Drop", type: "jacket", price: "$79", accent: "purple", image: pinkDropImage },
+  { name: "Black Street", type: "hoodie", price: "$59", accent: "cyan", image: blackStreetImage },
+  { name: "Cargo Fit", type: "hoodie", price: "$89", accent: "gold", image: cargoFitImage },
+  { name: "Neon Crew", type: "hoodie", price: "$49", accent: "green", image: neonCrewImage },
 ];
 
 function App() {
@@ -293,7 +293,10 @@ function ProductCard({ product }) {
 
       <div className="productLabel">
         <h3>{product.name}</h3>
-        <span className="productPrice">{product.price}</span>
+        <div className="productMeta">
+          <span className="productType">{product.type}</span>
+          <span className="productPrice">{product.price}</span>
+        </div>
       </div>
 
       <span className="productArrowButton" aria-hidden="true">

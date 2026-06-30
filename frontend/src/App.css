@@ -697,40 +697,59 @@
   filter: drop-shadow(0 18px 16px rgba(0, 0, 0, 0.6));
 }
 
-/* Bottom metadata row: name in white, price in the box accent color. */
+/* Bottom metadata block: item name on top, type and price on the second row. */
 .productLabel {
   position: absolute;
   left: clamp(12px, 1.1cqw, 18px);
-  right: clamp(54px, 4.4cqw, 72px);
+  right: auto;
   bottom: clamp(14px, 1.2cqw, 20px);
   z-index: 2;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: end;
-  gap: clamp(8px, 0.8cqw, 14px);
+  width: max-content;
+  max-width: calc(100% - clamp(82px, 6.6cqw, 108px));
+  align-items: start;
+  justify-content: flex-start;
+  gap: clamp(4px, 0.35cqw, 7px);
   color: #fff;
 }
 
 .productLabel h3 {
   margin: 0;
   font-family: "Bahnschrift", "Segoe UI Condensed", "Arial Narrow", system-ui, sans-serif;
-  font-size: clamp(14px, 1.15cqw, 20px);
+  font-size: clamp(12px, 0.98cqw, 17px);
   font-weight: 900;
   line-height: 1;
   text-transform: uppercase;
   text-shadow: 0 2px 7px rgba(0, 0, 0, 0.84);
 }
 
+.productMeta {
+  display: inline-flex;
+  width: max-content;
+  align-items: baseline;
+  gap: clamp(8px, 0.72cqw, 12px);
+}
+
+.productType {
+  color: rgba(214, 218, 218, 0.68);
+  font-family: "Segoe UI", system-ui, sans-serif;
+  font-size: clamp(10px, 0.78cqw, 13px);
+  font-weight: 400;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
 .productPrice {
   color: currentColor;
   font-family: "Bahnschrift", "Segoe UI Condensed", "Arial Narrow", system-ui, sans-serif;
-  font-size: clamp(15px, 1.2cqw, 22px);
+  font-size: clamp(13px, 1.02cqw, 18px);
   font-weight: 900;
   line-height: 0.95;
 }
 
 /* Decorative arrow button. It is intentionally not interactive. */
 .productArrowButton {
+  --product-arrow-shape: polygon(22% 0, 100% 0, 100% 78%, 86% 100%, 0 100%, 0 28%);
   position: absolute;
   right: clamp(10px, 0.9cqw, 14px);
   bottom: clamp(10px, 0.9cqw, 14px);
@@ -739,14 +758,35 @@
   width: clamp(36px, 3.4cqw, 54px);
   height: clamp(26px, 2.35cqw, 38px);
   place-items: center;
-  clip-path: polygon(22% 0, 100% 0, 100% 74%, 86% 100%, 0 100%, 0 30%);
   color: currentColor;
-  background: rgba(0, 0, 0, 0.42);
-  border: 1px solid currentColor;
+  background: transparent;
+  border: 0;
   pointer-events: none;
 }
 
+.productArrowButton::before,
+.productArrowButton::after {
+  content: "";
+  position: absolute;
+  clip-path: var(--product-arrow-shape);
+  pointer-events: none;
+}
+
+.productArrowButton::before {
+  inset: 0;
+  z-index: 0;
+  background: currentColor;
+}
+
+.productArrowButton::after {
+  inset: 1px;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.58);
+}
+
 .productArrowButton svg {
+  position: relative;
+  z-index: 2;
   width: clamp(18px, 1.5cqw, 26px);
   height: clamp(18px, 1.5cqw, 26px);
   stroke-width: 2.2;
