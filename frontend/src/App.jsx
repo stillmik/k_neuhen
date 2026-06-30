@@ -1,17 +1,22 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import { ArrowRight, Search, ShoppingCart, UserRound } from "lucide-react";
 import "./App.css";
+import pinkDropImage from "./assets/hoodies_temp/1644c644-35d9-4a5d-8e43-49947f557bae.png";
+import lavenderHoodieImage from "./assets/hoodies_temp/6260999c-5799-4b79-91a5-13bf40b3db8f.png";
+import blackStreetImage from "./assets/hoodies_temp/d846e74b-58f7-4386-8b1c-b4324ce45629.png";
+import neonCrewImage from "./assets/hoodies_temp/e6595b20-70e2-41da-bbf5-2d392796432f.png";
+import cargoFitImage from "./assets/hoodies_temp/92c184d8-93b2-4107-8514-275034de9e62.png";
 
 const leftNavItems = ["Home", "Jewelry", "Accesories"];
 const rightNavItems = ["Sales", "Clothing", "About Us", "Contact"];
 
-// Product data controls card text, accent color class, and temporary product shape.
+// Product data controls card text, accent color class, and real product image.
 const products = [
-  { name: "Lavender Hoodie", accent: "red", type: "hoodie" },
-  { name: "Pink Drop", accent: "purple", type: "jacket" },
-  { name: "Black Street", accent: "cyan", type: "tee" },
-  { name: "Cargo Fit", accent: "yellow", type: "cargo" },
-  { name: "Neon Crew", accent: "green", type: "crew" },
+  { name: "Lavender Hoodie", accent: "red", image: lavenderHoodieImage },
+  { name: "Pink Drop", accent: "purple", image: pinkDropImage },
+  { name: "Black Street", accent: "cyan", image: blackStreetImage },
+  { name: "Cargo Fit", accent: "yellow", image: cargoFitImage },
+  { name: "Neon Crew", accent: "green", image: neonCrewImage },
 ];
 
 function App() {
@@ -157,7 +162,7 @@ function SiteHeader({ renderNavLink }) {
       </nav>
 
       <div className="cornerPanel" aria-label="Shop actions">
-        {/* SVG frame gives the top-right panel its angled cyber shape and glow. */}
+        {/* SVG frame gives the top-right panel its angled cyber shape. */}
         <svg
           className="cornerPanelFrame"
           viewBox="0 0 270 92"
@@ -190,11 +195,7 @@ function SiteHeader({ renderNavLink }) {
 
           <path className="cornerPanelFill" d="M0 0 H270 V92 H151 L120 66 H30 L0 38 Z" />
           <path className="cornerPanelTint" d="M0 0 H270 V92 H151 L120 66 H30 L0 38 Z" />
-          <path
-            className="cornerPanelStroke"
-            filter="url(#cyanGlow)"
-            d="M0 0 V38 L30 66 H120 L151 92 H270"
-          />
+          <path className="cornerPanelStroke" d="M0 0 V38 L30 66 H120 L151 92 H270" />
         </svg>
 
         <div className="headerActions">
@@ -250,14 +251,8 @@ function NeonHeroFrame() {
       </defs>
 
       <path className="heroDividerShade" d="M0 0 V95 L178 218 V548 L400 650 H900 V0 Z" />
-      <path
-        className="heroDividerGlow"
-        d="M0 0 V95 L178 218 V548 L400 650 H900"
-        filter="url(#limeDividerGlow)"
-      />
+      <path className="heroDividerGlow" d="M0 0 V95 L178 218 V548 L400 650 H900" />
       <path className="heroDividerCore" d="M0 0 V95 L178 218 V548 L400 650 H900" />
-      <path className="heroDividerSpark heroDividerSparkTop" d="M0 0 V95 L178 218 V548 L400 650 H900" />
-      <path className="heroDividerSpark heroDividerSparkBottom" d="M0 0 V95 L178 218 V548 L400 650 H900" />
     </svg>
   );
 }
@@ -288,12 +283,12 @@ function SaleBadge() {
   );
 }
 
-// Product card shell. The current product art is placeholder CSS until real images exist.
+// Product card shell with real hoodie image.
 function ProductCard({ product }) {
   return (
     <article className={`productCard productCard-${product.accent}`}>
-      <div className={`productArt productArt-${product.type}`} aria-hidden="true">
-        <span />
+      <div className="productArt">
+        <img src={product.image} alt="" aria-hidden="true" loading="lazy" />
       </div>
 
       <div className="productStripes" aria-hidden="true" />
