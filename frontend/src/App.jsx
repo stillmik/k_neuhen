@@ -95,7 +95,7 @@ function App() {
         <div className="desktopShell" ref={desktopShellRef}>
           <SiteHeader renderNavLink={renderNavLink} />
 
-          {/* Hero section: left copy/sale area + right visual slot/neon geometry. */}
+          {/* Hero section: left copy area + right visual slot/neon geometry. */}
           <section className="heroSection" aria-label="New collection">
             <NeonHeroFrame />
 
@@ -118,8 +118,6 @@ function App() {
                 <span>Shop Now</span>
                 <ArrowRight aria-hidden="true" />
               </a>
-
-              <SaleBadge />
 
               {/* Desktop product row. CSS keeps five cards in one flexible row. */}
               <section id="new-drops" className="productDrops" aria-label="New drops">
@@ -254,32 +252,6 @@ function NeonHeroFrame() {
       <path className="heroDividerGlow" d="M0 0 V95 L178 218 V548 L400 650 H900" />
       <path className="heroDividerCore" d="M0 0 V95 L178 218 V548 L400 650 H900" />
     </svg>
-  );
-}
-
-// Red polygon sale badge under the CTA.
-function SaleBadge() {
-  return (
-    <aside
-      className="saleBadge"
-      aria-label="Limited sale up to 40 percent off on selected hoodies"
-    >
-      <div className="saleBadgeTop">
-        <span />
-        Limited Sale
-        <span />
-      </div>
-
-      <div className="saleBadgeMain">
-        Up To <strong>40%</strong> Off
-      </div>
-
-      <div className="saleBadgeBottom">
-        <span />
-        On Selected Hoodies
-        <span />
-      </div>
-    </aside>
   );
 }
 

@@ -411,69 +411,6 @@
   z-index: 1;
 }
 
-/* Red sale badge block. */
-.saleBadge {
-  position: relative;
-  width: min(100%, clamp(430px, 38cqw, 660px));
-  margin-top: clamp(44px, 4cqw, 72px);
-  padding: clamp(24px, 2cqw, 34px) clamp(34px, 3cqw, 54px);
-  clip-path: polygon(9% 0, 91% 0, 100% 28%, 100% 72%, 91% 100%, 9% 100%, 0 72%, 0 28%);
-  border: 2px solid var(--red);
-  background:
-    radial-gradient(circle at 70% 18%, rgba(255, 84, 74, 0.12), transparent 26%),
-    linear-gradient(180deg, rgba(22, 24, 24, 0.92), rgba(7, 8, 8, 0.82));
-  box-shadow:
-    0 0 18px rgba(255, 53, 48, 0.25),
-    inset 0 0 32px rgba(255, 53, 48, 0.08);
-  text-align: center;
-}
-
-/* Thin text rows above and below the sale number. */
-.saleBadgeTop,
-.saleBadgeBottom {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(16px, 1.6cqw, 28px);
-  color: #f94b42;
-  font-size: clamp(13px, 1cqw, 18px);
-  font-weight: 700;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-}
-
-.saleBadgeTop span,
-.saleBadgeBottom span {
-  width: clamp(48px, 4cqw, 76px);
-  height: 1px;
-  background: currentColor;
-}
-
-/* Main "UP TO 40% OFF" text. */
-.saleBadgeMain {
-  margin: clamp(12px, 1.2cqw, 20px) 0 clamp(6px, 0.8cqw, 12px);
-  color: #f1f1f1;
-  font-size: clamp(34px, 3.6cqw, 66px);
-  font-family: Impact, "Arial Black", sans-serif;
-  font-weight: 900;
-  line-height: 1;
-  text-transform: uppercase;
-  text-shadow:
-    0 3px 0 rgba(255, 255, 255, 0.06),
-    0 9px 14px rgba(0, 0, 0, 0.9);
-}
-
-.saleBadgeMain strong {
-  color: var(--red);
-  font-size: 1.42em;
-  font-weight: 900;
-}
-
-.saleBadgeBottom {
-  color: #bdbdbd;
-  font-size: clamp(12px, 0.9cqw, 16px);
-}
-
 /* Right hero side: neon layer and future hoodie image slot live here. */
 .heroVisual {
   position: relative;
@@ -553,7 +490,7 @@
 .productDrops {
   position: relative;
   z-index: 3;
-  margin-top: 48px;
+  margin-top: clamp(118px, 10cqw, 180px);
   padding-inline: 0;
 }
 
