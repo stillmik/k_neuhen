@@ -145,7 +145,7 @@ function App() {
   );
 }
 
-// Top navigation and the angled blue action panel from the reference design.
+// Top navigation and the simple action icons on the right.
 function SiteHeader({ renderNavLink }) {
   return (
     <header className="siteHeader">
@@ -160,42 +160,6 @@ function SiteHeader({ renderNavLink }) {
       </nav>
 
       <div className="cornerPanel" aria-label="Shop actions">
-        {/* SVG frame gives the top-right panel its angled cyber shape. */}
-        <svg
-          className="cornerPanelFrame"
-          viewBox="0 0 270 92"
-          preserveAspectRatio="none"
-          aria-hidden="true"
-        >
-          <defs>
-            <filter id="cyanGlow" x="-20%" y="-45%" width="140%" height="190%">
-              <feGaussianBlur stdDeviation="3.2" result="blur" />
-              <feColorMatrix
-                in="blur"
-                type="matrix"
-                values="0 0 0 0 0
-                        0 0 0 0 0.62
-                        0 0 0 0 1
-                        0 0 0 0.95 0"
-              />
-              <feMerge>
-                <feMergeNode />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-
-            <linearGradient id="panelFade" x1="0%" x2="82%" y1="14%" y2="80%">
-              <stop offset="0%" stopColor="#ffffff" stopOpacity="0.2" />
-              <stop offset="50%" stopColor="#172329" stopOpacity="0.64" />
-              <stop offset="100%" stopColor="#05090b" stopOpacity="0.9" />
-            </linearGradient>
-          </defs>
-
-          <path className="cornerPanelFill" d="M0 0 H270 V92 H151 L120 66 H30 L0 38 Z" />
-          <path className="cornerPanelTint" d="M0 0 H270 V92 H151 L120 66 H30 L0 38 Z" />
-          <path className="cornerPanelStroke" d="M0 0 V38 L30 66 H120 L151 92 H270" />
-        </svg>
-
         <div className="headerActions">
           <button type="button" aria-label="Search">
             <Search aria-hidden="true" />
