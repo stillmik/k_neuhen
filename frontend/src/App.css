@@ -26,8 +26,8 @@
 
 
   /* Shared color tokens for neon accents and text. */
-  --lime: #00ff62;
-  --lime-hot: #62ff9c;
+  --lime: #3cff2f;
+  --lime-hot: #7eff66;
   --cyan: #00b7ff;
   --red: #ff3530;
   --purple: #b54cff;
@@ -45,11 +45,7 @@
   overflow-x: clip;
   overflow-y: auto;
   color: var(--text);
-  background:
-    radial-gradient(circle at 88% 0%, rgba(255, 255, 255, 0.11), transparent 17rem),
-    radial-gradient(circle at 42% 18%, rgba(255, 255, 255, 0.05), transparent 24rem),
-    radial-gradient(circle at 55% 58%, rgba(0, 255, 98, 0.04), transparent 34rem),
-    linear-gradient(120deg, #090a0a 0%, #111313 42%, #060707 100%);
+  background: #202221;
   font-family: "Bahnschrift", "Agency FB", "Segoe UI Condensed", "Arial Narrow", system-ui, sans-serif;
 }
 
