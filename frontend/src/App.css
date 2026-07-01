@@ -26,8 +26,8 @@
 
 
   /* Shared color tokens for neon accents and text. */
-  --lime: #88ff00;
-  --lime-hot: #b6ff12;
+  --lime: #00ff62;
+  --lime-hot: #62ff9c;
   --cyan: #00b7ff;
   --red: #ff3530;
   --purple: #b54cff;
@@ -127,12 +127,9 @@
   line-height: 1;
   text-decoration: none;
   text-transform: uppercase;
-  text-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.08),
-    0 8px 14px rgba(0, 0, 0, 0.78);
+  text-shadow: none;
   transition:
     color 160ms ease,
-    text-shadow 160ms ease,
     transform 160ms ease;
 }
 
@@ -147,18 +144,14 @@
   content: "";
   opacity: 0;
   background: var(--lime);
-  box-shadow:
-    0 0 8px rgba(136, 255, 0, 0.9),
-    0 0 22px rgba(136, 255, 0, 0.58);
+  box-shadow: none;
 }
 
 /* Hover changes text color; active keeps the underline. */
 .primaryNav a:hover,
 .primaryNav a.active {
   color: var(--lime);
-  text-shadow:
-    0 0 9px rgba(136, 255, 0, 0.42),
-    0 6px 13px rgba(0, 0, 0, 0.84);
+  text-shadow: none;
 }
 
 .primaryNav a:hover {
@@ -315,7 +308,7 @@
   font-weight: 500;
   line-height: 1;
   text-transform: uppercase;
-  text-shadow: 0 0 14px rgba(136, 255, 0, 0.32);
+  text-shadow: none;
 }
 
 /* Main reflective brand title. */
@@ -341,23 +334,21 @@
   letter-spacing: -0.035em;
   line-height: 0.92;
   -webkit-text-stroke: 0.3px rgba(255, 255, 255, 0.12);
-  text-shadow:
-    0 0 7px rgba(255, 255, 255, 0.12);
+  text-shadow: none;
 }
 
 .heroTitle span {
   background:
     linear-gradient(
       180deg,
-      #b8ff33 0%,
+      #72ffa4 0%,
       var(--lime) 42%,
-      #65df00 100%
+      #00cc4f 100%
     );
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-stroke: 0.3px rgba(118, 255, 148, 0.12);
-  text-shadow:
-    0 0 9px rgba(0, 255, 82, 0.16);
+  text-shadow: none;
 }
 
 /* Hero supporting copy under the title. */
@@ -572,6 +563,9 @@
 
 /* Product section heading. */
 .productDrops h2 {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(8px, 0.8cqw, 14px);
   margin: 0 0 clamp(18px, 1.7cqw, 30px);
   color: #f1f1f1;
   font-size: clamp(22px, 1.9cqw, 34px);
