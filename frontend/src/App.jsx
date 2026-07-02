@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { ArrowRight, Search, ShoppingCart, UserRound } from "lucide-react";
 import "./App.css";
 import pinkDropImage from "./assets/hoodies_temp/1644c644-35d9-4a5d-8e43-49947f557bae.png";
@@ -7,8 +7,7 @@ import blackStreetImage from "./assets/hoodies_temp/d846e74b-58f7-4386-8b1c-b432
 import neonCrewImage from "./assets/hoodies_temp/e6595b20-70e2-41da-bbf5-2d392796432f.png";
 import cargoFitImage from "./assets/hoodies_temp/92c184d8-93b2-4107-8514-275034de9e62.png";
 
-const leftNavItems = ["Home", "Jewelry", "Accesories"];
-const rightNavItems = ["Sales", "Clothing", "About Us", "Contact"];
+const navItems = ["Home", "Jewelry", "Accesories", "Sales", "Clothing", "About Us", "Contact"];
 
 // Product data controls card text, accent color class, and real product image.
 const products = [
@@ -23,52 +22,7 @@ function App() {
   // Stores the clicked navigation item so the green underline stays on it.
   const [activeNavItem, setActiveNavItem] = useState("Home");
 
-  // Used to calculate where the green hoodie border should start.
-  // The start point is always the midpoint between ACCESORIES and SALES.
-  const desktopShellRef = useRef(null);
-
-  useLayoutEffect(() => {
-    const updateNeonStart = () => {
-      const shell = desktopShellRef.current;
-      if (!shell) return;
-
-      const accessories = shell.querySelector('[data-nav-item="accesories"]');
-      const sales = shell.querySelector('[data-nav-item="sales"]');
-
-      if (!accessories || !sales) return;
-
-      const shellRect = shell.getBoundingClientRect();
-      const accessoriesRect = accessories.getBoundingClientRect();
-      const salesRect = sales.getBoundingClientRect();
-
-      const midpoint =
-        accessoriesRect.right + (salesRect.left - accessoriesRect.right) / 2;
-
-      shell.style.setProperty("--neon-start-x", `${midpoint - shellRect.left}px`);
-    };
-
-    updateNeonStart();
-
-    const frameId = window.requestAnimationFrame(updateNeonStart);
-
-    window.addEventListener("resize", updateNeonStart);
-
-    const resizeObserver = new ResizeObserver(updateNeonStart);
-
-    if (desktopShellRef.current) {
-      resizeObserver.observe(desktopShellRef.current);
-    }
-
-    document.fonts?.ready?.then(updateNeonStart);
-
-    return () => {
-      window.cancelAnimationFrame(frameId);
-      window.removeEventListener("resize", updateNeonStart);
-      resizeObserver.disconnect();
-    };
-  }, []);
-
-  // Shared renderer for both left and right navigation groups.
+  // Shared renderer for the header navigation links.
   const renderNavLink = (item) => {
     const navKey = item.toLowerCase().replaceAll(" ", "-");
 
@@ -92,13 +46,11 @@ function App() {
 
       {/* Main desktop container. Width limits are controlled in App.css variables. */}
       <div className="desktopStage">
-        <div className="desktopShell" ref={desktopShellRef}>
+        <div className="desktopShell">
           <SiteHeader renderNavLink={renderNavLink} />
 
-          {/* Hero section: left copy area + right visual slot/neon geometry. */}
+          {/* Hero section: single-zone background with left-aligned copy. */}
           <section className="heroSection" aria-label="New collection">
-            <NeonHeroFrame />
-
             <div className="heroCopy">
               <p className="eyebrow">New Collection</p>
 
@@ -132,12 +84,6 @@ function App() {
                 </div>
               </section>
             </div>
-
-            <div className="heroVisual" aria-label="Featured hoodies">
-              <div className="heroImageSlot">
-                {/* Put the final hoodie group image here later. Keep the slot sizing in CSS. */}
-              </div>
-            </div>
           </section>
         </div>
       </div>
@@ -151,11 +97,7 @@ function SiteHeader({ renderNavLink }) {
     <header className="siteHeader">
       <nav className="primaryNav" aria-label="Primary navigation">
         <div className="navCluster navClusterLeft">
-          {leftNavItems.map(renderNavLink)}
-        </div>
-
-        <div className="navCluster navClusterRight">
-          {rightNavItems.map(renderNavLink)}
+          {navItems.map(renderNavLink)}
         </div>
       </nav>
 
@@ -176,46 +118,6 @@ function SiteHeader({ renderNavLink }) {
         </div>
       </div>
     </header>
-  );
-}
-
-// Scalable green divider behind the future hoodie image.
-function NeonHeroFrame() {
-  return (
-    <svg
-      className="heroNeonLayer"
-      viewBox="0 0 900 680"
-      preserveAspectRatio="none"
-      aria-hidden="true"
-    >
-      <defs>
-        <linearGradient id="hoodiePanelShade" x1="0%" x2="100%" y1="0%" y2="100%">
-          <stop offset="0%" stopColor="#111614" stopOpacity="0.08" />
-          <stop offset="46%" stopColor="#121817" stopOpacity="0.2" />
-          <stop offset="100%" stopColor="#050606" stopOpacity="0.58" />
-        </linearGradient>
-
-        <filter id="limeDividerGlow" x="-8%" y="-8%" width="116%" height="116%">
-          <feGaussianBlur stdDeviation="3.8" result="blur" />
-          <feColorMatrix
-            in="blur"
-            type="matrix"
-            values="0 0 0 0 0
-                    0 0 0 0 1
-                    0 0 0 0 0.36
-                    0 0 0 0.92 0"
-          />
-          <feMerge>
-            <feMergeNode />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
-      </defs>
-
-      <path className="heroDividerShade" d="M0 0 V95 L178 218 V548 L400 650 H900 V0 Z" />
-      <path className="heroDividerGlow" d="M0 0 V95 L178 218 V548 L400 650 H900" />
-      <path className="heroDividerCore" d="M0 0 V95 L178 218 V548 L400 650 H900" />
-    </svg>
   );
 }
 
