@@ -34,7 +34,7 @@ body {
 
 .desktopStage {
   container-type: inline-size;
-  width: clamp(var(--stage-min), 100vw, var(--stage-max));
+  width: min(100%, var(--stage-max));
   min-width: var(--stage-min);
   max-width: var(--stage-max);
   margin-inline: auto;
