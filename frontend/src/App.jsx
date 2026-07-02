@@ -7,7 +7,7 @@ import blackStreetImage from "./assets/hoodies_temp/d846e74b-58f7-4386-8b1c-b432
 import neonCrewImage from "./assets/hoodies_temp/e6595b20-70e2-41da-bbf5-2d392796432f.png";
 import cargoFitImage from "./assets/hoodies_temp/92c184d8-93b2-4107-8514-275034de9e62.png";
 
-const navItems = ["Home", "Jewelry", "Accesories", "Sales", "Clothing", "About Us", "Contact"];
+const navItems = ["Home", "Clothing", "Jewelry", "Accesories", "About Us", "Contact"];
 
 // Product data controls card text, accent color class, and real product image.
 const products = [
