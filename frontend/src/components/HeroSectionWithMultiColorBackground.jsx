@@ -7,7 +7,6 @@ export function HeroSectionWithMultiColorBackground() {
       <Navbar />
       <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-32">
         <div className="relative mt-20 flex flex-col items-center justify-center">
-          <FeaturedImages />
           <h1 className="relative mx-auto mt-4 max-w-6xl text-center text-3xl font-bold tracking-tight text-zinc-700 md:text-4xl lg:text-7xl dark:text-white">
             Your best in class{" "}
             <span className="relative z-10 bg-gradient-to-b from-indigo-700 to-indigo-600 bg-clip-text text-transparent">
@@ -85,7 +84,8 @@ export function HeroSectionWithMultiColorBackground() {
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [mobileResourcesOpen, setMobileResourcesOpen] = useState(false);
+  const [mobileContactOpen, setMobileContactOpen] = useState(false);
+  const navItems = ["Home", "Jewelry", "Accessories", "Clothing", "Sales", "About Us"];
 
   const resourcesLeftColumn = [
     {
@@ -136,21 +136,24 @@ const Navbar = () => {
           <LogoIcon className="relative z-20 size-4 text-emerald-500" />
 
           <span className="text-base font-semibold text-black sm:text-lg dark:text-white">
-            Leadgen
+            K-Neuhen
           </span>
         </a>
 
         <div className="hidden items-center gap-6 lg:flex lg:gap-8">
-          <a
-            href="#"
-            className="text-sm font-medium text-neutral-600 transition-colors hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
-          >
-            Product
-          </a>
+          {navItems.map((item) => (
+            <a
+              key={item}
+              href={`#${item.toLowerCase().replaceAll(" ", "-")}`}
+              className="text-sm font-medium text-neutral-600 transition-colors hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
+            >
+              {item}
+            </a>
+          ))}
 
           <div className="group/hero-navbar relative">
             <button className="flex items-center gap-1 text-sm font-medium text-neutral-600 transition-colors hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white">
-              Resources
+              Contact
               <ChevronDownIcon className="size-4 transition-transform duration-200 group-hover/hero-navbar:rotate-180" />
             </button>
 
@@ -223,12 +226,6 @@ const Navbar = () => {
             </div>
           </div>
 
-          <a
-            href="#"
-            className="text-sm font-medium text-neutral-600 transition-colors hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
-          >
-            Contact
-          </a>
         </div>
 
         <div className="hidden items-center gap-3 lg:flex lg:gap-4">
@@ -261,24 +258,27 @@ const Navbar = () => {
       {mobileMenuOpen && (
         <div className="border-t border-neutral-200 bg-white px-4 py-4 lg:hidden dark:border-neutral-800 dark:bg-neutral-900">
           <div className="flex flex-col gap-1">
-            <a
-              href="#"
-              className="rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white"
-            >
-              Product
-            </a>
+            {navItems.map((item) => (
+              <a
+                key={item}
+                href={`#${item.toLowerCase().replaceAll(" ", "-")}`}
+                className="rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white"
+              >
+                {item}
+              </a>
+            ))}
 
             <div>
               <button
-                onClick={() => setMobileResourcesOpen(!mobileResourcesOpen)}
+                onClick={() => setMobileContactOpen(!mobileContactOpen)}
                 className="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white"
               >
-                Resources
+                Contact
                 <ChevronDownIcon
-                  className={`size-4 transition-transform ${mobileResourcesOpen ? "rotate-180" : ""}`}
+                  className={`size-4 transition-transform ${mobileContactOpen ? "rotate-180" : ""}`}
                 />
               </button>
-              {mobileResourcesOpen && (
+              {mobileContactOpen && (
                 <div className="mt-1 ml-3 flex flex-col gap-0.5 border-l border-neutral-200 pl-3 dark:border-neutral-700">
                   {[...resourcesLeftColumn, ...resourcesRightColumn].map((item) => (
                     <a
@@ -301,13 +301,6 @@ const Navbar = () => {
               )}
             </div>
 
-            <a
-              href="#"
-              className="rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white"
-            >
-              Contact
-            </a>
-
             <div className="my-3 h-px bg-neutral-200 dark:bg-neutral-800" />
             <a
               href="#"
@@ -325,61 +318,6 @@ const Navbar = () => {
         </div>
       )}
     </nav>
-  );
-};
-
-const FeaturedImages = () => {
-  const images = [
-    {
-      name: "John Doe",
-      src: "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3387&q=80",
-    },
-    {
-      name: "Robert Johnson",
-      src: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
-    },
-    {
-      name: "Jane Smith",
-      src: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YXZhdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
-    },
-    {
-      name: "Emily Davis",
-      src: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
-    },
-    {
-      name: "Tyler Durden",
-      src: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3540&q=80",
-    },
-    {
-      name: "Dora",
-      src: "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3534&q=80",
-    },
-  ];
-
-  return (
-    <div className="flex flex-col items-center">
-      <div className="mb-2 flex flex-col items-center justify-center sm:flex-row">
-        <div className="mb-4 flex flex-row items-center sm:mb-0">
-          {images.map((image) => (
-            <div className="group relative -mr-4" key={image.name}>
-              <motion.div
-                whileHover={{ scale: 1.05, zIndex: 30 }}
-                transition={{ duration: 0.2 }}
-                className="relative overflow-hidden rounded-full border-2 border-neutral-200"
-              >
-                <img
-                  height={100}
-                  width={100}
-                  src={image.src}
-                  alt={image.name}
-                  className="h-8 w-8 object-cover object-top md:h-14 md:w-14"
-                />
-              </motion.div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
   );
 };
 
