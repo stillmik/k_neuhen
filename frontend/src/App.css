@@ -45,17 +45,66 @@
   font-family: "Bahnschrift", "Agency FB", "Segoe UI Condensed", "Arial Narrow", system-ui, sans-serif;
 }
 
-/* Subtle texture overlay that stretches over the entire viewport. */
+/* Animated dotted glow background inspired by the referenced component. */
 .backgroundTexture {
   position: fixed;
   inset: 0;
+  z-index: 0;
   pointer-events: none;
+  overflow: hidden;
+  background: rgba(0, 0, 0, var(--dotted-bg-opacity));
+}
+
+.dottedGlowBackground {
+  isolation: isolate;
+}
+
+.dottedGlowBase,
+.dottedGlowGrid,
+.dottedGlowSpot {
+  position: absolute;
+  inset: 0;
+}
+
+.dottedGlowBase {
+  z-index: 0;
   background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(0deg, rgba(255, 255, 255, 0.026) 1px, transparent 1px);
-  background-size: 3px 3px;
-  mix-blend-mode: overlay;
-  opacity: 0.45;
+    radial-gradient(circle at 50% 42%, rgba(10, 12, 16, 0.08), transparent 38%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.16), transparent 30%, rgba(0, 0, 0, 0.2));
+}
+
+.dottedGlowGrid {
+  z-index: 2;
+  background-image: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--dotted-color), transparent 18%) 0 var(--dotted-radius),
+    transparent calc(var(--dotted-radius) + 0.2px)
+  );
+  background-size: var(--dotted-gap) var(--dotted-gap);
+  opacity: calc(var(--dotted-opacity) * 0.58);
+  -webkit-mask-image: radial-gradient(circle at center, #000 0 66%, transparent 94%);
+  mask-image: radial-gradient(circle at center, #000 0 66%, transparent 94%);
+}
+
+.dottedGlowSpot {
+  z-index: 1;
+  filter: blur(18px);
+  mix-blend-mode: screen;
+  opacity: 0.72;
+  -webkit-mask-image: radial-gradient(circle at center, #000 0 54%, transparent 90%);
+  mask-image: radial-gradient(circle at center, #000 0 54%, transparent 90%);
+}
+
+.dottedGlowSpotOne {
+  background: radial-gradient(circle at 30% 22%, color-mix(in srgb, var(--dotted-glow-color), transparent 28%), transparent 33%);
+}
+
+.dottedGlowSpotTwo {
+  background: radial-gradient(circle at 76% 34%, color-mix(in srgb, var(--dotted-glow-color), transparent 36%), transparent 30%);
+}
+
+.dottedGlowSpotThree {
+  background: radial-gradient(circle at 48% 70%, color-mix(in srgb, var(--dotted-glow-color), transparent 48%), transparent 38%);
 }
 
 /* Main desktop container. Left and right outside gaps are controlled by --container-pad. */
