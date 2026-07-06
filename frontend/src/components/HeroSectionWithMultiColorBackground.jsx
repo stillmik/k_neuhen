@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 import { motion } from "motion/react";
 import { cn } from "../lib/utils";
 import pinkDropImage from "../assets/hoodies_temp/1644c644-35d9-4a5d-8e43-49947f557bae.png";
@@ -129,13 +129,16 @@ function TeamSectionWithLightBackground() {
             key={member.title + "first-team-section"}
             className="group/team overflow-hidden rounded-3xl bg-gray-100 p-1 dark:bg-neutral-900"
           >
-            <img
-              src={member.src}
-              alt={member.title}
-              height={1020}
-              width={1024}
-              className="aspect-square rounded-2xl bg-neutral-950 object-contain p-5 shadow-sm ring-1 shadow-black/20 ring-black/20 duration-200 will-change-transform group-hover/team:scale-105"
-            />
+            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-b from-neutral-100 to-white shadow-sm ring-1 shadow-black/20 dark:from-neutral-900 dark:to-neutral-950 dark:ring-black/20">
+              <Grid size={20} />
+              <img
+                src={member.src}
+                alt={member.title}
+                height={1020}
+                width={1024}
+                className="relative z-20 aspect-square object-contain p-5 duration-200 will-change-transform group-hover/team:scale-105"
+              />
+            </div>
             <div className="p-2 md:p-4">
               <p className="mt-2 text-base font-semibold tracking-tight text-balance text-neutral-900 dark:text-white">
                 {member.title}
@@ -152,6 +155,69 @@ function TeamSectionWithLightBackground() {
         ))}
       </div>
     </section>
+  );
+}
+
+function Grid({ pattern, size }) {
+  const p =
+    pattern ??
+    [
+      [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
+      [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
+      [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
+      [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
+      [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
+    ];
+
+  return (
+    <div className="pointer-events-none absolute inset-0 [mask-image:linear-gradient(white,transparent)]">
+      <div className="absolute inset-0 opacity-100 [mask-image:radial-gradient(farthest-side_at_top,white,transparent)]">
+        <GridPattern
+          width={size ?? 20}
+          height={size ?? 20}
+          x="-12"
+          y="4"
+          squares={p}
+          className="absolute inset-0 h-full w-full fill-black/10 stroke-black/10 mix-blend-overlay dark:fill-white/10 dark:stroke-white/10"
+        />
+      </div>
+    </div>
+  );
+}
+
+function GridPattern({ width, height, x, y, squares, ...props }) {
+  const patternId = useId();
+
+  return (
+    <svg aria-hidden="true" {...props}>
+      <defs>
+        <pattern
+          id={patternId}
+          width={width}
+          height={height}
+          patternUnits="userSpaceOnUse"
+          x={x}
+          y={y}
+        >
+          <path d={`M.5 ${height}V.5H${width}`} fill="none" />
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" strokeWidth={0} fill={`url(#${patternId})`} />
+      {squares && (
+        <svg x={x} y={y} className="overflow-visible">
+          {squares.map(([squareX, squareY], index) => (
+            <rect
+              strokeWidth="0"
+              key={`${squareX}-${squareY}-${index}`}
+              width={width + 1}
+              height={height + 1}
+              x={squareX * width}
+              y={squareY * height}
+            />
+          ))}
+        </svg>
+      )}
+    </svg>
   );
 }
 
