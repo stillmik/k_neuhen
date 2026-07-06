@@ -395,7 +395,7 @@ const Navbar = () => {
 
         <div className="hidden items-center gap-3 lg:flex lg:gap-4">
           <a
-            href="#"
+            href="#login"
             className="text-sm font-medium text-neutral-600 transition-colors hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
           >
             Login
@@ -404,7 +404,7 @@ const Navbar = () => {
             href="#"
             className="rounded-full bg-neutral-900 px-4 py-2 text-sm font-medium text-white shadow-sm transition-all hover:bg-neutral-800 active:scale-98 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200"
           >
-            Try for free
+            Registration
           </a>
         </div>
 
@@ -468,7 +468,7 @@ const Navbar = () => {
 
             <div className="my-3 h-px bg-neutral-200 dark:bg-neutral-800" />
             <a
-              href="#"
+              href="#login"
               className="rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white"
             >
               Login
@@ -477,7 +477,7 @@ const Navbar = () => {
               href="#"
               className="mt-2 rounded-full bg-neutral-900 px-4 py-2.5 text-center text-sm font-medium text-white shadow-sm transition-all hover:bg-neutral-800 active:scale-98 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200"
             >
-              Try for free
+              Registration
             </a>
           </div>
         </div>
