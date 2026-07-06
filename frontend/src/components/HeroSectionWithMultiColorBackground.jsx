@@ -1,25 +1,55 @@
 import { useState } from "react";
+import { motion } from "motion/react";
 
 export function HeroSectionWithMultiColorBackground() {
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-white dark:bg-neutral-950">
       <Navbar />
       <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-32">
-        <h1 className="max-w-3xl text-4xl font-medium tracking-tight text-neutral-700 md:text-7xl dark:text-neutral-300">
-          Get warm leads for your business in minutes.
-        </h1>
-        <p className="mt-4 max-w-2xl text-base text-neutral-700 md:text-xl dark:text-neutral-300">
-          Our AI-powered platform identifies and qualifies potential customers,
-          so you can focus on closing deals instead of chasing cold leads.
-        </p>
-        <div className="mt-8 flex items-center gap-4">
-          <button className="rounded-full bg-neutral-900 px-6 py-3 text-sm font-medium text-white shadow-sm transition-all hover:bg-neutral-800 active:scale-98 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-100">
-            <span className="flex items-center gap-2">
-              Get Started <Arrow className="size-4" />
+        <div className="relative mt-20 flex flex-col items-center justify-center">
+          <FeaturedImages />
+          <h1 className="relative mx-auto mt-4 max-w-6xl text-center text-3xl font-bold tracking-tight text-zinc-700 md:text-4xl lg:text-7xl dark:text-white">
+            Your best in class{" "}
+            <span className="relative z-10 bg-gradient-to-b from-indigo-700 to-indigo-600 bg-clip-text text-transparent">
+              design and development studio
+            </span>{" "}
+            <span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="inline-block h-14 w-14 stroke-indigo-500 stroke-[1px]"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                strokeWidth="2"
+                stroke="currentColor"
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <motion.path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <motion.path
+                  initial={{ pathLength: 0, fill: "#a5b4fc", opacity: 0 }}
+                  animate={{ pathLength: 1, fill: "#a5b4fc", opacity: 1 }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                    ease: "linear",
+                    repeatDelay: 0.5,
+                  }}
+                  d="M13 3l0 7l6 0l-8 11l0 -7l-6 0l8 -11"
+                />
+              </svg>
             </span>
-          </button>
-          <button className="rounded-full bg-white px-6 py-3 text-sm font-medium text-neutral-900 shadow-sm ring-1 ring-neutral-200 transition-all hover:bg-neutral-50 active:scale-98 dark:bg-neutral-800 dark:text-white dark:ring-neutral-700 dark:hover:bg-neutral-700">
-            Learn More
+          </h1>
+          <h2 className="relative mx-auto mt-8 mb-8 max-w-xl text-center text-base font-normal tracking-wide text-zinc-500 antialiased md:text-xl dark:text-zinc-200">
+            We provide the best in class design and development services for
+            teams that ship with the speed of light.
+          </h2>
+        </div>
+        <div className="group relative z-10 mb-10 flex justify-center">
+          <button className="rounded-lg bg-black px-8 py-2 font-medium text-white shadow-[0px_-2px_0px_0px_rgba(255,255,255,0.4)_inset] dark:bg-white dark:text-black">
+            Book a call
           </button>
         </div>
         <div className="mt-16 md:mt-24">
@@ -295,6 +325,61 @@ const Navbar = () => {
         </div>
       )}
     </nav>
+  );
+};
+
+const FeaturedImages = () => {
+  const images = [
+    {
+      name: "John Doe",
+      src: "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3387&q=80",
+    },
+    {
+      name: "Robert Johnson",
+      src: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+    },
+    {
+      name: "Jane Smith",
+      src: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YXZhdGFyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60",
+    },
+    {
+      name: "Emily Davis",
+      src: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60",
+    },
+    {
+      name: "Tyler Durden",
+      src: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3540&q=80",
+    },
+    {
+      name: "Dora",
+      src: "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3534&q=80",
+    },
+  ];
+
+  return (
+    <div className="flex flex-col items-center">
+      <div className="mb-2 flex flex-col items-center justify-center sm:flex-row">
+        <div className="mb-4 flex flex-row items-center sm:mb-0">
+          {images.map((image) => (
+            <div className="group relative -mr-4" key={image.name}>
+              <motion.div
+                whileHover={{ scale: 1.05, zIndex: 30 }}
+                transition={{ duration: 0.2 }}
+                className="relative overflow-hidden rounded-full border-2 border-neutral-200"
+              >
+                <img
+                  height={100}
+                  width={100}
+                  src={image.src}
+                  alt={image.name}
+                  className="h-8 w-8 object-cover object-top md:h-14 md:w-14"
+                />
+              </motion.div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 };
 
