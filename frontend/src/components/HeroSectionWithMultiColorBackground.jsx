@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { motion } from "motion/react";
 import { cn } from "../lib/utils";
+import pinkDropImage from "../assets/hoodies_temp/1644c644-35d9-4a5d-8e43-49947f557bae.png";
+import lavenderHoodieImage from "../assets/hoodies_temp/6260999c-5799-4b79-91a5-13bf40b3db8f.png";
+import cargoFitImage from "../assets/hoodies_temp/92c184d8-93b2-4107-8514-275034de9e62.png";
+import blackStreetImage from "../assets/hoodies_temp/d846e74b-58f7-4386-8b1c-b4324ce45629.png";
+import neonCrewImage from "../assets/hoodies_temp/e6595b20-70e2-41da-bbf5-2d392796432f.png";
 
 export function HeroSectionWithMultiColorBackground() {
   return (
@@ -61,72 +66,63 @@ export function HeroSectionWithMultiColorBackground() {
 function TeamSectionWithLightBackground() {
   const team = [
     {
-      title: "Manu Arora",
-      designation: "Founder & CEO",
-      src: "https://assets.aceternity.com/avatars/manu.webp",
-      excerpt:
-        "Builder of digital products and founder at Aceternity, Manu focuses on product innovation and cross-disciplinary leadership.",
+      title: "Lavender Hoodie",
+      designation: "Hoodie",
+      src: lavenderHoodieImage,
+      excerpt: "$54",
     },
     {
-      title: "John Doe",
-      designation: "Co-Founder & CTO",
-      src: "https://assets.aceternity.com/avatars/1.webp",
-      excerpt:
-        "Architects scalable infrastructures and leads our technology vision, with a passion for mentoring the engineering team.",
+      title: "Pink Drop",
+      designation: "Jacket",
+      src: pinkDropImage,
+      excerpt: "$79",
     },
     {
-      title: "Glennfiddich Doe",
-      designation: "Software Engineer",
-      src: "https://assets.aceternity.com/avatars/2.webp",
-      excerpt:
-        "Specializes in frontend frameworks and UI systems-Glennfiddich crafts seamless and accessible user interfaces.",
+      title: "Black Street",
+      designation: "Hoodie",
+      src: blackStreetImage,
+      excerpt: "$59",
     },
     {
-      title: "Jameson Beam",
-      designation: "Designer",
-      src: "https://assets.aceternity.com/avatars/3.webp",
-      excerpt:
-        "Designs clear, elegant digital experiences, blending visual storytelling with empathetic user research.",
+      title: "Cargo Fit",
+      designation: "Hoodie",
+      src: cargoFitImage,
+      excerpt: "$89",
     },
     {
-      title: "Johnny Walker",
-      designation: "Marketing Manager",
-      src: "https://assets.aceternity.com/avatars/4.webp",
-      excerpt:
-        "Drives brand growth through creative campaigns and analytics, always seeking meaningful community engagement.",
+      title: "Neon Crew",
+      designation: "Hoodie",
+      src: neonCrewImage,
+      excerpt: "$49",
     },
     {
-      title: "Jack Daniels",
-      designation: "HR & Management",
-      src: "https://assets.aceternity.com/avatars/5.webp",
-      excerpt:
-        "Fosters company culture and supports team wellbeing, ensuring seamless operations and professional development.",
+      title: "Violet Storm",
+      designation: "Hoodie",
+      src: lavenderHoodieImage,
+      excerpt: "$64",
     },
     {
-      title: "Samantha Rives",
-      designation: "Product Manager",
-      src: "https://assets.aceternity.com/avatars/6.webp",
-      excerpt:
-        "Bridges vision and execution, keeping projects on track and fostering collaboration across all disciplines.",
+      title: "Rose Utility",
+      designation: "Jacket",
+      src: pinkDropImage,
+      excerpt: "$84",
     },
     {
-      title: "Evelyn Martinez",
-      designation: "QA Lead",
-      src: "https://assets.aceternity.com/avatars/7.webp",
-      excerpt:
-        "Ensures every release meets rigorous quality standards, blending keen attention to detail with a love for process improvement.",
+      title: "Graphite Cross",
+      designation: "Hoodie",
+      src: blackStreetImage,
+      excerpt: "$69",
     },
   ];
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-10 md:px-8 md:py-20 lg:py-32">
-      <h2 className="max-w-2xl text-3xl font-semibold tracking-tight text-balance text-neutral-900 md:text-4xl dark:text-white">
-        A team who is not afraid to take risks and bet on themselves.
+      <h2 className="max-w-2xl text-3xl font-bold tracking-tight text-balance text-white md:text-4xl">
+        EXPLORE{" "}
+        <span className="relative z-10 bg-gradient-to-b from-indigo-700 to-indigo-600 bg-clip-text text-transparent">
+          NEW DROPS
+        </span>
       </h2>
-      <p className="mt-4 max-w-3xl text-lg text-neutral-600 dark:text-neutral-400">
-        Meet the creators, strategists, and makers who move our mission forward,
-        combining design, code, and vision to achieve remarkable results.
-      </p>
       <div className="mt-8 grid grid-cols-1 gap-4 md:mt-12 md:grid-cols-2 md:gap-12 lg:grid-cols-4">
         {team.map((member) => (
           <div
@@ -138,7 +134,7 @@ function TeamSectionWithLightBackground() {
               alt={member.title}
               height={1020}
               width={1024}
-              className="aspect-square rounded-2xl object-cover shadow-sm ring-1 shadow-black/20 ring-black/20 duration-200 will-change-transform group-hover/team:scale-105"
+              className="aspect-square rounded-2xl bg-neutral-950 object-contain p-5 shadow-sm ring-1 shadow-black/20 ring-black/20 duration-200 will-change-transform group-hover/team:scale-105"
             />
             <div className="p-2 md:p-4">
               <p className="mt-2 text-base font-semibold tracking-tight text-balance text-neutral-900 dark:text-white">
@@ -148,7 +144,7 @@ function TeamSectionWithLightBackground() {
                 {member.designation}
               </p>
               <Separator className="my-2" />
-              <p className="text-sm text-neutral-600 dark:text-neutral-400">
+              <p className="text-lg font-semibold text-neutral-900 dark:text-white">
                 {member.excerpt}
               </p>
             </div>
