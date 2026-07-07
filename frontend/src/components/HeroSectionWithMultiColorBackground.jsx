@@ -1,5 +1,5 @@
-import { useId, useState } from "react";
-import { motion } from "motion/react";
+import { useEffect, useId, useRef, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import { cn } from "../lib/utils";
 import pinkDropImage from "../assets/hoodies_temp/1644c644-35d9-4a5d-8e43-49947f557bae.png";
 import lavenderHoodieImage from "../assets/hoodies_temp/6260999c-5799-4b79-91a5-13bf40b3db8f.png";
@@ -12,12 +12,59 @@ import neonCrewImage from "../assets/hoodies_temp/e6595b20-70e2-41da-bbf5-2d3927
 const PRODUCT_SEPARATOR_SPACING_CLASS = "my-2";
 
 export function HeroSectionWithMultiColorBackground() {
+  const productFrameRef = useRef(null);
+  const pageRef = useRef(null);
+
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-white dark:bg-neutral-950">
+    <div
+      ref={pageRef}
+      className="relative min-h-screen w-full overflow-hidden bg-neutral-900 text-white"
+    >
+      <BackgroundGrids />
+      <CollisionMechanism
+        beamOptions={{
+          initialX: -400,
+          translateX: 600,
+          duration: 7,
+          repeatDelay: 3,
+        }}
+        containerRef={productFrameRef}
+        parentRef={pageRef}
+      />
+      <CollisionMechanism
+        beamOptions={{
+          initialX: -200,
+          translateX: 800,
+          duration: 4,
+          repeatDelay: 3,
+        }}
+        containerRef={productFrameRef}
+        parentRef={pageRef}
+      />
+      <CollisionMechanism
+        beamOptions={{
+          initialX: 200,
+          translateX: 1200,
+          duration: 5,
+          repeatDelay: 3,
+        }}
+        containerRef={productFrameRef}
+        parentRef={pageRef}
+      />
+      <CollisionMechanism
+        beamOptions={{
+          initialX: 400,
+          translateX: 1400,
+          duration: 6,
+          repeatDelay: 3,
+        }}
+        containerRef={productFrameRef}
+        parentRef={pageRef}
+      />
       <Navbar />
-      <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-32">
+      <div className="relative z-20 mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-32">
         <div className="relative mt-20 flex flex-col items-center justify-center">
-          <h1 className="relative mx-auto mt-4 max-w-6xl text-center text-3xl font-bold tracking-tight text-zinc-700 md:text-4xl lg:text-7xl dark:text-white">
+          <h1 className="relative mx-auto mt-4 max-w-6xl text-center text-3xl font-bold tracking-tight text-white md:text-4xl lg:text-7xl">
             Your best in class{" "}
             <span className="relative z-10 bg-gradient-to-b from-indigo-700 to-indigo-600 bg-clip-text text-transparent">
               design and development studio
@@ -51,7 +98,7 @@ export function HeroSectionWithMultiColorBackground() {
               </svg>
             </span>
           </h1>
-          <h2 className="relative mx-auto mt-8 mb-8 max-w-xl text-center text-base font-normal tracking-wide text-zinc-500 antialiased md:text-xl dark:text-zinc-200">
+          <h2 className="relative mx-auto mt-8 mb-8 max-w-xl text-center text-base font-normal tracking-wide text-zinc-200 antialiased md:text-xl">
             We provide the best in class design and development services for
             teams that ship with the speed of light.
           </h2>
@@ -61,13 +108,213 @@ export function HeroSectionWithMultiColorBackground() {
             Book a call
           </button>
         </div>
-        <TeamSectionWithLightBackground />
+        <TeamSectionWithLightBackground productFrameRef={productFrameRef} />
       </div>
     </div>
   );
 }
 
-function TeamSectionWithLightBackground() {
+function BackgroundGrids() {
+  return (
+    <div className="pointer-events-none absolute inset-0 z-0 grid h-full w-full -rotate-45 transform select-none grid-cols-2 gap-10 md:grid-cols-4">
+      <div className="relative h-full w-full">
+        <GridLineVertical className="left-0" />
+        <GridLineVertical className="right-0 left-auto" />
+      </div>
+      <div className="relative h-full w-full">
+        <GridLineVertical className="left-0" />
+        <GridLineVertical className="right-0 left-auto" />
+      </div>
+      <div className="relative h-full w-full bg-gradient-to-b from-transparent via-neutral-800 to-transparent">
+        <GridLineVertical className="left-0" />
+        <GridLineVertical className="right-0 left-auto" />
+      </div>
+      <div className="relative h-full w-full">
+        <GridLineVertical className="left-0" />
+        <GridLineVertical className="right-0 left-auto" />
+      </div>
+    </div>
+  );
+}
+
+function CollisionMechanism({ parentRef, containerRef, beamOptions = {} }) {
+  const beamRef = useRef(null);
+  const [collision, setCollision] = useState({
+    detected: false,
+    coordinates: null,
+  });
+  const [beamKey, setBeamKey] = useState(0);
+  const [cycleCollisionDetected, setCycleCollisionDetected] = useState(false);
+
+  useEffect(() => {
+    const checkCollision = () => {
+      if (
+        beamRef.current &&
+        containerRef.current &&
+        parentRef.current &&
+        !cycleCollisionDetected
+      ) {
+        const beamRect = beamRef.current.getBoundingClientRect();
+        const containerRect = containerRef.current.getBoundingClientRect();
+        const parentRect = parentRef.current.getBoundingClientRect();
+
+        if (beamRect.bottom >= containerRect.top) {
+          const relativeX = beamRect.left - parentRect.left + beamRect.width / 2;
+          const relativeY = beamRect.bottom - parentRect.top;
+
+          setCollision({
+            detected: true,
+            coordinates: {
+              x: relativeX,
+              y: relativeY,
+            },
+          });
+          setCycleCollisionDetected(true);
+
+          if (beamRef.current) {
+            beamRef.current.style.opacity = "0";
+          }
+        }
+      }
+    };
+
+    const animationInterval = setInterval(checkCollision, 50);
+
+    return () => clearInterval(animationInterval);
+  }, [cycleCollisionDetected, containerRef, parentRef]);
+
+  useEffect(() => {
+    if (!collision.detected || !collision.coordinates) {
+      return undefined;
+    }
+
+    const collisionResetTimeout = setTimeout(() => {
+      setCollision({ detected: false, coordinates: null });
+      setCycleCollisionDetected(false);
+
+      if (beamRef.current) {
+        beamRef.current.style.opacity = "1";
+      }
+    }, 2000);
+
+    const beamResetTimeout = setTimeout(() => {
+      setBeamKey((prevKey) => prevKey + 1);
+    }, 2000);
+
+    return () => {
+      clearTimeout(collisionResetTimeout);
+      clearTimeout(beamResetTimeout);
+    };
+  }, [collision]);
+
+  return (
+    <>
+      <motion.div
+        key={beamKey}
+        ref={beamRef}
+        animate="animate"
+        initial={{
+          translateY: beamOptions.initialY || "-200px",
+          translateX: beamOptions.initialX || "0px",
+          rotate: beamOptions.rotate || -45,
+        }}
+        variants={{
+          animate: {
+            translateY: beamOptions.translateY || "800px",
+            translateX: beamOptions.translateX || "700px",
+            rotate: beamOptions.rotate || -45,
+          },
+        }}
+        transition={{
+          duration: beamOptions.duration || 8,
+          repeat: Infinity,
+          repeatType: "loop",
+          ease: "linear",
+          delay: beamOptions.delay || 0,
+          repeatDelay: beamOptions.repeatDelay || 0,
+        }}
+        className={cn(
+          "absolute top-20 left-96 z-10 m-auto h-14 w-px rounded-full bg-gradient-to-t from-orange-500 via-yellow-500 to-transparent",
+          beamOptions.className
+        )}
+      />
+      <AnimatePresence>
+        {collision.detected && collision.coordinates && (
+          <Explosion
+            key={`${collision.coordinates.x}-${collision.coordinates.y}`}
+            style={{
+              left: `${collision.coordinates.x + 20}px`,
+              top: `${collision.coordinates.y}px`,
+              transform: "translate(-50%, -50%)",
+            }}
+          />
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
+
+function Explosion({ className, ...props }) {
+  const spans = Array.from({ length: 20 }, (_, index) => ({
+    id: index,
+    initialX: 0,
+    initialY: 0,
+    directionX: Math.floor(Math.random() * 80 - 40),
+    directionY: Math.floor(Math.random() * -50 - 10),
+  }));
+
+  return (
+    <div {...props} className={cn("absolute z-50 h-2 w-2", className)}>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: [0, 1, 0] }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 1, ease: "easeOut" }}
+        className="absolute -inset-x-10 top-0 m-auto h-[4px] w-10 rounded-full bg-gradient-to-r from-transparent via-orange-500 to-transparent blur-sm"
+      />
+      {spans.map((span) => (
+        <motion.span
+          key={span.id}
+          initial={{ x: span.initialX, y: span.initialY, opacity: 1 }}
+          animate={{
+            x: span.directionX,
+            y: span.directionY,
+            opacity: 0,
+          }}
+          transition={{ duration: Math.random() * 1.5 + 0.5, ease: "easeOut" }}
+          className="absolute h-1 w-1 rounded-full bg-gradient-to-b from-orange-500 to-yellow-500"
+        />
+      ))}
+    </div>
+  );
+}
+
+function GridLineVertical({ className, offset }) {
+  return (
+    <div
+      style={{
+        "--background": "#ffffff",
+        "--color": "rgba(0, 0, 0, 0.2)",
+        "--height": "5px",
+        "--width": "1px",
+        "--fade-stop": "90%",
+        "--offset": offset || "150px",
+        "--color-dark": "rgba(255, 255, 255, 0.3)",
+        maskComposite: "exclude",
+      }}
+      className={cn(
+        "absolute top-[calc(var(--offset)/2*-1)] z-30 h-[calc(100%+var(--offset))] w-[var(--width)]",
+        "bg-[linear-gradient(to_bottom,var(--color-dark),var(--color-dark)_50%,transparent_0,transparent)]",
+        "[background-size:var(--width)_var(--height)]",
+        "[mask:linear-gradient(to_top,var(--background)_var(--fade-stop),transparent),_linear-gradient(to_bottom,var(--background)_var(--fade-stop),transparent),_linear-gradient(black,black)]",
+        "[mask-composite:exclude]",
+        className
+      )}
+    />
+  );
+}
+
+function TeamSectionWithLightBackground({ productFrameRef }) {
   const team = [
     {
       title: "Lavender Hoodie",
@@ -127,40 +374,50 @@ function TeamSectionWithLightBackground() {
           New Drops
         </span>
       </h2>
-      <div className="mt-8 grid grid-cols-1 gap-4 md:mt-12 md:grid-cols-2 md:gap-12 lg:grid-cols-4">
-        {team.map((member, index) => (
-          <div
-            key={member.title + "first-team-section"}
-            className="group/team overflow-hidden rounded-3xl bg-gray-100 p-1 dark:bg-neutral-900"
-          >
-            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-b from-neutral-100 to-white shadow-sm ring-1 shadow-black/20 dark:from-neutral-900 dark:to-neutral-950 dark:ring-black/20">
-              <Grid size={20} />
-              <img
-                src={member.src}
-                alt={member.title}
-                height={1020}
-                width={1024}
-                className="relative z-20 aspect-square object-contain p-5 duration-200 will-change-transform group-hover/team:scale-105"
-              />
-            </div>
-            <div className="p-2 md:p-4">
-              <p className="mt-2 text-base font-semibold tracking-tight text-balance text-neutral-900 dark:text-white">
-                {member.title}
-              </p>
-              <p className="text-sm text-neutral-600 dark:text-neutral-400">
-                {member.designation}
-              </p>
-              <GlowingStarsSeparator
-                className={PRODUCT_SEPARATOR_SPACING_CLASS}
-                seed={index}
-              />
-              <p className="text-lg font-semibold text-neutral-900 dark:text-white">
-                {member.excerpt}
-              </p>
-            </div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.9, ease: "easeOut" }}
+        ref={productFrameRef}
+        className="relative mx-auto mt-8 max-w-7xl rounded-[32px] border border-neutral-700 bg-neutral-800/50 p-2 backdrop-blur-lg md:mt-12 md:p-4"
+      >
+        <div className="rounded-[24px] border border-neutral-700 bg-black p-2">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-12 lg:grid-cols-4">
+            {team.map((member, index) => (
+              <div
+                key={member.title + "first-team-section"}
+                className="group/team overflow-hidden rounded-3xl bg-gray-100 p-1 dark:bg-neutral-900"
+              >
+                <div className="relative overflow-hidden rounded-2xl bg-gradient-to-b from-neutral-100 to-white shadow-sm ring-1 shadow-black/20 dark:from-neutral-900 dark:to-neutral-950 dark:ring-black/20">
+                  <Grid size={20} />
+                  <img
+                    src={member.src}
+                    alt={member.title}
+                    height={1020}
+                    width={1024}
+                    className="relative z-20 aspect-square object-contain p-5 duration-200 will-change-transform group-hover/team:scale-105"
+                  />
+                </div>
+                <div className="p-2 md:p-4">
+                  <p className="mt-2 text-base font-semibold tracking-tight text-balance text-neutral-900 dark:text-white">
+                    {member.title}
+                  </p>
+                  <p className="text-sm text-neutral-600 dark:text-neutral-400">
+                    {member.designation}
+                  </p>
+                  <GlowingStarsSeparator
+                    className={PRODUCT_SEPARATOR_SPACING_CLASS}
+                    seed={index}
+                  />
+                  <p className="text-lg font-semibold text-neutral-900 dark:text-white">
+                    {member.excerpt}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
+      </motion.div>
     </section>
   );
 }
@@ -368,7 +625,7 @@ const Navbar = () => {
         <a href="#" className="flex items-center space-x-2">
           <LogoIcon className="relative z-20 size-4 text-emerald-500" />
 
-          <span className="text-base font-semibold text-black sm:text-lg dark:text-white">
+          <span className="text-base font-semibold text-white sm:text-lg">
             K-Neuhen
           </span>
         </a>
@@ -378,14 +635,14 @@ const Navbar = () => {
             <a
               key={item}
               href={`#${item.toLowerCase().replaceAll(" ", "-")}`}
-              className="text-sm font-medium text-neutral-600 transition-colors hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
+              className="text-sm font-medium text-neutral-400 transition-colors hover:text-white"
             >
               {item}
             </a>
           ))}
 
           <div className="group/hero-navbar relative">
-            <button className="flex items-center gap-1 text-sm font-medium text-neutral-600 transition-colors hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white">
+            <button className="flex items-center gap-1 text-sm font-medium text-neutral-400 transition-colors hover:text-white">
               Contact
               <ChevronDownIcon className="size-4 transition-transform duration-200 group-hover/hero-navbar:rotate-180" />
             </button>
@@ -464,7 +721,7 @@ const Navbar = () => {
         <div className="hidden items-center gap-3 lg:flex lg:gap-4">
           <a
             href="#login"
-            className="text-sm font-medium text-neutral-600 transition-colors hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
+            className="text-sm font-medium text-neutral-400 transition-colors hover:text-white"
           >
             Login
           </a>
