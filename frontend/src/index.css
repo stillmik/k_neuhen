@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 :root {
   /* Browser-level defaults shared by the whole React app. */
   color-scheme: dark;
@@ -34,7 +36,7 @@ body {
 
 .desktopStage {
   container-type: inline-size;
-  width: clamp(var(--stage-min), 100vw, var(--stage-max));
+  width: min(100%, var(--stage-max));
   min-width: var(--stage-min);
   max-width: var(--stage-max);
   margin-inline: auto;
@@ -45,4 +47,14 @@ button,
 a {
   /* Interactive elements inherit the app typography instead of browser defaults. */
   font: inherit;
+}
+
+.scrollbar-hidden {
+  /* Keeps horizontal scrolling usable while hiding the browser scrollbar rail. */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
 }

@@ -11,16 +11,14 @@
   --site-header-height: clamp(78px, 6.4cqw, 104px);
   --hero-section-gap: clamp(16px, 1.7cqw, 34px);
   --nav-top: clamp(20px, 1.8cqw, 27px);
-  --actions-top: clamp(10px, 0.95cqw, 15px);
-  --actions-right: clamp(54px, 4.6cqw, 76px);
   --hero-left: 40%;
   --hero-min-height: clamp(610px, 49cqw, 660px);
-  --content-left-inset: clamp(10px, 1.4cqw, 18px);
+  --content-left-inset: 0px;
   --product-gap: 28px;
   --corner-panel-width: clamp(220px, 18cqw, 246px);
   --header-left-gap: var(--content-left-inset);
   --header-right-gap: clamp(44px, 4.2cqw, 58px);
-  --nav-group-gap: clamp(22px, 2.4cqw, 40px);
+  --nav-group-gap: clamp(22px, 2.3cqw, 40px);
 
 
   /* Shared color tokens for neon accents and text. */
@@ -43,31 +41,80 @@
   overflow-x: clip;
   overflow-y: auto;
   color: var(--text);
-  background: #2b2b2b;
+  background: #19191c;
   font-family: "Bahnschrift", "Agency FB", "Segoe UI Condensed", "Arial Narrow", system-ui, sans-serif;
 }
 
-/* Subtle texture overlay that stretches over the entire viewport. */
+/* Animated dotted glow background inspired by the referenced component. */
 .backgroundTexture {
   position: fixed;
   inset: 0;
+  z-index: 0;
   pointer-events: none;
-  background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(0deg, rgba(255, 255, 255, 0.026) 1px, transparent 1px);
-  background-size: 3px 3px;
-  mix-blend-mode: overlay;
-  opacity: 0.45;
+  overflow: hidden;
+  background: rgba(0, 0, 0, var(--dotted-bg-opacity));
 }
 
-/* Main desktop container. It starts after --container-pad and fills the remaining staged width. */
+.dottedGlowBackground {
+  isolation: isolate;
+}
+
+.dottedGlowBase,
+.dottedGlowGrid,
+.dottedGlowSpot {
+  position: absolute;
+  inset: 0;
+}
+
+.dottedGlowBase {
+  z-index: 0;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(10, 12, 16, 0.08), transparent 38%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.16), transparent 30%, rgba(0, 0, 0, 0.2));
+}
+
+.dottedGlowGrid {
+  z-index: 2;
+  background-image: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--dotted-color), transparent 18%) 0 var(--dotted-radius),
+    transparent calc(var(--dotted-radius) + 0.2px)
+  );
+  background-size: var(--dotted-gap) var(--dotted-gap);
+  opacity: calc(var(--dotted-opacity) * 0.58);
+  -webkit-mask-image: radial-gradient(circle at center, #000 0 66%, transparent 94%);
+  mask-image: radial-gradient(circle at center, #000 0 66%, transparent 94%);
+}
+
+.dottedGlowSpot {
+  z-index: 1;
+  filter: blur(18px);
+  mix-blend-mode: screen;
+  opacity: 0.72;
+  -webkit-mask-image: radial-gradient(circle at center, #000 0 54%, transparent 90%);
+  mask-image: radial-gradient(circle at center, #000 0 54%, transparent 90%);
+}
+
+.dottedGlowSpotOne {
+  background: radial-gradient(circle at 30% 22%, color-mix(in srgb, var(--dotted-glow-color), transparent 28%), transparent 33%);
+}
+
+.dottedGlowSpotTwo {
+  background: radial-gradient(circle at 76% 34%, color-mix(in srgb, var(--dotted-glow-color), transparent 36%), transparent 30%);
+}
+
+.dottedGlowSpotThree {
+  background: radial-gradient(circle at 48% 70%, color-mix(in srgb, var(--dotted-glow-color), transparent 48%), transparent 38%);
+}
+
+/* Main desktop container. Left and right outside gaps are controlled by --container-pad. */
 .desktopShell {
   position: relative;
   z-index: 1;
   width: calc(100% - (var(--container-pad) * 2));
   min-width: 0;
   max-width: none;
-  margin: 0 0 0 var(--container-pad);
+  margin-inline: var(--container-pad);
   padding-bottom: clamp(42px, 4cqw, 72px);
   transform: translateX(var(--container-shift-x));
 }
@@ -79,7 +126,7 @@
   height: var(--site-header-height);
 }
 
-/* Single-row nav: all text links live in the left group, icons stay separate on the right. */
+/* Single nav row: all text links live in the left container. */
 .primaryNav {
   position: absolute;
   inset: 0;
@@ -87,7 +134,7 @@
   align-items: flex-start;
   justify-content: flex-start;
   padding-left: var(--header-left-gap);
-  padding-right: calc((var(--corner-panel-width) - var(--container-pad)) + var(--header-right-gap));
+  padding-right: calc(var(--corner-panel-width) + var(--header-right-gap));
   pointer-events: none;
 }
 /* Shared navigation row behavior. */
@@ -99,7 +146,7 @@
   pointer-events: auto;
 }
 
-/* Left navigation group: all header text links live here. */
+/* Left navigation group: all header text links. */
 .navClusterLeft {
   gap: var(--nav-group-gap);
   padding-left: 0;
@@ -160,20 +207,11 @@
   outline-offset: 6px;
 }
 
-/* Invisible positioning container for search/account/cart actions. */
-.cornerPanel {
-  position: absolute;
-  top: 0;
-  right: calc(var(--container-pad) * -1);
-  width: var(--corner-panel-width);
-  height: clamp(78px, 6.4cqw, 104px);
-}
-
-/* Header icon row. */
+/* Header icon row without any panel background. */
 .headerActions {
   position: absolute;
-  top: var(--actions-top);
-  right: var(--actions-right);
+  top: var(--nav-top);
+  right: 0;
   display: flex;
   align-items: center;
   gap: clamp(20px, 2cqw, 32px);
@@ -234,7 +272,7 @@
     0 0 16px rgba(136, 255, 0, 0.4);
 }
 
-/* Hero layout: one continuous background zone without a right-side divider. */
+/* Hero layout: one continuous background zone. */
 .heroSection {
   position: relative;
   min-height: var(--hero-min-height);
@@ -430,10 +468,10 @@
 .productCard::after {
   content: "";
   position: absolute;
-  inset: 2px;
+  inset: 1px;
   z-index: 1;
   clip-path: inherit;
-  background: #2b2b2b;
+  background: #19191c;
   box-shadow: none;
   pointer-events: none;
 }
@@ -617,7 +655,7 @@
   :root {
     --container-pad: 84px;
     --hero-min-height: clamp(630px, 48cqw, 685px);
-    --content-left-inset: clamp(8px, 1.1cqw, 18px);
+    --content-left-inset: 0px;
     --corner-panel-width: clamp(238px, 18cqw, 258px);
     --header-right-gap: clamp(52px, 4.2cqw, 64px);
     --nav-group-gap: clamp(40px, 3.6cqw, 52px);
@@ -651,7 +689,7 @@
   :root {
     --container-pad: 104px;
     --hero-min-height: clamp(720px, 45.6cqw, 790px);
-    --content-left-inset: clamp(6px, 0.8cqw, 14px);
+    --content-left-inset: 0px;
     --corner-panel-width: clamp(280px, 17.8cqw, 294px);
     --header-right-gap: clamp(72px, 4.25cqw, 92px);
     --nav-group-gap: clamp(56px, 3.7cqw, 70px);
@@ -663,7 +701,7 @@
   :root {
     --container-pad: 116px;
     --hero-min-height: clamp(760px, 43cqw, 820px);
-    --content-left-inset: clamp(0px, 0.45cqw, 10px);
+    --content-left-inset: 0px;
     --corner-panel-width: clamp(292px, 15.8cqw, 304px);
     --header-right-gap: clamp(84px, 4.4cqw, 104px);
     --nav-group-gap: clamp(62px, 3.7cqw, 76px);
