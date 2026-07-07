@@ -110,6 +110,7 @@ export function HeroSectionWithMultiColorBackground() {
         </div>
         <TeamSectionWithLightBackground productFrameRef={productFrameRef} />
       </div>
+      <CenteredWithLogo />
     </div>
   );
 }
@@ -504,6 +505,135 @@ function TeamSectionWithLightBackground({ productFrameRef }) {
         </div>
       </motion.div>
     </section>
+  );
+}
+
+function CenteredWithLogo() {
+  const pages = [
+    {
+      title: "Products",
+      href: "#",
+    },
+    {
+      title: "Studio",
+      href: "#",
+    },
+    {
+      title: "Clients",
+      href: "#",
+    },
+    {
+      title: "Pricing",
+      href: "#",
+    },
+    {
+      title: "Blog",
+      href: "#",
+    },
+    {
+      title: "Privacy",
+      href: "#",
+    },
+    {
+      title: "Terms",
+      href: "#",
+    },
+  ];
+
+  const socials = [
+    {
+      title: "Twitter",
+      icon: TwitterIcon,
+    },
+    {
+      title: "LinkedIn",
+      icon: LinkedinIcon,
+    },
+    {
+      title: "GitHub",
+      icon: GithubIcon,
+    },
+    {
+      title: "Facebook",
+      icon: FacebookIcon,
+    },
+    {
+      title: "Instagram",
+      icon: InstagramIcon,
+    },
+  ];
+
+  return (
+    <footer className="relative z-20 w-full overflow-hidden border-t border-white/[0.1] bg-neutral-950 px-8 py-20">
+      <div className="mx-auto max-w-7xl items-start justify-between text-sm text-neutral-500 md:px-8">
+        <div className="relative flex w-full flex-col items-center justify-center">
+          <div className="mr-0 mb-4 md:mr-4 md:flex">
+            <FooterLogo />
+          </div>
+
+          <ul className="flex list-none flex-col gap-4 text-neutral-300 transition-colors sm:flex-row">
+            {pages.map((page) => (
+              <li key={page.title} className="list-none">
+                <a className="transition-colors hover:text-white" href={page.href}>
+                  {page.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <GridLineHorizontal className="mx-auto mt-8 max-w-7xl" />
+        </div>
+        <div className="mt-8 flex w-full flex-col items-center justify-between sm:flex-row">
+          <p className="mb-8 text-neutral-400 sm:mb-0">
+            &copy; DevStudios LLABC
+          </p>
+          <div className="flex gap-4">
+            {socials.map((social) => (
+              <a key={social.title} href="#" aria-label={social.title}>
+                <social.icon className="h-6 w-6 text-neutral-300 transition-colors hover:text-white" />
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+function GridLineHorizontal({ className, offset }) {
+  return (
+    <div
+      style={{
+        "--background": "#ffffff",
+        "--color": "rgba(0, 0, 0, 0.2)",
+        "--height": "1px",
+        "--width": "5px",
+        "--fade-stop": "90%",
+        "--offset": offset || "200px",
+        "--color-dark": "rgba(255, 255, 255, 0.2)",
+        maskComposite: "exclude",
+      }}
+      className={cn(
+        "z-30 h-[var(--height)] w-[calc(100%+var(--offset))]",
+        "bg-[linear-gradient(to_right,var(--color-dark),var(--color-dark)_50%,transparent_0,transparent)]",
+        "[background-size:var(--width)_var(--height)]",
+        "[mask:linear-gradient(to_left,var(--background)_var(--fade-stop),transparent),_linear-gradient(to_right,var(--background)_var(--fade-stop),transparent),_linear-gradient(black,black)]",
+        "[mask-composite:exclude]",
+        className
+      )}
+    />
+  );
+}
+
+function FooterLogo() {
+  return (
+    <a
+      href="#"
+      className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal text-white"
+    >
+      <LogoIcon className="relative z-20 size-8 text-emerald-500" />
+      <span className="font-medium text-white">DevStudio</span>
+    </a>
   );
 }
 
@@ -1089,3 +1219,69 @@ const Arrow = (props) => {
     </svg>
   );
 };
+
+const TwitterIcon = (props) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    aria-hidden="true"
+    {...props}
+  >
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.657l-5.214-6.817-5.968 6.817H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z" />
+  </svg>
+);
+
+const LinkedinIcon = (props) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    aria-hidden="true"
+    {...props}
+  >
+    <path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5ZM.5 8h4V23h-4V8Zm7.5 0h3.83v2.05h.05c.53-1.01 1.84-2.08 3.79-2.08 4.05 0 4.8 2.67 4.8 6.14V23h-4v-7.88c0-1.88-.03-4.3-2.62-4.3-2.62 0-3.02 2.05-3.02 4.16V23h-4V8Z" />
+  </svg>
+);
+
+const GithubIcon = (props) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    aria-hidden="true"
+    {...props}
+  >
+    <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2.03c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.17 1.18A11.04 11.04 0 0 1 12 6.18c.98 0 1.96.13 2.88.39 2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.23 2.75.11 3.04.74.8 1.19 1.82 1.19 3.08 0 4.42-2.69 5.39-5.25 5.67.41.35.78 1.05.78 2.12v3.15c0 .31.21.67.8.56A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z" />
+  </svg>
+);
+
+const FacebookIcon = (props) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    aria-hidden="true"
+    {...props}
+  >
+    <path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06C2 17.08 5.66 21.25 10.44 22v-7.03H7.9v-2.91h2.54V9.85c0-2.52 1.49-3.91 3.78-3.91 1.09 0 2.24.2 2.24.2v2.47H15.2c-1.24 0-1.63.78-1.63 1.57v1.88h2.77l-.44 2.91h-2.33V22C18.34 21.25 22 17.08 22 12.06Z" />
+  </svg>
+);
+
+const InstagramIcon = (props) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+    {...props}
+  >
+    <rect width="18" height="18" x="3" y="3" rx="5" />
+    <circle cx="12" cy="12" r="4" />
+    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+  </svg>
+);
