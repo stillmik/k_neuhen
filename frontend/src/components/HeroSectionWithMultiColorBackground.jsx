@@ -382,11 +382,11 @@ function TeamSectionWithLightBackground({ productFrameRef }) {
         className="relative mx-auto mt-8 max-w-7xl rounded-[32px] border border-neutral-700 bg-neutral-800/50 p-2 backdrop-blur-lg md:mt-12 md:p-4"
       >
         <div className="rounded-[24px] border border-neutral-700 bg-black p-2">
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-12 lg:grid-cols-4">
+          <div className="scrollbar-hidden flex snap-x snap-mandatory gap-4 overflow-x-auto overflow-y-hidden scroll-smooth pb-3 md:gap-8 lg:gap-12">
             {team.map((member, index) => (
               <div
                 key={member.title + "first-team-section"}
-                className="group/team overflow-hidden rounded-3xl bg-gray-100 p-1 dark:bg-neutral-900"
+                className="group/team w-full flex-none snap-start overflow-hidden rounded-3xl bg-gray-100 p-1 sm:w-[calc((100%_-_1rem)/2)] lg:w-[calc((100%_-_9rem)/4)] dark:bg-neutral-900"
               >
                 <div className="relative overflow-hidden rounded-2xl bg-gradient-to-b from-neutral-100 to-white shadow-sm ring-1 shadow-black/20 dark:from-neutral-900 dark:to-neutral-950 dark:ring-black/20">
                   <Grid size={20} />

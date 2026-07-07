@@ -48,3 +48,13 @@ a {
   /* Interactive elements inherit the app typography instead of browser defaults. */
   font: inherit;
 }
+
+.scrollbar-hidden {
+  /* Keeps horizontal scrolling usable while hiding the browser scrollbar rail. */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
