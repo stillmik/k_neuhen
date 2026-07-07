@@ -637,66 +637,17 @@ function FooterLogo() {
   );
 }
 
-function Grid({ pattern, size }) {
-  const p =
-    pattern ??
-    [
-      [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
-      [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
-      [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
-      [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
-      [Math.floor(Math.random() * 4) + 7, Math.floor(Math.random() * 6) + 1],
-    ];
-
+function Grid() {
   return (
-    <div className="pointer-events-none absolute inset-0 [mask-image:linear-gradient(white,transparent)]">
-      <div className="absolute inset-0 opacity-100 [mask-image:radial-gradient(farthest-side_at_top,white,transparent)]">
-        <GridPattern
-          width={size ?? 20}
-          height={size ?? 20}
-          x="-12"
-          y="4"
-          squares={p}
-          className="absolute inset-0 h-full w-full fill-black/10 stroke-black/10 mix-blend-overlay dark:fill-white/10 dark:stroke-white/10"
-        />
-      </div>
-    </div>
-  );
-}
-
-function GridPattern({ width, height, x, y, squares, ...props }) {
-  const patternId = useId();
-
-  return (
-    <svg aria-hidden="true" {...props}>
-      <defs>
-        <pattern
-          id={patternId}
-          width={width}
-          height={height}
-          patternUnits="userSpaceOnUse"
-          x={x}
-          y={y}
-        >
-          <path d={`M.5 ${height}V.5H${width}`} fill="none" />
-        </pattern>
-      </defs>
-      <rect width="100%" height="100%" strokeWidth={0} fill={`url(#${patternId})`} />
-      {squares && (
-        <svg x={x} y={y} className="overflow-visible">
-          {squares.map(([squareX, squareY], index) => (
-            <rect
-              strokeWidth="0"
-              key={`${squareX}-${squareY}-${index}`}
-              width={width + 1}
-              height={height + 1}
-              x={squareX * width}
-              y={squareY * height}
-            />
-          ))}
-        </svg>
+    <div
+      className={cn(
+        "pointer-events-none absolute inset-0 z-0 h-full w-full",
+        "bg-[radial-gradient(circle_at_0.5px_0.5px,rgba(255,255,255,0.3)_0.5px,transparent_0)]",
+        "[mask-image:radial-gradient(circle_at_center,white,transparent)]",
+        "bg-repeat",
+        "[background-size:8px_8px]"
       )}
-    </svg>
+    />
   );
 }
 
