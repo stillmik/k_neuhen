@@ -7,6 +7,10 @@ import cargoFitImage from "../assets/hoodies_temp/92c184d8-93b2-4107-8514-275034
 import blackStreetImage from "../assets/hoodies_temp/d846e74b-58f7-4386-8b1c-b4324ce45629.png";
 import neonCrewImage from "../assets/hoodies_temp/e6595b20-70e2-41da-bbf5-2d392796432f.png";
 
+// Product card separator spacing: change this class to tune the distance
+// between item type, glowing line, and price. Smaller = more compact.
+const PRODUCT_SEPARATOR_SPACING_CLASS = "my-2";
+
 export function HeroSectionWithMultiColorBackground() {
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-white dark:bg-neutral-950">
@@ -118,13 +122,13 @@ function TeamSectionWithLightBackground() {
   return (
     <section className="mx-auto max-w-7xl px-4 py-10 md:px-8 md:py-20 lg:py-32">
       <h2 className="max-w-2xl text-3xl font-bold tracking-tight text-balance text-white md:text-4xl">
-        EXPLORE{" "}
+        Explore{" "}
         <span className="relative z-10 bg-gradient-to-b from-indigo-700 to-indigo-600 bg-clip-text text-transparent">
-          NEW DROPS
+          New Drops
         </span>
       </h2>
       <div className="mt-8 grid grid-cols-1 gap-4 md:mt-12 md:grid-cols-2 md:gap-12 lg:grid-cols-4">
-        {team.map((member) => (
+        {team.map((member, index) => (
           <div
             key={member.title + "first-team-section"}
             className="group/team overflow-hidden rounded-3xl bg-gray-100 p-1 dark:bg-neutral-900"
@@ -146,7 +150,10 @@ function TeamSectionWithLightBackground() {
               <p className="text-sm text-neutral-600 dark:text-neutral-400">
                 {member.designation}
               </p>
-              <Separator className="my-2" />
+              <GlowingStarsSeparator
+                className={PRODUCT_SEPARATOR_SPACING_CLASS}
+                seed={index}
+              />
               <p className="text-lg font-semibold text-neutral-900 dark:text-white">
                 {member.excerpt}
               </p>
@@ -217,6 +224,67 @@ function GridPattern({ width, height, x, y, squares, ...props }) {
           ))}
         </svg>
       )}
+    </svg>
+  );
+}
+
+function GlowingStarsSeparator({ className, seed = 0 }) {
+  const filterId = useId();
+  const dotCount = 18;
+  const glowingDotIndexes = [
+    (seed * 5 + 2) % dotCount,
+    (seed * 7 + 8) % dotCount,
+    (seed * 11 + 14) % dotCount,
+  ];
+
+  return (
+    <svg
+      className={cn(
+        "h-4 w-full shrink-0 overflow-visible opacity-80 transition-opacity duration-300 group-hover/team:opacity-100",
+        className
+      )}
+      viewBox="0 0 240 16"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+    >
+      <defs>
+        <filter id={filterId} x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="2.4" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+      </defs>
+
+      {Array.from({ length: 18 }).map((_, index) => (
+        <circle
+          key={index}
+          cx={8 + index * 13}
+          cy="8"
+          r="0.85"
+          fill="rgba(255,255,255,0.28)"
+        />
+      ))}
+
+      {glowingDotIndexes.map((dotIndex, glowIndex) => (
+        <motion.circle
+          key={`${seed}-${dotIndex}`}
+          cx={8 + dotIndex * 13}
+          cy="8"
+          r="1.9"
+          fill="#60a5fa"
+          filter={`url(#${filterId})`}
+          initial={{ opacity: 0.25, scale: 0.8 }}
+          animate={{ opacity: [0.25, 1, 0.25], scale: [0.8, 1.35, 0.8] }}
+          transition={{
+            duration: 2.4 + ((seed + glowIndex) % 3) * 0.35,
+            delay: ((seed * 0.37 + glowIndex * 0.58) % 1.8),
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
     </svg>
   );
 }
