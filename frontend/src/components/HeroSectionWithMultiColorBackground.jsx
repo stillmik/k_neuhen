@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { cn } from "../lib/utils";
 import pinkDropImage from "../assets/hoodies_temp/1644c644-35d9-4a5d-8e43-49947f557bae.png";
@@ -315,6 +315,8 @@ function GridLineVertical({ className, offset }) {
 }
 
 function TeamSectionWithLightBackground({ productFrameRef }) {
+  const itemsPerPage = 4;
+  const [currentPage, setCurrentPage] = useState(0);
   const team = [
     {
       title: "Lavender Hoodie",
@@ -365,15 +367,73 @@ function TeamSectionWithLightBackground({ productFrameRef }) {
       excerpt: "$69",
     },
   ];
+  const totalPages = Math.ceil(team.length / itemsPerPage);
+
+  const visibleItems = useMemo(() => {
+    const start = currentPage * itemsPerPage;
+    return team.slice(start, start + itemsPerPage);
+  }, [currentPage]);
+
+  const handleNext = () => {
+    setCurrentPage((prev) => (prev + 1) % totalPages);
+  };
+
+  const handlePrevious = () => {
+    setCurrentPage((prev) => (prev - 1 + totalPages) % totalPages);
+  };
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-10 md:px-8 md:py-20 lg:py-32">
-      <h2 className="max-w-2xl text-3xl font-bold tracking-tight text-balance text-white md:text-4xl">
-        Explore{" "}
-        <span className="relative z-10 bg-gradient-to-b from-indigo-700 to-indigo-600 bg-clip-text text-transparent">
-          New Drops
-        </span>
-      </h2>
+      <div className="flex items-center justify-between gap-4">
+        <h2 className="max-w-2xl text-3xl font-bold tracking-tight text-balance text-white md:text-4xl">
+          Explore{" "}
+          <span className="relative z-10 bg-gradient-to-b from-indigo-700 to-indigo-600 bg-clip-text text-transparent">
+            New Drops
+          </span>
+        </h2>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            aria-label="Previous items"
+            onClick={handlePrevious}
+            className="flex size-10 items-center justify-center rounded-full border border-white/20 text-white transition duration-200 hover:bg-white/10 active:scale-98"
+          >
+            <svg
+              aria-hidden
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              className="size-5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            aria-label="Next items"
+            onClick={handleNext}
+            className="flex size-10 items-center justify-center rounded-full border border-white/20 text-white transition duration-200 hover:bg-white/10 active:scale-98"
+          >
+            <svg
+              aria-hidden
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              className="size-5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </button>
+        </div>
+      </div>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -383,9 +443,32 @@ function TeamSectionWithLightBackground({ productFrameRef }) {
       >
         <div className="rounded-[24px] border border-neutral-700 bg-black p-2">
           <div className="scrollbar-hidden flex snap-x snap-mandatory gap-4 overflow-x-auto overflow-y-hidden scroll-smooth pb-3 md:gap-8 lg:gap-12">
-            {team.map((member, index) => (
-              <div
-                key={member.title + "first-team-section"}
+            <AnimatePresence mode="popLayout">
+              {visibleItems.map((member, index) => {
+                const itemIndex = currentPage * itemsPerPage + index;
+
+                return (
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  y: 10,
+                  filter: "blur(10px)",
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                  filter: "blur(0px)",
+                }}
+                exit={{
+                  opacity: 0,
+                  y: 10,
+                  filter: "blur(10px)",
+                }}
+                transition={{
+                  duration: 0.5,
+                  delay: index * 0.1,
+                }}
+                key={`${member.title}-${itemIndex}-first-team-section`}
                 className="group/team w-full flex-none snap-start overflow-hidden rounded-3xl bg-gray-100 p-1 sm:w-[calc((100%_-_1rem)/2)] lg:w-[calc((100%_-_9rem)/4)] dark:bg-neutral-900"
               >
                 <div className="relative overflow-hidden rounded-2xl bg-gradient-to-b from-neutral-100 to-white shadow-sm ring-1 shadow-black/20 dark:from-neutral-900 dark:to-neutral-950 dark:ring-black/20">
@@ -407,14 +490,16 @@ function TeamSectionWithLightBackground({ productFrameRef }) {
                   </p>
                   <GlowingStarsSeparator
                     className={PRODUCT_SEPARATOR_SPACING_CLASS}
-                    seed={index}
+                    seed={itemIndex}
                   />
                   <p className="text-lg font-semibold text-neutral-900 dark:text-white">
                     {member.excerpt}
                   </p>
                 </div>
-              </div>
-            ))}
+              </motion.div>
+                );
+              })}
+            </AnimatePresence>
           </div>
         </div>
       </motion.div>
