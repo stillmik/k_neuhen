@@ -513,6 +513,50 @@ function ProductCarousel({
         ref={productFrameRef}
         className="relative mx-auto mt-4 max-w-7xl rounded-[32px] border border-neutral-700 bg-neutral-800/50 p-2 backdrop-blur-lg md:mt-6 md:p-4"
       >
+        {isGrid && (
+          <div className="absolute top-1/2 -right-16 z-30 hidden -translate-y-1/2 flex-col gap-3 xl:flex">
+            <button
+              type="button"
+              aria-label="Previous classical clothing items"
+              onClick={handlePrevious}
+              className="flex size-12 items-center justify-center rounded-full border border-white/20 bg-neutral-950/80 text-white backdrop-blur-md transition duration-200 hover:border-indigo-400/70 hover:bg-indigo-500/15 active:scale-95"
+            >
+              <svg
+                aria-hidden
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                className="size-5"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="m15 18-6-6 6-6" />
+              </svg>
+            </button>
+            <button
+              type="button"
+              aria-label="Next classical clothing items"
+              onClick={handleNext}
+              className="flex size-12 items-center justify-center rounded-full border border-white/20 bg-neutral-950/80 text-white backdrop-blur-md transition duration-200 hover:border-indigo-400/70 hover:bg-indigo-500/15 active:scale-95"
+            >
+              <svg
+                aria-hidden
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                className="size-5"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </button>
+          </div>
+        )}
         <div className="rounded-[24px] border border-neutral-700 bg-black p-2">
           <div
             className={cn(
