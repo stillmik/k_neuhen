@@ -1,6 +1,6 @@
 import React, { memo, useCallback, useEffect, useMemo, useRef } from "react";
-import DottedMap from "dotted-map";
 import { animate, motion } from "motion/react";
+import { createMap } from "svg-dotted-map";
 import {
   IconBrandDiscord,
   IconBrandFacebook,
@@ -355,17 +355,41 @@ function LogoOrbit() {
 }
 
 function MapView() {
-  const svgMap = useMemo(() => {
-    const map = new DottedMap({
-      height: 40,
-      grid: "diagonal",
+  const mapWidth = 120;
+  const mapHeight = 60;
+  const { points, xStep, yToRowIndex } = useMemo(() => {
+    const { points } = createMap({
+      width: mapWidth,
+      height: mapHeight,
+      mapSamples: 6000,
     });
 
-    return map.getSVG({
-      radius: 0.15,
-      color: "#ffffff80",
-      shape: "circle",
-    });
+    const sorted = [...points].sort((a, b) => a.y - b.y || a.x - b.x);
+    const rowMap = new Map();
+    let step = 0;
+    let prevY = Number.NaN;
+    let prevXInRow = Number.NaN;
+
+    for (const point of sorted) {
+      if (point.y !== prevY) {
+        prevY = point.y;
+        prevXInRow = Number.NaN;
+        if (!rowMap.has(point.y)) {
+          rowMap.set(point.y, rowMap.size);
+        }
+      }
+
+      if (!Number.isNaN(prevXInRow)) {
+        const delta = point.x - prevXInRow;
+        if (delta > 0) {
+          step = step === 0 ? delta : Math.min(step, delta);
+        }
+      }
+
+      prevXInRow = point.x;
+    }
+
+    return { points, xStep: step || 1, yToRowIndex: rowMap };
   }, []);
 
   const flashingPoints = useMemo(() => {
@@ -386,14 +410,27 @@ function MapView() {
   return (
     <div className="relative h-full w-full overflow-hidden">
       <div className="absolute inset-0 transition-opacity duration-300">
-        <img
-          src={`data:image/svg+xml;utf8,${encodeURIComponent(svgMap)}`}
-          className="pointer-events-none absolute -right-2 -top-14 h-full w-full select-none object-cover opacity-70 [mask-image:linear-gradient(to_bottom,transparent,white_15%,white_85%,transparent)]"
-          alt="Interactive world map visualization"
-          height={595}
-          width={356}
-          draggable={false}
-        />
+        <svg
+          viewBox={`0 0 ${mapWidth} ${mapHeight}`}
+          className="pointer-events-none absolute -right-2 -top-14 h-full w-full select-none text-white opacity-70 [mask-image:linear-gradient(to_bottom,transparent,white_15%,white_85%,transparent)]"
+          preserveAspectRatio="xMidYMid slice"
+          aria-label="Interactive world map visualization"
+        >
+          {points.map((point, index) => {
+            const rowIndex = yToRowIndex.get(point.y) ?? 0;
+            const offsetX = rowIndex % 2 === 1 ? xStep / 2 : 0;
+
+            return (
+              <circle
+                key={`${point.x}-${point.y}-${index}`}
+                cx={point.x + offsetX}
+                cy={point.y}
+                r="0.18"
+                fill="currentColor"
+              />
+            );
+          })}
+        </svg>
       </div>
 
       <div className="absolute inset-0" aria-hidden="true">
