@@ -383,23 +383,66 @@ function TeamSectionWithLightBackground({ productFrameRef }) {
             </a>
           </>
         }
+        description={
+          <>
+            Discover fresh drops shaped for standout styling, everyday comfort,
+            <br className="hidden md:block" />
+            and expressive outfits that move with your rhythm
+          </>
+        }
         sectionKey="new-drops"
       />
       <UseCasesSection />
-      <ProductCarousel title="Our classical designs" sectionKey="classical-designs" />
+      <ProductCarousel
+        title={
+          <>
+            Our classical{" "}
+            <a
+              href="/#clothing"
+              className="relative z-10 border-b border-indigo-500 bg-gradient-to-b from-indigo-700 to-indigo-600 bg-clip-text text-transparent transition-colors hover:border-indigo-300"
+            >
+              Clothing
+            </a>
+          </>
+        }
+        description={
+          <>
+            Explore timeless clothing silhouettes made for clean layering,
+            <br className="hidden md:block" />
+            polished details, and a softer everyday wardrobe
+          </>
+        }
+        sectionKey="classical-clothing"
+        layout="grid"
+      />
     </section>
   );
 }
 
-function ProductCarousel({ productFrameRef, title, sectionKey }) {
-  const itemsPerPage = 4;
+function ProductCarousel({
+  productFrameRef,
+  title,
+  description,
+  sectionKey,
+  layout = "carousel",
+}) {
+  const pageStep = 4;
+  const visibleCount = layout === "grid" ? 8 : 4;
   const [currentPage, setCurrentPage] = useState(0);
-  const totalPages = Math.ceil(PRODUCT_ITEMS.length / itemsPerPage);
+  const isGrid = layout === "grid";
+  const totalPages = Math.ceil(PRODUCT_ITEMS.length / pageStep);
 
   const visibleItems = useMemo(() => {
-    const start = currentPage * itemsPerPage;
-    return PRODUCT_ITEMS.slice(start, start + itemsPerPage);
-  }, [currentPage]);
+    if (isGrid) {
+      const start = currentPage * pageStep;
+      return Array.from({ length: visibleCount }, (_, index) => {
+        return PRODUCT_ITEMS[(start + index) % PRODUCT_ITEMS.length];
+      });
+    }
+
+    const start = currentPage * pageStep;
+    return PRODUCT_ITEMS.slice(start, start + visibleCount);
+  }, [currentPage, isGrid, visibleCount]);
 
   const handleNext = () => {
     setCurrentPage((prev) => (prev + 1) % totalPages);
@@ -412,9 +455,14 @@ function ProductCarousel({ productFrameRef, title, sectionKey }) {
   return (
     <div className="mx-auto w-full">
       <div className="relative flex flex-col items-center gap-4 md:block">
-        <h2 className="mx-auto max-w-2xl text-center text-3xl font-bold tracking-tight text-balance text-white md:text-4xl">
+        <h2 className="mx-auto max-w-3xl text-center text-3xl font-semibold tracking-tight text-balance text-white md:text-5xl">
           {title}
         </h2>
+        {description && (
+          <p className="mx-auto mt-8 max-w-2xl text-center text-base font-medium leading-7 text-white md:text-xl">
+            {description}
+          </p>
+        )}
         <div className="flex items-center gap-2 md:absolute md:top-1/2 md:right-0 md:-translate-y-1/2">
           <button
             type="button"
@@ -466,10 +514,16 @@ function ProductCarousel({ productFrameRef, title, sectionKey }) {
         className="relative mx-auto mt-4 max-w-7xl rounded-[32px] border border-neutral-700 bg-neutral-800/50 p-2 backdrop-blur-lg md:mt-6 md:p-4"
       >
         <div className="rounded-[24px] border border-neutral-700 bg-black p-2">
-          <div className="scrollbar-hidden flex snap-x snap-mandatory gap-4 overflow-x-auto overflow-y-hidden scroll-smooth pb-3 md:gap-8 lg:gap-12">
+          <div
+            className={cn(
+              isGrid
+                ? "grid grid-cols-1 gap-4 pb-3 sm:grid-cols-2 md:gap-8 lg:grid-cols-4 lg:gap-12"
+                : "scrollbar-hidden flex snap-x snap-mandatory gap-4 overflow-x-auto overflow-y-hidden scroll-smooth pb-3 md:gap-8 lg:gap-12"
+            )}
+          >
             <AnimatePresence mode="popLayout">
               {visibleItems.map((member, index) => {
-                const itemIndex = currentPage * itemsPerPage + index;
+                const itemIndex = (currentPage * pageStep + index) % PRODUCT_ITEMS.length;
 
                 return (
               <motion.div
@@ -492,8 +546,12 @@ function ProductCarousel({ productFrameRef, title, sectionKey }) {
                   duration: 0.5,
                   delay: index * 0.1,
                 }}
-                key={`${member.title}-${itemIndex}-${sectionKey}`}
-                className="group/team w-full flex-none snap-start overflow-hidden rounded-3xl bg-gray-100 p-1 sm:w-[calc((100%_-_1rem)/2)] lg:w-[calc((100%_-_9rem)/4)] dark:bg-neutral-900"
+                key={`${member.title}-${itemIndex}-${currentPage}-${sectionKey}`}
+                className={cn(
+                  "group/team snap-start overflow-hidden rounded-3xl bg-gray-100 p-1 dark:bg-neutral-900",
+                  !isGrid &&
+                    "w-full flex-none snap-start sm:w-[calc((100%_-_1rem)/2)] lg:w-[calc((100%_-_9rem)/4)]"
+                )}
               >
                 <div className="relative overflow-hidden rounded-2xl bg-gradient-to-b from-neutral-100 to-white shadow-sm ring-1 shadow-black/20 dark:from-neutral-900 dark:to-neutral-950 dark:ring-black/20">
                   <Grid size={20} />
