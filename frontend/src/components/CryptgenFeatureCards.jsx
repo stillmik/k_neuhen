@@ -14,7 +14,7 @@ import { cn } from "../lib/utils";
 
 export function CryptgenFeatureCards() {
   return (
-    <div className="mt-16 grid auto-rows-[25rem] grid-cols-1 gap-4 lg:mt-24 lg:grid-cols-5">
+    <div className="mt-12 grid auto-rows-[25rem] grid-cols-1 gap-4 lg:mt-16 lg:grid-cols-5">
       <Card className="relative flex flex-col justify-between lg:col-span-2">
         <div className="absolute left-1/2 -translate-x-1/2 -translate-y-1/3">
           <LogoOrbit />
