@@ -429,6 +429,7 @@ function ProductCarousel({
   const pageStep = 4;
   const visibleCount = layout === "grid" ? 8 : 4;
   const [currentPage, setCurrentPage] = useState(0);
+  const wheelLockRef = useRef(false);
   const isGrid = layout === "grid";
   const totalPages = Math.ceil(PRODUCT_ITEMS.length / pageStep);
 
@@ -452,6 +453,32 @@ function ProductCarousel({
     setCurrentPage((prev) => (prev - 1 + totalPages) % totalPages);
   };
 
+  const handleWheel = (event) => {
+    const horizontalDelta =
+      Math.abs(event.deltaX) >= Math.abs(event.deltaY)
+        ? event.deltaX
+        : event.shiftKey
+          ? event.deltaY
+          : 0;
+
+    if (Math.abs(horizontalDelta) < 24 || wheelLockRef.current) {
+      return;
+    }
+
+    event.preventDefault();
+    wheelLockRef.current = true;
+
+    if (horizontalDelta > 0) {
+      handleNext();
+    } else {
+      handlePrevious();
+    }
+
+    window.setTimeout(() => {
+      wheelLockRef.current = false;
+    }, 450);
+  };
+
   return (
     <div className="mx-auto w-full">
       <div className="relative flex flex-col items-center gap-4 md:block">
@@ -459,7 +486,7 @@ function ProductCarousel({
           {title}
         </h2>
         {description && (
-          <p className="mx-auto mt-8 max-w-2xl text-center text-base font-medium leading-7 text-white md:text-xl">
+          <p className="mx-auto mt-8 max-w-2xl text-center text-base font-medium text-zinc-200 md:text-xl">
             {description}
           </p>
         )}
@@ -511,6 +538,7 @@ function ProductCarousel({
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.9, ease: "easeOut" }}
         ref={productFrameRef}
+        onWheel={handleWheel}
         className="relative mx-auto mt-4 max-w-7xl rounded-[32px] border border-neutral-700 bg-neutral-800/50 p-2 backdrop-blur-lg md:mt-6 md:p-4"
       >
         {isGrid && (

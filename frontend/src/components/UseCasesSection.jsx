@@ -31,7 +31,7 @@ export function UseCasesSection() {
         <h2 className="mt-6 text-center text-3xl font-semibold tracking-tight text-white md:text-5xl">
           Across various Industries
         </h2>
-        <p className="mx-auto mt-8 max-w-2xl text-center text-base font-medium leading-7 text-white md:text-xl">
+        <p className="mx-auto mt-8 max-w-2xl text-center text-base font-medium leading-7 text-zinc-200 md:text-xl">
           We empower developers and technical teams to create, simulate, and
           <br className="hidden md:block" />
           manage AI-driven workflows visually
