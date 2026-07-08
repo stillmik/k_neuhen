@@ -429,6 +429,7 @@ function ProductCarousel({
   const pageStep = 4;
   const visibleCount = layout === "grid" ? 8 : 4;
   const [currentPage, setCurrentPage] = useState(0);
+  const frameRef = useRef(null);
   const wheelLockRef = useRef(false);
   const isGrid = layout === "grid";
   const totalPages = Math.ceil(PRODUCT_ITEMS.length / pageStep);
@@ -453,30 +454,57 @@ function ProductCarousel({
     setCurrentPage((prev) => (prev - 1 + totalPages) % totalPages);
   };
 
-  const handleWheel = (event) => {
-    const horizontalDelta =
-      Math.abs(event.deltaX) >= Math.abs(event.deltaY)
-        ? event.deltaX
-        : event.shiftKey
-          ? event.deltaY
-          : 0;
+  useEffect(() => {
+    const frame = frameRef.current;
 
-    if (Math.abs(horizontalDelta) < 24 || wheelLockRef.current) {
-      return;
+    if (!frame) {
+      return undefined;
     }
 
-    event.preventDefault();
-    wheelLockRef.current = true;
+    const handleWheel = (event) => {
+      const horizontalDelta =
+        Math.abs(event.deltaX) >= Math.abs(event.deltaY)
+          ? event.deltaX
+          : event.shiftKey
+            ? event.deltaY
+            : 0;
 
-    if (horizontalDelta > 0) {
-      handleNext();
-    } else {
-      handlePrevious();
+      if (Math.abs(horizontalDelta) < 16) {
+        return;
+      }
+
+      event.preventDefault();
+      event.stopPropagation();
+
+      if (wheelLockRef.current) {
+        return;
+      }
+
+      wheelLockRef.current = true;
+      setCurrentPage((prev) =>
+        horizontalDelta > 0
+          ? (prev + 1) % totalPages
+          : (prev - 1 + totalPages) % totalPages
+      );
+
+      window.setTimeout(() => {
+        wheelLockRef.current = false;
+      }, 450);
+    };
+
+    frame.addEventListener("wheel", handleWheel, { passive: false });
+
+    return () => {
+      frame.removeEventListener("wheel", handleWheel);
+    };
+  }, [totalPages]);
+
+  const setFrameRefs = (node) => {
+    frameRef.current = node;
+
+    if (productFrameRef) {
+      productFrameRef.current = node;
     }
-
-    window.setTimeout(() => {
-      wheelLockRef.current = false;
-    }, 450);
   };
 
   return (
@@ -537,9 +565,8 @@ function ProductCarousel({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.9, ease: "easeOut" }}
-        ref={productFrameRef}
-        onWheel={handleWheel}
-        className="relative mx-auto mt-4 max-w-7xl rounded-[32px] border border-neutral-700 bg-neutral-800/50 p-2 backdrop-blur-lg md:mt-6 md:p-4"
+        ref={setFrameRefs}
+        className="relative mx-auto mt-4 max-w-7xl overscroll-x-contain rounded-[32px] border border-neutral-700 bg-neutral-800/50 p-2 backdrop-blur-lg md:mt-6 md:p-4"
       >
         {isGrid && (
           <div className="absolute top-1/2 -right-16 z-30 hidden -translate-y-1/2 flex-col gap-3 xl:flex">
