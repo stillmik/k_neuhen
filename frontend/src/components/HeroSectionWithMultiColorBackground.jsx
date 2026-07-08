@@ -415,6 +415,30 @@ function TeamSectionWithLightBackground({ productFrameRef }) {
         sectionKey="classical-clothing"
         layout="grid"
       />
+      <DeploymentsMadeEasySection />
+    </section>
+  );
+}
+
+function DeploymentsMadeEasySection() {
+  return (
+    <section className="mx-auto mt-20 w-full max-w-7xl px-4 text-center md:mt-28 md:px-8">
+      <div className="relative mx-auto flex w-fit items-center justify-center p-4">
+        <motion.div
+          initial={{ width: 0, height: 0, borderRadius: 0 }}
+          whileInView={{ width: "100%", height: "100%" }}
+          viewport={{ once: true, amount: 0.6 }}
+          style={{ transformOrigin: "top-left" }}
+          transition={{ duration: 1, ease: "easeInOut" }}
+          className="absolute inset-0 h-full w-full border border-neutral-800"
+        />
+        <h2 className="relative z-10 mx-auto w-fit text-center text-xl font-bold tracking-tight text-neutral-100 md:text-4xl">
+          Deployments made easy
+        </h2>
+      </div>
+      <p className="mx-auto mt-4 max-w-lg text-center text-sm text-neutral-400">
+        Deploy with ease, leave complexities to us.
+      </p>
     </section>
   );
 }
