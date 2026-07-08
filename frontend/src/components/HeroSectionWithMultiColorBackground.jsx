@@ -12,6 +12,56 @@ import neonCrewImage from "../assets/hoodies_temp/e6595b20-70e2-41da-bbf5-2d3927
 // Product card separator spacing: change this class to tune the distance
 // between item type, glowing line, and price. Smaller = more compact.
 const PRODUCT_SEPARATOR_SPACING_CLASS = "my-2";
+const PRODUCT_ITEMS = [
+  {
+    title: "Lavender Hoodie",
+    designation: "Hoodie",
+    src: lavenderHoodieImage,
+    excerpt: "$54",
+  },
+  {
+    title: "Pink Drop",
+    designation: "Jacket",
+    src: pinkDropImage,
+    excerpt: "$79",
+  },
+  {
+    title: "Black Street",
+    designation: "Hoodie",
+    src: blackStreetImage,
+    excerpt: "$59",
+  },
+  {
+    title: "Cargo Fit",
+    designation: "Hoodie",
+    src: cargoFitImage,
+    excerpt: "$89",
+  },
+  {
+    title: "Neon Crew",
+    designation: "Hoodie",
+    src: neonCrewImage,
+    excerpt: "$49",
+  },
+  {
+    title: "Violet Storm",
+    designation: "Hoodie",
+    src: lavenderHoodieImage,
+    excerpt: "$64",
+  },
+  {
+    title: "Rose Utility",
+    designation: "Jacket",
+    src: pinkDropImage,
+    excerpt: "$84",
+  },
+  {
+    title: "Graphite Cross",
+    designation: "Hoodie",
+    src: blackStreetImage,
+    excerpt: "$69",
+  },
+];
 
 export function HeroSectionWithMultiColorBackground() {
   const productFrameRef = useRef(null);
@@ -318,63 +368,37 @@ function GridLineVertical({ className, offset }) {
 }
 
 function TeamSectionWithLightBackground({ productFrameRef }) {
+  return (
+    <section className="mx-auto max-w-7xl px-4 py-10 md:px-8 md:py-20 lg:py-32">
+      <ProductCarousel
+        productFrameRef={productFrameRef}
+        title={
+          <>
+            Explore{" "}
+            <a
+              href="/new-drops/"
+              className="relative z-10 border-b border-indigo-500 bg-gradient-to-b from-indigo-700 to-indigo-600 bg-clip-text text-transparent transition-colors hover:border-indigo-300"
+            >
+              New Drops
+            </a>
+          </>
+        }
+        sectionKey="new-drops"
+      />
+      <UseCasesSection />
+      <ProductCarousel title="Our classical designs" sectionKey="classical-designs" />
+    </section>
+  );
+}
+
+function ProductCarousel({ productFrameRef, title, sectionKey }) {
   const itemsPerPage = 4;
   const [currentPage, setCurrentPage] = useState(0);
-  const team = [
-    {
-      title: "Lavender Hoodie",
-      designation: "Hoodie",
-      src: lavenderHoodieImage,
-      excerpt: "$54",
-    },
-    {
-      title: "Pink Drop",
-      designation: "Jacket",
-      src: pinkDropImage,
-      excerpt: "$79",
-    },
-    {
-      title: "Black Street",
-      designation: "Hoodie",
-      src: blackStreetImage,
-      excerpt: "$59",
-    },
-    {
-      title: "Cargo Fit",
-      designation: "Hoodie",
-      src: cargoFitImage,
-      excerpt: "$89",
-    },
-    {
-      title: "Neon Crew",
-      designation: "Hoodie",
-      src: neonCrewImage,
-      excerpt: "$49",
-    },
-    {
-      title: "Violet Storm",
-      designation: "Hoodie",
-      src: lavenderHoodieImage,
-      excerpt: "$64",
-    },
-    {
-      title: "Rose Utility",
-      designation: "Jacket",
-      src: pinkDropImage,
-      excerpt: "$84",
-    },
-    {
-      title: "Graphite Cross",
-      designation: "Hoodie",
-      src: blackStreetImage,
-      excerpt: "$69",
-    },
-  ];
-  const totalPages = Math.ceil(team.length / itemsPerPage);
+  const totalPages = Math.ceil(PRODUCT_ITEMS.length / itemsPerPage);
 
   const visibleItems = useMemo(() => {
     const start = currentPage * itemsPerPage;
-    return team.slice(start, start + itemsPerPage);
+    return PRODUCT_ITEMS.slice(start, start + itemsPerPage);
   }, [currentPage]);
 
   const handleNext = () => {
@@ -386,18 +410,12 @@ function TeamSectionWithLightBackground({ productFrameRef }) {
   };
 
   return (
-    <section className="mx-auto max-w-7xl px-4 py-10 md:px-8 md:py-20 lg:py-32">
-      <div className="flex items-center justify-between gap-4">
-        <h2 className="max-w-2xl text-3xl font-bold tracking-tight text-balance text-white md:text-4xl">
-          Explore{" "}
-          <a
-            href="/new-drops/"
-            className="relative z-10 border-b border-indigo-500 bg-gradient-to-b from-indigo-700 to-indigo-600 bg-clip-text text-transparent transition-colors hover:border-indigo-300"
-          >
-            New Drops
-          </a>
+    <div className="mx-auto w-full">
+      <div className="relative flex flex-col items-center gap-4 md:block">
+        <h2 className="mx-auto max-w-2xl text-center text-3xl font-bold tracking-tight text-balance text-white md:text-4xl">
+          {title}
         </h2>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 md:absolute md:top-1/2 md:right-0 md:-translate-y-1/2">
           <button
             type="button"
             aria-label="Previous items"
@@ -474,7 +492,7 @@ function TeamSectionWithLightBackground({ productFrameRef }) {
                   duration: 0.5,
                   delay: index * 0.1,
                 }}
-                key={`${member.title}-${itemIndex}-first-team-section`}
+                key={`${member.title}-${itemIndex}-${sectionKey}`}
                 className="group/team w-full flex-none snap-start overflow-hidden rounded-3xl bg-gray-100 p-1 sm:w-[calc((100%_-_1rem)/2)] lg:w-[calc((100%_-_9rem)/4)] dark:bg-neutral-900"
               >
                 <div className="relative overflow-hidden rounded-2xl bg-gradient-to-b from-neutral-100 to-white shadow-sm ring-1 shadow-black/20 dark:from-neutral-900 dark:to-neutral-950 dark:ring-black/20">
@@ -509,8 +527,7 @@ function TeamSectionWithLightBackground({ productFrameRef }) {
           </div>
         </div>
       </motion.div>
-      <UseCasesSection />
-    </section>
+    </div>
   );
 }
 
