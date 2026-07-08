@@ -423,20 +423,49 @@ function TeamSectionWithLightBackground({ productFrameRef }) {
 function DeploymentsMadeEasySection() {
   return (
     <section className="mx-auto mt-20 w-full max-w-7xl px-4 text-center md:mt-28 md:px-8">
-      <div className="relative mx-auto flex w-fit items-center justify-center p-4">
+      <div className="relative mx-auto flex w-fit items-center justify-center px-8 py-4 md:px-10">
         <motion.div
           initial={{ width: 0, height: 0, borderRadius: 0 }}
           whileInView={{ width: "100%", height: "100%" }}
           viewport={{ once: true, amount: 0.6 }}
           style={{ transformOrigin: "top-left" }}
           transition={{ duration: 1, ease: "easeInOut" }}
-          className="absolute inset-0 h-full w-full border border-neutral-800"
-        />
-        <h2 className="relative z-10 mx-auto w-fit text-center text-xl font-bold tracking-tight text-neutral-100 md:text-4xl">
+          className="absolute inset-0 h-full w-full"
+        >
+          <div className="absolute top-0 -left-8 h-px w-[calc(100%+4rem)] bg-neutral-800" />
+          <div className="absolute bottom-0 -left-8 h-px w-[calc(100%+4rem)] bg-neutral-800" />
+          <div className="absolute -top-5 left-0 h-[calc(100%+2.5rem)] w-px bg-neutral-800" />
+          <div className="absolute -top-5 right-0 h-[calc(100%+2.5rem)] w-px bg-neutral-800" />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.1, ease: "easeInOut" }}
+            className="absolute -top-1 -left-1 h-2 w-2 bg-neutral-800"
+          />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.1, ease: "easeInOut" }}
+            className="absolute -top-1 -right-1 h-2 w-2 bg-neutral-800"
+          />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.1, ease: "easeInOut" }}
+            className="absolute -bottom-1 -left-1 h-2 w-2 bg-neutral-800"
+          />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.1, ease: "easeInOut" }}
+            className="absolute -right-1 -bottom-1 h-2 w-2 bg-neutral-800"
+          />
+        </motion.div>
+        <h2 className="relative z-10 mx-auto w-fit text-center font-sans text-xl font-bold tracking-tight text-neutral-100 md:text-4xl">
           Deployments made easy
         </h2>
       </div>
-      <p className="mx-auto mt-4 max-w-lg text-center text-sm text-neutral-400">
+      <p className="mx-auto mt-4 max-w-lg text-center font-sans text-sm font-normal text-neutral-400">
         Deploy with ease, leave complexities to us.
       </p>
     </section>
