@@ -1,8 +1,6 @@
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { cn } from "../lib/utils";
-import { CryptgenFeatureCards } from "./CryptgenFeatureCards";
-import { DeployAgentsAcrossPlatformsSection } from "./DeployAgentsAcrossPlatformsSection";
 import pinkDropImage from "../assets/hoodies_temp/1644c644-35d9-4a5d-8e43-49947f557bae.png";
 import lavenderHoodieImage from "../assets/hoodies_temp/6260999c-5799-4b79-91a5-13bf40b3db8f.png";
 import cargoFitImage from "../assets/hoodies_temp/92c184d8-93b2-4107-8514-275034de9e62.png";
@@ -506,13 +504,11 @@ function TeamSectionWithLightBackground({ productFrameRef }) {
           </div>
         </div>
       </motion.div>
-      <DeployAgentsAcrossPlatformsSection />
-      <CryptgenFeatureCards />
     </section>
   );
 }
 
-function CenteredWithLogo() {
+export function CenteredWithLogo() {
   const pages = [
     {
       title: "Products",
@@ -742,7 +738,7 @@ function Separator({ className }) {
   );
 }
 
-const Navbar = () => {
+export const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileContactOpen, setMobileContactOpen] = useState(false);
   const navItems = ["Home", "Jewelry", "Accessories", "Clothing", "Sales", "About Us"];

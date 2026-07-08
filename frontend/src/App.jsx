@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { AboutUsPage } from "./components/AboutUsPage";
 import { HeroSectionWithMultiColorBackground } from "./components/HeroSectionWithMultiColorBackground";
 import { SimpleLoginWithGridLines } from "./components/SimpleLoginWithGridLines";
 import "./App.css";
@@ -17,6 +18,8 @@ function App() {
     <main className="page dark">
       {route === "#login" ? (
         <SimpleLoginWithGridLines />
+      ) : route === "#about-us" ? (
+        <AboutUsPage />
       ) : (
         <HeroSectionWithMultiColorBackground />
       )}
