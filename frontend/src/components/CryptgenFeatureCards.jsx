@@ -14,14 +14,17 @@ import { cn } from "../lib/utils";
 
 export function CryptgenFeatureCards() {
   return (
-    <div className="mt-8 grid auto-rows-[25rem] grid-cols-1 gap-4 lg:grid-cols-5">
+    <div className="mt-16 grid auto-rows-[25rem] grid-cols-1 gap-4 lg:mt-24 lg:grid-cols-5">
       <Card className="relative flex flex-col justify-between lg:col-span-2">
         <div className="absolute left-1/2 -translate-x-1/2 -translate-y-1/3">
           <LogoOrbit />
         </div>
         <CardContent className="absolute bottom-0 h-40">
           <CardTitle>
-            Hosting over
+            <span className="relative z-10 bg-gradient-to-b from-indigo-700 to-indigo-600 bg-clip-text text-transparent">
+              Hosting
+            </span>
+            {" "}over
             <br /> the edge
           </CardTitle>
           <CardDescription>
@@ -34,7 +37,11 @@ export function CryptgenFeatureCards() {
       <Card className="relative flex flex-col justify-between lg:col-span-3">
         <CardContent className="h-40">
           <CardTitle>
-            Available in <br /> every country
+            Available in{" "}
+            <br />
+            <span className="relative z-10 bg-gradient-to-b from-indigo-700 to-indigo-600 bg-clip-text text-transparent">
+              every country
+            </span>
           </CardTitle>
           <CardDescription>
             Access our platform from anywhere in the world with our globally
@@ -91,23 +98,71 @@ function CardDescription({ children, className }) {
 function Card({ children, className }) {
   return (
     <motion.div
-      whileHover="animate"
       className={cn(
-        "group relative isolate flex flex-col overflow-hidden rounded-2xl bg-neutral-900 shadow-[0_1px_1px_rgba(0,0,0,0.05),0_4px_6px_rgba(34,42,53,0.04),0_24px_68px_rgba(47,48,55,0.05),0_2px_3px_rgba(0,0,0,0.04)]",
+        "group relative isolate flex flex-col bg-[#141414]",
         className
       )}
     >
-      <GlowingEffect
-        spread={60}
-        glow
-        disabled={false}
-        proximity={64}
-        inactiveZone={0.01}
-        borderWidth={5}
-        blur={10}
-      />
-      {children}
+      <GridLineHorizontal className="top-0" offset="80px" />
+      <GridLineHorizontal className="bottom-0 top-auto" offset="80px" />
+      <GridLineVertical className="left-0" offset="80px" />
+      <GridLineVertical className="left-auto right-0" offset="80px" />
+      <div className="relative z-10 flex h-full w-full flex-col justify-between overflow-hidden">
+        {children}
+      </div>
     </motion.div>
+  );
+}
+
+function GridLineHorizontal({ className, offset }) {
+  return (
+    <div
+      style={{
+        "--background": "#ffffff",
+        "--color": "rgba(0, 0, 0, 0.2)",
+        "--height": "1px",
+        "--width": "5px",
+        "--fade-stop": "90%",
+        "--offset": offset || "200px",
+        "--color-dark": "rgba(255, 255, 255, 0.2)",
+        maskComposite: "exclude",
+      }}
+      className={cn(
+        "pointer-events-none absolute left-[calc(var(--offset)/2*-1)] z-30 h-[var(--height)] w-[calc(100%+var(--offset))]",
+        "bg-[linear-gradient(to_right,var(--color),var(--color)_50%,transparent_0,transparent)]",
+        "[background-size:var(--width)_var(--height)]",
+        "[mask:linear-gradient(to_left,var(--background)_var(--fade-stop),transparent),_linear-gradient(to_right,var(--background)_var(--fade-stop),transparent),_linear-gradient(black,black)]",
+        "[mask-composite:exclude]",
+        "dark:bg-[linear-gradient(to_right,var(--color-dark),var(--color-dark)_50%,transparent_0,transparent)]",
+        className
+      )}
+    />
+  );
+}
+
+function GridLineVertical({ className, offset }) {
+  return (
+    <div
+      style={{
+        "--background": "#ffffff",
+        "--color": "rgba(0, 0, 0, 0.2)",
+        "--height": "5px",
+        "--width": "1px",
+        "--fade-stop": "90%",
+        "--offset": offset || "150px",
+        "--color-dark": "rgba(255, 255, 255, 0.2)",
+        maskComposite: "exclude",
+      }}
+      className={cn(
+        "pointer-events-none absolute top-[calc(var(--offset)/2*-1)] z-30 h-[calc(100%+var(--offset))] w-[var(--width)]",
+        "bg-[linear-gradient(to_bottom,var(--color),var(--color)_50%,transparent_0,transparent)]",
+        "[background-size:var(--width)_var(--height)]",
+        "[mask:linear-gradient(to_top,var(--background)_var(--fade-stop),transparent),_linear-gradient(to_bottom,var(--background)_var(--fade-stop),transparent),_linear-gradient(black,black)]",
+        "[mask-composite:exclude]",
+        "dark:bg-[linear-gradient(to_bottom,var(--color-dark),var(--color-dark)_50%,transparent_0,transparent)]",
+        className
+      )}
+    />
   );
 }
 
@@ -308,7 +363,7 @@ function MapView() {
 
     return map.getSVG({
       radius: 0.15,
-      color: "#FFFFFF50",
+      color: "#ffffff80",
       shape: "circle",
     });
   }, []);
@@ -333,7 +388,7 @@ function MapView() {
       <div className="absolute inset-0 transition-opacity duration-300">
         <img
           src={`data:image/svg+xml;utf8,${encodeURIComponent(svgMap)}`}
-          className="pointer-events-none absolute -right-2 -top-14 h-full w-full select-none object-cover opacity-50 [mask-image:linear-gradient(to_bottom,transparent,white_15%,white_85%,transparent)]"
+          className="pointer-events-none absolute -right-2 -top-14 h-full w-full select-none object-cover opacity-70 [mask-image:linear-gradient(to_bottom,transparent,white_15%,white_85%,transparent)]"
           alt="Interactive world map visualization"
           height={595}
           width={356}
