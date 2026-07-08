@@ -7,11 +7,33 @@ router = APIRouter()
 APP_DIR = Path(__file__).resolve().parents[1]
 TEMPLATES_DIR = APP_DIR / "templates"
 FRONTEND_INDEX = APP_DIR.parent / "frontend" / "index.html"
+FRONTEND_ABOUT_US = APP_DIR.parent / "frontend" / "about-us" / "index.html"
+FRONTEND_NEW_DROPS = APP_DIR.parent / "frontend" / "new-drops" / "index.html"
 
 
 @router.get("/")
 async def root():
     return FileResponse(FRONTEND_INDEX)
+
+
+@router.get("/about-us/")
+async def about_us_page():
+    return FileResponse(FRONTEND_ABOUT_US)
+
+
+@router.get("/about-us")
+async def about_us_page_no_slash():
+    return FileResponse(FRONTEND_ABOUT_US)
+
+
+@router.get("/new-drops/")
+async def new_drops_page():
+    return FileResponse(FRONTEND_NEW_DROPS)
+
+
+@router.get("/new-drops")
+async def new_drops_page_no_slash():
+    return FileResponse(FRONTEND_NEW_DROPS)
 
 
 @router.get("/register")

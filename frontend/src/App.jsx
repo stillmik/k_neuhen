@@ -1,28 +1,33 @@
-import { useEffect, useState } from "react";
-import { AboutUsPage } from "./components/AboutUsPage";
-import { HeroSectionWithMultiColorBackground } from "./components/HeroSectionWithMultiColorBackground";
-import { SimpleLoginWithGridLines } from "./components/SimpleLoginWithGridLines";
+import { lazy, Suspense } from "react";
 import "./App.css";
 
+const pages = {
+  "about-us": lazy(() =>
+    import("./components/AboutUsPage").then((module) => ({
+      default: module.AboutUsPage,
+    }))
+  ),
+  "new-drops": lazy(() =>
+    import("./components/NewDropsPage").then((module) => ({
+      default: module.NewDropsPage,
+    }))
+  ),
+  home: lazy(() =>
+    import("./components/HeroSectionWithMultiColorBackground").then((module) => ({
+      default: module.HeroSectionWithMultiColorBackground,
+    }))
+  ),
+};
+
 function App() {
-  const [route, setRoute] = useState(() => window.location.hash || "#home");
-
-  useEffect(() => {
-    const handleHashChange = () => setRoute(window.location.hash || "#home");
-
-    window.addEventListener("hashchange", handleHashChange);
-    return () => window.removeEventListener("hashchange", handleHashChange);
-  }, []);
+  const page = document.getElementById("root")?.dataset.page || "home";
+  const Page = pages[page] || pages.home;
 
   return (
     <main className="page dark">
-      {route === "#login" ? (
-        <SimpleLoginWithGridLines />
-      ) : route === "#about-us" ? (
-        <AboutUsPage />
-      ) : (
-        <HeroSectionWithMultiColorBackground />
-      )}
+      <Suspense fallback={null}>
+        <Page />
+      </Suspense>
     </main>
   );
 }

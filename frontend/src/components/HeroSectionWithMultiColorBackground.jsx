@@ -1,6 +1,7 @@
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { cn } from "../lib/utils";
+import { CenteredWithLogo as SiteFooter, Navbar as SiteNavbar } from "./SiteChrome";
 import { UseCasesSection } from "./UseCasesSection";
 import pinkDropImage from "../assets/hoodies_temp/1644c644-35d9-4a5d-8e43-49947f557bae.png";
 import lavenderHoodieImage from "../assets/hoodies_temp/6260999c-5799-4b79-91a5-13bf40b3db8f.png";
@@ -62,7 +63,7 @@ export function HeroSectionWithMultiColorBackground() {
         containerRef={productFrameRef}
         parentRef={pageRef}
       />
-      <Navbar />
+      <SiteNavbar />
       <div className="relative z-20 mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-32">
         <div className="relative mt-20 flex flex-col items-center justify-center">
           <h1 className="relative mx-auto mt-4 max-w-6xl text-center text-3xl font-bold tracking-tight text-white md:text-4xl lg:text-7xl">
@@ -111,7 +112,7 @@ export function HeroSectionWithMultiColorBackground() {
         </div>
         <TeamSectionWithLightBackground productFrameRef={productFrameRef} />
       </div>
-      <CenteredWithLogo />
+      <SiteFooter />
     </div>
   );
 }
@@ -389,9 +390,12 @@ function TeamSectionWithLightBackground({ productFrameRef }) {
       <div className="flex items-center justify-between gap-4">
         <h2 className="max-w-2xl text-3xl font-bold tracking-tight text-balance text-white md:text-4xl">
           Explore{" "}
-          <span className="relative z-10 bg-gradient-to-b from-indigo-700 to-indigo-600 bg-clip-text text-transparent">
+          <a
+            href="/new-drops/"
+            className="relative z-10 border-b border-indigo-500 bg-gradient-to-b from-indigo-700 to-indigo-600 bg-clip-text text-transparent transition-colors hover:border-indigo-300"
+          >
             New Drops
-          </span>
+          </a>
         </h2>
         <div className="flex items-center gap-2">
           <button
@@ -441,7 +445,7 @@ function TeamSectionWithLightBackground({ productFrameRef }) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.9, ease: "easeOut" }}
         ref={productFrameRef}
-        className="relative mx-auto mt-8 max-w-7xl rounded-[32px] border border-neutral-700 bg-neutral-800/50 p-2 backdrop-blur-lg md:mt-12 md:p-4"
+        className="relative mx-auto mt-4 max-w-7xl rounded-[32px] border border-neutral-700 bg-neutral-800/50 p-2 backdrop-blur-lg md:mt-6 md:p-4"
       >
         <div className="rounded-[24px] border border-neutral-700 bg-black p-2">
           <div className="scrollbar-hidden flex snap-x snap-mandatory gap-4 overflow-x-auto overflow-y-hidden scroll-smooth pb-3 md:gap-8 lg:gap-12">
@@ -513,32 +517,36 @@ function TeamSectionWithLightBackground({ productFrameRef }) {
 export function CenteredWithLogo() {
   const pages = [
     {
-      title: "Products",
-      href: "#",
+      title: "Home",
+      href: "/",
     },
     {
-      title: "Studio",
-      href: "#",
+      title: "Jewelry",
+      href: "/#jewelry",
     },
     {
-      title: "Clients",
-      href: "#",
+      title: "Accessories",
+      href: "/#accessories",
     },
     {
-      title: "Pricing",
-      href: "#",
+      title: "Clothing",
+      href: "/#clothing",
     },
     {
-      title: "Blog",
-      href: "#",
+      title: "Sales",
+      href: "/#sales",
     },
     {
-      title: "Privacy",
-      href: "#",
+      title: "About Us",
+      href: "/about-us/",
     },
     {
-      title: "Terms",
-      href: "#",
+      title: "Contact",
+      href: "/#contact",
+    },
+    {
+      title: "New Drops",
+      href: "/new-drops/",
     },
   ];
 
@@ -743,7 +751,15 @@ function Separator({ className }) {
 export const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileContactOpen, setMobileContactOpen] = useState(false);
-  const navItems = ["Home", "Jewelry", "Accessories", "Clothing", "Sales", "About Us"];
+  const navItems = [
+    { title: "Home", href: "/" },
+    { title: "Jewelry", href: "/#jewelry" },
+    { title: "Accessories", href: "/#accessories" },
+    { title: "Clothing", href: "/#clothing" },
+    { title: "Sales", href: "/#sales" },
+    { title: "About Us", href: "/about-us/" },
+    { title: "New Drops", href: "/new-drops/" },
+  ];
 
   const resourcesLeftColumn = [
     {
@@ -790,7 +806,7 @@ export const Navbar = () => {
   return (
     <nav className="z-60 w-full backdrop-blur-md">
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:h-16 md:px-8">
-        <a href="#" className="flex items-center space-x-2">
+        <a href="/" className="flex items-center space-x-2">
           <LogoIcon className="relative z-20 size-4 text-emerald-500" />
 
           <span className="text-base font-semibold text-white sm:text-lg">
@@ -801,11 +817,11 @@ export const Navbar = () => {
         <div className="hidden items-center gap-6 lg:flex lg:gap-8">
           {navItems.map((item) => (
             <a
-              key={item}
-              href={`#${item.toLowerCase().replaceAll(" ", "-")}`}
+              key={item.title}
+              href={item.href}
               className="text-sm font-medium text-neutral-400 transition-colors hover:text-white"
             >
-              {item}
+              {item.title}
             </a>
           ))}
 
@@ -888,13 +904,13 @@ export const Navbar = () => {
 
         <div className="hidden items-center gap-3 lg:flex lg:gap-4">
           <a
-            href="#login"
+            href="/login"
             className="text-sm font-medium text-neutral-400 transition-colors hover:text-white"
           >
             Login
           </a>
           <a
-            href="#"
+            href="/register"
             className="rounded-full bg-neutral-900 px-4 py-2 text-sm font-medium text-white shadow-sm transition-all hover:bg-neutral-800 active:scale-98 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200"
           >
             Registration
@@ -918,11 +934,11 @@ export const Navbar = () => {
           <div className="flex flex-col gap-1">
             {navItems.map((item) => (
               <a
-                key={item}
-                href={`#${item.toLowerCase().replaceAll(" ", "-")}`}
+                key={item.title}
+                href={item.href}
                 className="rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white"
               >
-                {item}
+                {item.title}
               </a>
             ))}
 
@@ -961,13 +977,13 @@ export const Navbar = () => {
 
             <div className="my-3 h-px bg-neutral-200 dark:bg-neutral-800" />
             <a
-              href="#login"
+              href="/login"
               className="rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-white"
             >
               Login
             </a>
             <a
-              href="#"
+              href="/register"
               className="mt-2 rounded-full bg-neutral-900 px-4 py-2.5 text-center text-sm font-medium text-white shadow-sm transition-all hover:bg-neutral-800 active:scale-98 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200"
             >
               Registration
