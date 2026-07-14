@@ -507,26 +507,20 @@ function ProductCarousel({
   const frameRef = useRef(null);
   const wheelLockRef = useRef(false);
   const isGrid = layout === "grid";
-  const totalPages = Math.ceil(PRODUCT_ITEMS.length / pageStep);
-
   const visibleItems = useMemo(() => {
-    if (isGrid) {
-      const start = currentPage * pageStep;
-      return Array.from({ length: visibleCount }, (_, index) => {
-        return PRODUCT_ITEMS[(start + index) % PRODUCT_ITEMS.length];
-      });
-    }
-
-    const start = currentPage * pageStep;
-    return PRODUCT_ITEMS.slice(start, start + visibleCount);
-  }, [currentPage, isGrid, visibleCount]);
+    return Array.from({ length: visibleCount }, (_, index) => {
+      return PRODUCT_ITEMS[(currentPage + index) % PRODUCT_ITEMS.length];
+    });
+  }, [currentPage, visibleCount]);
 
   const handleNext = () => {
-    setCurrentPage((prev) => (prev + 1) % totalPages);
+    setCurrentPage((prev) => (prev + pageStep) % PRODUCT_ITEMS.length);
   };
 
   const handlePrevious = () => {
-    setCurrentPage((prev) => (prev - 1 + totalPages) % totalPages);
+    setCurrentPage(
+      (prev) => (prev - pageStep + PRODUCT_ITEMS.length) % PRODUCT_ITEMS.length
+    );
   };
 
   useEffect(() => {
@@ -558,8 +552,8 @@ function ProductCarousel({
       wheelLockRef.current = true;
       setCurrentPage((prev) =>
         horizontalDelta > 0
-          ? (prev + 1) % totalPages
-          : (prev - 1 + totalPages) % totalPages
+          ? (prev + pageStep) % PRODUCT_ITEMS.length
+          : (prev - pageStep + PRODUCT_ITEMS.length) % PRODUCT_ITEMS.length
       );
 
       window.setTimeout(() => {
@@ -572,7 +566,7 @@ function ProductCarousel({
     return () => {
       frame.removeEventListener("wheel", handleWheel);
     };
-  }, [totalPages]);
+  }, [pageStep]);
 
   const setFrameRefs = (node) => {
     frameRef.current = node;
@@ -697,7 +691,7 @@ function ProductCarousel({
           >
             <AnimatePresence mode="popLayout">
               {visibleItems.map((member, index) => {
-                const itemIndex = (currentPage * pageStep + index) % PRODUCT_ITEMS.length;
+                const itemIndex = (currentPage + index) % PRODUCT_ITEMS.length;
 
                 return (
               <motion.div
