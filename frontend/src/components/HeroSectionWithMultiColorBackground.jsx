@@ -102,29 +102,33 @@ export function HeroSectionWithMultiColorBackground() {
       className="relative min-h-screen w-full overflow-hidden bg-neutral-900 text-white"
     >
       <SiteNavbar />
-      <section ref={heroRef} className="relative isolate overflow-hidden [contain:paint]">
-        <BackgroundGrids />
-        <CollisionMechanism
-          beamOptions={{ initialX: -400, translateX: 600, duration: 7, repeatDelay: 3 }}
-          containerRef={beamTargetRef}
-          parentRef={heroRef}
-        />
-        <CollisionMechanism
-          beamOptions={{ initialX: -200, translateX: 800, duration: 4, repeatDelay: 3 }}
-          containerRef={beamTargetRef}
-          parentRef={heroRef}
-        />
-        <CollisionMechanism
-          beamOptions={{ initialX: 200, translateX: 1200, duration: 5, repeatDelay: 3 }}
-          containerRef={beamTargetRef}
-          parentRef={heroRef}
-        />
-        <CollisionMechanism
-          beamOptions={{ initialX: 400, translateX: 1400, duration: 6, repeatDelay: 3 }}
-          containerRef={beamTargetRef}
-          parentRef={heroRef}
-        />
-        <div className="relative z-20 mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-32">
+      <section className="relative mx-4 mt-4 p-2 md:mx-8 md:p-4">
+        <div
+          ref={heroRef}
+          className="relative isolate overflow-hidden rounded-[24px] bg-black [contain:paint]"
+        >
+          <BackgroundGrids />
+          <CollisionMechanism
+            beamOptions={{ initialX: -400, translateX: 600, duration: 7, repeatDelay: 3 }}
+            containerRef={beamTargetRef}
+            parentRef={heroRef}
+          />
+          <CollisionMechanism
+            beamOptions={{ initialX: -200, translateX: 800, duration: 4, repeatDelay: 3 }}
+            containerRef={beamTargetRef}
+            parentRef={heroRef}
+          />
+          <CollisionMechanism
+            beamOptions={{ initialX: 200, translateX: 1200, duration: 5, repeatDelay: 3 }}
+            containerRef={beamTargetRef}
+            parentRef={heroRef}
+          />
+          <CollisionMechanism
+            beamOptions={{ initialX: 400, translateX: 1400, duration: 6, repeatDelay: 3 }}
+            containerRef={beamTargetRef}
+            parentRef={heroRef}
+          />
+          <div className="relative z-20 mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-32">
         <div className="relative mt-20 flex flex-col items-center justify-center">
           <h1 className="relative mx-auto mt-4 max-w-6xl text-center text-3xl font-bold tracking-tight text-white md:text-4xl lg:text-7xl">
             Your best in class{" "}
@@ -170,7 +174,8 @@ export function HeroSectionWithMultiColorBackground() {
             Book a call
           </button>
         </div>
-          <div ref={beamTargetRef} className="pointer-events-none absolute right-0 bottom-0 left-0 h-px" />
+            <div ref={beamTargetRef} className="pointer-events-none absolute right-0 bottom-0 left-0 h-px" />
+          </div>
         </div>
       </section>
       <div className="relative z-20">
