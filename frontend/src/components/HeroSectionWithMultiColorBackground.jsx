@@ -45,6 +45,18 @@ const CLOTHING_CATALOG = [
   { title: "Pearl Orbit", designation: "Sweatpants", price: 61, description: "Cream sweatpants traced with oversized abstract orbit lines." },
 ];
 
+const JEWELRY_CATALOG = [
+  { title: "Astral Thorn", designation: "Pendant Necklace", price: 49, description: "A fine silver chain finished with an ornate celestial thorn pendant." },
+  { title: "Chrome Sovereign", designation: "Cuban Chain", price: 79, description: "A weighty polished Cuban-link chain with a crisp silver finish." },
+  { title: "Tidal Fang", designation: "Layered Necklace", price: 54, description: "A layered shell choker and earthy strand centered by a carved fang." },
+  { title: "Wyrmcoil Regent", designation: "Statement Ring", price: 69, description: "A sculpted silver dragon curls around the finger in intricate relief." },
+  { title: "Obsidian Dragonbite", designation: "Open Ring", price: 64, description: "A dark open ring shaped as a dragon meeting its own armored tail." },
+  { title: "Starlight Drake", designation: "Crystal Ring", price: 74, description: "A bright crystal-covered dragon ring with dramatic raised wings." },
+  { title: "Nocturne Wing", designation: "Cuff Ring", price: 46, description: "A wraparound silver cuff formed from angular nocturnal wings." },
+  { title: "Seraph Flight", designation: "Wing Earrings", price: 52, description: "A mirrored pair of feathered silver wings with sculptural depth." },
+  { title: "Rivet Thorn", designation: "Charm Bracelet", price: 44, description: "A chunky silver bracelet punctuated by sharp hanging spike charms." },
+];
+
 function createCollection(imageModules, type, basePrice, description, catalog = []) {
   return Object.entries(imageModules)
     .sort(([firstPath], [secondPath]) => firstPath.localeCompare(secondPath))
@@ -74,7 +86,8 @@ export const JEWELRY_ITEMS = createCollection(
   jewelryImages,
   "Jewelry",
   29,
-  "A polished jewelry piece designed to add character to any look."
+  "A polished jewelry piece designed to add character to any look.",
+  JEWELRY_CATALOG
 ).slice(0, 9);
 
 export function HeroSectionWithMultiColorBackground() {
@@ -207,7 +220,7 @@ function BackgroundGrids() {
   return (
     <div
       ref={backgroundRef}
-      className="pointer-events-none absolute inset-0 z-0 flex h-full w-full select-none flex-col overflow-hidden"
+      className="pointer-events-none absolute top-14 right-0 bottom-0 left-0 z-0 flex w-full select-none flex-col overflow-hidden sm:top-16"
     >
       {Array.from({ length: tileCount }).map((_, index) => (
         <BackgroundGridTile key={index} />

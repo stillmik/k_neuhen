@@ -29,6 +29,9 @@ export function GridFeatures({ items = [] }) {
                     <p className="text-sm font-medium uppercase tracking-[0.24em] text-neutral-500">
                       {item.designation}
                     </p>
+                    <p className="mt-3 text-2xl font-semibold text-white">
+                      {item.title}
+                    </p>
                     <p className="mt-4 text-base leading-7 text-neutral-300">
                       {item.description}
                     </p>
