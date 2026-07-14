@@ -2,66 +2,80 @@ import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { cn } from "../lib/utils";
 import { CenteredWithLogo as SiteFooter, Navbar as SiteNavbar } from "./SiteChrome";
+import { GridFeatures } from "./GridFeatures";
 import { UseCasesSection } from "./UseCasesSection";
-import pinkDropImage from "../assets/hoodies_temp/1644c644-35d9-4a5d-8e43-49947f557bae.png";
-import lavenderHoodieImage from "../assets/hoodies_temp/6260999c-5799-4b79-91a5-13bf40b3db8f.png";
-import cargoFitImage from "../assets/hoodies_temp/92c184d8-93b2-4107-8514-275034de9e62.png";
-import blackStreetImage from "../assets/hoodies_temp/d846e74b-58f7-4386-8b1c-b4324ce45629.png";
-import neonCrewImage from "../assets/hoodies_temp/e6595b20-70e2-41da-bbf5-2d392796432f.png";
 
 // Product card separator spacing: change this class to tune the distance
 // between item type, glowing line, and price. Smaller = more compact.
 const PRODUCT_SEPARATOR_SPACING_CLASS = "my-2";
-const PRODUCT_ITEMS = [
-  {
-    title: "Lavender Hoodie",
-    designation: "Hoodie",
-    src: lavenderHoodieImage,
-    excerpt: "$54",
-  },
-  {
-    title: "Pink Drop",
-    designation: "Jacket",
-    src: pinkDropImage,
-    excerpt: "$79",
-  },
-  {
-    title: "Black Street",
-    designation: "Hoodie",
-    src: blackStreetImage,
-    excerpt: "$59",
-  },
-  {
-    title: "Cargo Fit",
-    designation: "Hoodie",
-    src: cargoFitImage,
-    excerpt: "$89",
-  },
-  {
-    title: "Neon Crew",
-    designation: "Hoodie",
-    src: neonCrewImage,
-    excerpt: "$49",
-  },
-  {
-    title: "Violet Storm",
-    designation: "Hoodie",
-    src: lavenderHoodieImage,
-    excerpt: "$64",
-  },
-  {
-    title: "Rose Utility",
-    designation: "Jacket",
-    src: pinkDropImage,
-    excerpt: "$84",
-  },
-  {
-    title: "Graphite Cross",
-    designation: "Hoodie",
-    src: blackStreetImage,
-    excerpt: "$69",
-  },
+const clothingImages = import.meta.glob("../assets/hoodies_temp/*.png", {
+  eager: true,
+  query: "?url",
+  import: "default",
+});
+
+const jewelryImages = import.meta.glob("../assets/jews/*.png", {
+  eager: true,
+  query: "?url",
+  import: "default",
+});
+
+const CLOTHING_CATALOG = [
+  { title: "Rose Circuit Bomber", designation: "Jacket", price: 89, description: "A color-block bomber jacket with utility pockets and vivid rose panels." },
+  { title: "Bubblegum Core", designation: "Hoodie", price: 59, description: "A soft pink pullover hoodie with a tonal pouch pocket." },
+  { title: "White Signal Rib", designation: "Tank Top", price: 29, description: "A fitted white ribbed tank made for clean everyday layering." },
+  { title: "Blush Cross Zip", designation: "Zip Hoodie", price: 69, description: "A washed pink zip hoodie finished with subtle cross graphics." },
+  { title: "Stonewash Drift", designation: "Wide-Leg Pants", price: 74, description: "Wide-leg stonewashed pants with an airy, relaxed silhouette." },
+  { title: "Cloud Camo Shark", designation: "Zip Hoodie", price: 84, description: "A cloud-camo zip hoodie with a playful shark hood detail." },
+  { title: "Ivory Thorn Script", designation: "Hoodie", price: 64, description: "An ivory pullover hoodie framed by dark ornamental graphics." },
+  { title: "Sand Utility Stack", designation: "Cargo Pants", price: 79, description: "Relaxed sand cargo pants with roomy side utility pockets." },
+  { title: "Scarlet Lost Boys", designation: "Zip Hoodie", price: 69, description: "A bright red zip hoodie with split Lost Boys lettering." },
+  { title: "Midnight Muse", designation: "Graphic Sweatshirt", price: 62, description: "A black crewneck sweatshirt with a bold monochrome portrait." },
+  { title: "Charcoal Teddy", designation: "Sweatpants", price: 57, description: "Washed charcoal sweatpants with a small embroidered bear detail." },
+  { title: "Frost Rib Knit", designation: "Sweater", price: 68, description: "A pale blue rib-knit sweater with a crisp minimal finish." },
+  { title: "Cloudwash Balloon", designation: "Sweatpants", price: 59, description: "Light gray balloon sweatpants shaped with elasticated cuffs." },
+  { title: "Essential White", designation: "T-Shirt", price: 34, description: "A heavyweight white tee with an easy oversized cut." },
+  { title: "Icewash Longline", designation: "Denim Shorts", price: 54, description: "Longline light-wash denim shorts with a relaxed streetwear fit." },
+  { title: "Scuffers Signal", designation: "Graphic T-Shirt", price: 39, description: "A white graphic tee marked with a sharp red Scuffers logo." },
+  { title: "Midnight Drawstring", designation: "Jeans", price: 72, description: "Dark loose-fit jeans finished with a contrasting drawstring waist." },
+  { title: "Desert Racing Patch", designation: "Bomber Jacket", price: 94, description: "A sand racing bomber covered with vintage motorsport patches." },
+  { title: "Graphite Crossfall", designation: "Hoodie", price: 78, description: "A washed graphite hoodie patterned with distressed crosses." },
+  { title: "Voltage Lime", designation: "Hoodie", price: 62, description: "A high-energy neon lime hoodie in a clean pullover shape." },
+  { title: "Noir Essential", designation: "T-Shirt", price: 34, description: "A versatile black tee with a smooth relaxed silhouette." },
+  { title: "Pearl Orbit", designation: "Sweatpants", price: 61, description: "Cream sweatpants traced with oversized abstract orbit lines." },
 ];
+
+function createCollection(imageModules, type, basePrice, description, catalog = []) {
+  return Object.entries(imageModules)
+    .sort(([firstPath], [secondPath]) => firstPath.localeCompare(secondPath))
+    .map(([path, src], index) => {
+      const details = catalog[index] || {};
+
+      return {
+        title: details.title || `${type} ${String(index + 1).padStart(2, "0")}`,
+        designation: details.designation || type,
+        description: details.description || description,
+        src,
+        excerpt: `$${details.price || basePrice + (index % 6) * 5}`,
+        assetPath: path,
+      };
+    });
+}
+
+const PRODUCT_ITEMS = createCollection(
+  clothingImages,
+  "Clothing",
+  49,
+  "A distinctive streetwear piece made for expressive everyday styling.",
+  CLOTHING_CATALOG
+);
+
+export const JEWELRY_ITEMS = createCollection(
+  jewelryImages,
+  "Jewelry",
+  29,
+  "A polished jewelry piece designed to add character to any look."
+).slice(0, 9);
 
 export function HeroSectionWithMultiColorBackground() {
   const productFrameRef = useRef(null);
@@ -168,8 +182,43 @@ export function HeroSectionWithMultiColorBackground() {
 }
 
 function BackgroundGrids() {
+  const backgroundRef = useRef(null);
+  const [tileCount, setTileCount] = useState(1);
+
+  useEffect(() => {
+    const background = backgroundRef.current;
+
+    if (!background) {
+      return undefined;
+    }
+
+    const updateTileCount = () => {
+      setTileCount(Math.max(1, Math.ceil(background.clientHeight / 900)));
+    };
+
+    updateTileCount();
+
+    const resizeObserver = new ResizeObserver(updateTileCount);
+    resizeObserver.observe(background);
+
+    return () => resizeObserver.disconnect();
+  }, []);
+
   return (
-    <div className="pointer-events-none absolute inset-0 z-0 grid h-full w-full -rotate-45 transform select-none grid-cols-2 gap-10 md:grid-cols-4">
+    <div
+      ref={backgroundRef}
+      className="pointer-events-none absolute inset-0 z-0 flex h-full w-full select-none flex-col overflow-hidden"
+    >
+      {Array.from({ length: tileCount }).map((_, index) => (
+        <BackgroundGridTile key={index} />
+      ))}
+    </div>
+  );
+}
+
+function BackgroundGridTile() {
+  return (
+    <div className="relative grid h-[900px] max-h-[900px] w-full shrink-0 -rotate-45 transform grid-cols-2 gap-10 md:grid-cols-4">
       <div className="relative h-full w-full">
         <GridLineVertical className="left-0" />
         <GridLineVertical className="right-0 left-auto" />
@@ -416,13 +465,14 @@ function TeamSectionWithLightBackground({ productFrameRef }) {
         layout="grid"
       />
       <DeploymentsMadeEasySection />
+      <GridFeatures items={JEWELRY_ITEMS} />
     </section>
   );
 }
 
 function DeploymentsMadeEasySection() {
   return (
-    <section className="mx-auto mt-20 w-full max-w-7xl px-4 text-center md:mt-28 md:px-8">
+    <section id="jewelry" className="mx-auto mt-20 w-full max-w-7xl px-4 text-center md:mt-28 md:px-8">
       <div className="relative mx-auto flex w-fit items-center justify-center px-8 py-4 md:px-10">
         <motion.div
           initial={{ width: 0, height: 0, borderRadius: 0 }}
@@ -432,41 +482,48 @@ function DeploymentsMadeEasySection() {
           transition={{ duration: 1, ease: "easeInOut" }}
           className="absolute inset-0 h-full w-full"
         >
-          <div className="absolute top-0 -left-8 h-px w-[calc(100%+4rem)] bg-neutral-800" />
-          <div className="absolute bottom-0 -left-8 h-px w-[calc(100%+4rem)] bg-neutral-800" />
-          <div className="absolute -top-5 left-0 h-[calc(100%+2.5rem)] w-px bg-neutral-800" />
-          <div className="absolute -top-5 right-0 h-[calc(100%+2.5rem)] w-px bg-neutral-800" />
+          <div className="absolute top-0 -left-8 h-px w-[calc(100%+4rem)] bg-neutral-700" />
+          <div className="absolute bottom-0 -left-8 h-px w-[calc(100%+4rem)] bg-neutral-700" />
+          <div className="absolute -top-5 left-0 h-[calc(100%+2.5rem)] w-px bg-neutral-700" />
+          <div className="absolute -top-5 right-0 h-[calc(100%+2.5rem)] w-px bg-neutral-700" />
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.1, ease: "easeInOut" }}
-            className="absolute -top-1 -left-1 h-2 w-2 bg-neutral-800"
+            className="absolute -top-1 -left-1 h-2 w-2 bg-neutral-500"
           />
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.1, ease: "easeInOut" }}
-            className="absolute -top-1 -right-1 h-2 w-2 bg-neutral-800"
+            className="absolute -top-1 -right-1 h-2 w-2 bg-neutral-500"
           />
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.1, ease: "easeInOut" }}
-            className="absolute -bottom-1 -left-1 h-2 w-2 bg-neutral-800"
+            className="absolute -bottom-1 -left-1 h-2 w-2 bg-neutral-500"
           />
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.1, ease: "easeInOut" }}
-            className="absolute -right-1 -bottom-1 h-2 w-2 bg-neutral-800"
+            className="absolute -right-1 -bottom-1 h-2 w-2 bg-neutral-500"
           />
         </motion.div>
         <h2 className="relative z-10 mx-auto w-fit text-center font-sans text-xl font-bold tracking-tight text-neutral-100 md:text-4xl">
-          Deployments made easy
+          Looking for{" "}
+          <a
+            href="/jewelry/"
+            className="border-b border-indigo-500 bg-gradient-to-b from-indigo-400 to-indigo-600 bg-clip-text text-transparent transition-colors hover:border-indigo-300"
+          >
+            Jewelry
+          </a>
+          ?
         </h2>
       </div>
       <p className="mx-auto mt-4 max-w-lg text-center font-sans text-sm font-normal text-neutral-400">
-        Deploy with ease, leave complexities to us.
+        Find the perfect piece for any occasion.
       </p>
     </section>
   );
@@ -749,7 +806,7 @@ export function CenteredWithLogo() {
     },
     {
       title: "Jewelry",
-      href: "/#jewelry",
+      href: "/jewelry/",
     },
     {
       title: "Accessories",
@@ -980,7 +1037,7 @@ export const Navbar = () => {
   const [mobileContactOpen, setMobileContactOpen] = useState(false);
   const navItems = [
     { title: "Home", href: "/" },
-    { title: "Jewelry", href: "/#jewelry" },
+    { title: "Jewelry", href: "/jewelry/" },
     { title: "Accessories", href: "/#accessories" },
     { title: "Clothing", href: "/#clothing" },
     { title: "Sales", href: "/#sales" },
@@ -1031,7 +1088,7 @@ export const Navbar = () => {
   ];
 
   return (
-    <nav className="z-60 w-full backdrop-blur-md">
+    <nav className="z-60 w-full bg-transparent">
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:h-16 md:px-8">
         <a href="/" className="flex items-center space-x-2">
           <LogoIcon className="relative z-20 size-4 text-emerald-500" />

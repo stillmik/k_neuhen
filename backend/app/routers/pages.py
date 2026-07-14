@@ -9,6 +9,7 @@ TEMPLATES_DIR = APP_DIR / "templates"
 FRONTEND_INDEX = APP_DIR.parent / "frontend" / "index.html"
 FRONTEND_ABOUT_US = APP_DIR.parent / "frontend" / "about-us" / "index.html"
 FRONTEND_NEW_DROPS = APP_DIR.parent / "frontend" / "new-drops" / "index.html"
+FRONTEND_JEWELRY = APP_DIR.parent / "frontend" / "jewelry" / "index.html"
 
 
 @router.get("/")
@@ -34,6 +35,16 @@ async def new_drops_page():
 @router.get("/new-drops")
 async def new_drops_page_no_slash():
     return FileResponse(FRONTEND_NEW_DROPS)
+
+
+@router.get("/jewelry/")
+async def jewelry_page():
+    return FileResponse(FRONTEND_JEWELRY)
+
+
+@router.get("/jewelry")
+async def jewelry_page_no_slash():
+    return FileResponse(FRONTEND_JEWELRY)
 
 
 @router.get("/register")

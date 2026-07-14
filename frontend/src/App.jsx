@@ -12,6 +12,11 @@ const pages = {
       default: module.NewDropsPage,
     }))
   ),
+  jewelry: lazy(() =>
+    import("./components/JewelryPage").then((module) => ({
+      default: module.JewelryPage,
+    }))
+  ),
   home: lazy(() =>
     import("./components/HeroSectionWithMultiColorBackground").then((module) => ({
       default: module.HeroSectionWithMultiColorBackground,

@@ -4,7 +4,7 @@ import { cn } from "../lib/utils";
 export function CenteredWithLogo() {
   const pages = [
     { title: "Home", href: "/" },
-    { title: "Jewelry", href: "/#jewelry" },
+    { title: "Jewelry", href: "/jewelry/" },
     { title: "Accessories", href: "/#accessories" },
     { title: "Clothing", href: "/#clothing" },
     { title: "Sales", href: "/#sales" },
@@ -61,7 +61,7 @@ export const Navbar = () => {
   const [mobileContactOpen, setMobileContactOpen] = useState(false);
   const navItems = [
     { title: "Home", href: "/" },
-    { title: "Jewelry", href: "/#jewelry" },
+    { title: "Jewelry", href: "/jewelry/" },
     { title: "Accessories", href: "/#accessories" },
     { title: "Clothing", href: "/#clothing" },
     { title: "Sales", href: "/#sales" },
@@ -82,7 +82,7 @@ export const Navbar = () => {
   ];
 
   return (
-    <nav className="z-60 w-full backdrop-blur-md">
+    <nav className="z-60 w-full bg-transparent">
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:h-16 md:px-8">
         <a href="/" className="flex items-center space-x-2">
           <LogoIcon className="relative z-20 size-4 text-emerald-500" />
