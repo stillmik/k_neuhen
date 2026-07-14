@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { cn } from "../lib/utils";
 import { CenteredWithLogo as SiteFooter, Navbar as SiteNavbar } from "./SiteChrome";
 import { GridFeatures } from "./GridFeatures";
+import { ScalingSuccessfulCompanies } from "./ScalingSuccessfulCompanies";
 import { UseCasesSection } from "./UseCasesSection";
 
 // Product card separator spacing: change this class to tune the distance
@@ -101,7 +102,6 @@ export function HeroSectionWithMultiColorBackground() {
       ref={pageRef}
       className="relative min-h-screen w-full overflow-hidden bg-neutral-900 text-white"
     >
-      <SiteNavbar />
       <section className="relative">
         <div
           ref={heroRef}
@@ -128,6 +128,7 @@ export function HeroSectionWithMultiColorBackground() {
             containerRef={beamTargetRef}
             parentRef={heroRef}
           />
+          <SiteNavbar />
           <div className="relative z-20 mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-32">
         <div className="relative mt-20 flex flex-col items-center justify-center">
           <h1 className="relative mx-auto mt-4 max-w-6xl text-center text-3xl font-bold tracking-tight text-white md:text-4xl lg:text-7xl">
@@ -436,6 +437,7 @@ function TeamSectionWithLightBackground({ productFrameRef }) {
       />
       <DeploymentsMadeEasySection />
       <GridFeatures items={JEWELRY_ITEMS} />
+      <ScalingSuccessfulCompanies />
     </section>
   );
 }
@@ -1052,7 +1054,7 @@ export const Navbar = () => {
   ];
 
   return (
-    <nav className="z-60 w-full bg-transparent">
+    <nav className="relative z-60 w-full bg-transparent">
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:h-16 md:px-8">
         <a href="/" className="flex items-center space-x-2">
           <LogoIcon className="relative z-20 size-4 text-emerald-500" />

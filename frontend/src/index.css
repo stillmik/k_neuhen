@@ -60,3 +60,32 @@ a {
 .scrollbar-hidden::-webkit-scrollbar {
   display: none;
 }
+
+@keyframes scaling-marquee-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-50% - 1.5rem)); }
+}
+
+@keyframes scaling-marquee-right {
+  from { transform: translateX(calc(-50% - 0.5rem)); }
+  to { transform: translateX(0); }
+}
+
+.scaling-marquee-left {
+  animation: scaling-marquee-left 24s linear infinite;
+}
+
+.scaling-marquee-right {
+  animation: scaling-marquee-right 20s linear infinite;
+}
+
+.scaling-marquee-mask {
+  mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scaling-marquee-left,
+  .scaling-marquee-right {
+    animation-play-state: paused;
+  }
+}

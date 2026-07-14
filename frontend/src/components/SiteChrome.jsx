@@ -82,7 +82,7 @@ export const Navbar = () => {
   ];
 
   return (
-    <nav className="z-60 w-full bg-transparent">
+    <nav className="relative z-60 w-full bg-transparent">
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:h-16 md:px-8">
         <a href="/" className="flex items-center space-x-2">
           <LogoIcon className="relative z-20 size-4 text-emerald-500" />
