@@ -93,55 +93,38 @@ export const JEWELRY_ITEMS = createCollection(
 export function HeroSectionWithMultiColorBackground() {
   const productFrameRef = useRef(null);
   const pageRef = useRef(null);
+  const heroRef = useRef(null);
+  const beamTargetRef = useRef(null);
 
   return (
     <div
       ref={pageRef}
       className="relative min-h-screen w-full overflow-hidden bg-neutral-900 text-white"
     >
-      <BackgroundGrids />
-      <CollisionMechanism
-        beamOptions={{
-          initialX: -400,
-          translateX: 600,
-          duration: 7,
-          repeatDelay: 3,
-        }}
-        containerRef={productFrameRef}
-        parentRef={pageRef}
-      />
-      <CollisionMechanism
-        beamOptions={{
-          initialX: -200,
-          translateX: 800,
-          duration: 4,
-          repeatDelay: 3,
-        }}
-        containerRef={productFrameRef}
-        parentRef={pageRef}
-      />
-      <CollisionMechanism
-        beamOptions={{
-          initialX: 200,
-          translateX: 1200,
-          duration: 5,
-          repeatDelay: 3,
-        }}
-        containerRef={productFrameRef}
-        parentRef={pageRef}
-      />
-      <CollisionMechanism
-        beamOptions={{
-          initialX: 400,
-          translateX: 1400,
-          duration: 6,
-          repeatDelay: 3,
-        }}
-        containerRef={productFrameRef}
-        parentRef={pageRef}
-      />
       <SiteNavbar />
-      <div className="relative z-20 mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-32">
+      <section ref={heroRef} className="relative isolate overflow-hidden [contain:paint]">
+        <BackgroundGrids />
+        <CollisionMechanism
+          beamOptions={{ initialX: -400, translateX: 600, duration: 7, repeatDelay: 3 }}
+          containerRef={beamTargetRef}
+          parentRef={heroRef}
+        />
+        <CollisionMechanism
+          beamOptions={{ initialX: -200, translateX: 800, duration: 4, repeatDelay: 3 }}
+          containerRef={beamTargetRef}
+          parentRef={heroRef}
+        />
+        <CollisionMechanism
+          beamOptions={{ initialX: 200, translateX: 1200, duration: 5, repeatDelay: 3 }}
+          containerRef={beamTargetRef}
+          parentRef={heroRef}
+        />
+        <CollisionMechanism
+          beamOptions={{ initialX: 400, translateX: 1400, duration: 6, repeatDelay: 3 }}
+          containerRef={beamTargetRef}
+          parentRef={heroRef}
+        />
+        <div className="relative z-20 mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-32">
         <div className="relative mt-20 flex flex-col items-center justify-center">
           <h1 className="relative mx-auto mt-4 max-w-6xl text-center text-3xl font-bold tracking-tight text-white md:text-4xl lg:text-7xl">
             Your best in class{" "}
@@ -187,6 +170,10 @@ export function HeroSectionWithMultiColorBackground() {
             Book a call
           </button>
         </div>
+          <div ref={beamTargetRef} className="pointer-events-none absolute right-0 bottom-0 left-0 h-px" />
+        </div>
+      </section>
+      <div className="relative z-20">
         <TeamSectionWithLightBackground productFrameRef={productFrameRef} />
       </div>
       <SiteFooter />
@@ -195,43 +182,8 @@ export function HeroSectionWithMultiColorBackground() {
 }
 
 function BackgroundGrids() {
-  const backgroundRef = useRef(null);
-  const [tileCount, setTileCount] = useState(1);
-
-  useEffect(() => {
-    const background = backgroundRef.current;
-
-    if (!background) {
-      return undefined;
-    }
-
-    const updateTileCount = () => {
-      setTileCount(Math.max(1, Math.ceil(background.clientHeight / 900)));
-    };
-
-    updateTileCount();
-
-    const resizeObserver = new ResizeObserver(updateTileCount);
-    resizeObserver.observe(background);
-
-    return () => resizeObserver.disconnect();
-  }, []);
-
   return (
-    <div
-      ref={backgroundRef}
-      className="pointer-events-none absolute top-14 right-0 bottom-0 left-0 z-0 flex w-full select-none flex-col overflow-hidden sm:top-16"
-    >
-      {Array.from({ length: tileCount }).map((_, index) => (
-        <BackgroundGridTile key={index} />
-      ))}
-    </div>
-  );
-}
-
-function BackgroundGridTile() {
-  return (
-    <div className="relative grid h-[900px] max-h-[900px] w-full shrink-0 -rotate-45 transform grid-cols-2 gap-10 md:grid-cols-4">
+    <div className="pointer-events-none absolute inset-0 z-0 grid h-full w-full -rotate-45 transform-gpu grid-cols-2 gap-10 select-none md:grid-cols-4 [will-change:transform]">
       <div className="relative h-full w-full">
         <GridLineVertical className="left-0" />
         <GridLineVertical className="right-0 left-auto" />
@@ -293,7 +245,7 @@ function CollisionMechanism({ parentRef, containerRef, beamOptions = {} }) {
       }
     };
 
-    const animationInterval = setInterval(checkCollision, 50);
+    const animationInterval = setInterval(checkCollision, 100);
 
     return () => clearInterval(animationInterval);
   }, [cycleCollisionDetected, containerRef, parentRef]);
@@ -349,7 +301,7 @@ function CollisionMechanism({ parentRef, containerRef, beamOptions = {} }) {
           repeatDelay: beamOptions.repeatDelay || 0,
         }}
         className={cn(
-          "absolute top-20 left-96 z-10 m-auto h-14 w-px rounded-full bg-gradient-to-t from-orange-500 via-yellow-500 to-transparent",
+          "absolute top-20 left-96 z-10 m-auto h-14 w-px rounded-full bg-gradient-to-t from-orange-500 via-yellow-500 to-transparent [will-change:transform,opacity]",
           beamOptions.className
         )}
       />
