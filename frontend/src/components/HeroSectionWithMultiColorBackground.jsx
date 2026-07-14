@@ -94,40 +94,17 @@ export const JEWELRY_ITEMS = createCollection(
 export function HeroSectionWithMultiColorBackground() {
   const productFrameRef = useRef(null);
   const pageRef = useRef(null);
-  const heroRef = useRef(null);
-  const beamTargetRef = useRef(null);
 
   return (
     <div
       ref={pageRef}
       className="relative min-h-screen w-full overflow-hidden bg-neutral-900 text-white"
     >
-      <section className="relative">
+      <BackgroundGrids className="fixed inset-0 opacity-70" />
+      <section className="relative z-10">
         <div
-          ref={heroRef}
-          className="relative isolate overflow-hidden bg-black [contain:paint]"
+          className="relative isolate overflow-hidden bg-transparent [contain:paint]"
         >
-          <BackgroundGrids />
-          <CollisionMechanism
-            beamOptions={{ initialX: -400, translateX: 600, duration: 7, repeatDelay: 3 }}
-            containerRef={beamTargetRef}
-            parentRef={heroRef}
-          />
-          <CollisionMechanism
-            beamOptions={{ initialX: -200, translateX: 800, duration: 4, repeatDelay: 3 }}
-            containerRef={beamTargetRef}
-            parentRef={heroRef}
-          />
-          <CollisionMechanism
-            beamOptions={{ initialX: 200, translateX: 1200, duration: 5, repeatDelay: 3 }}
-            containerRef={beamTargetRef}
-            parentRef={heroRef}
-          />
-          <CollisionMechanism
-            beamOptions={{ initialX: 400, translateX: 1400, duration: 6, repeatDelay: 3 }}
-            containerRef={beamTargetRef}
-            parentRef={heroRef}
-          />
           <SiteNavbar />
           <div className="relative z-20 mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-32">
         <div className="relative mt-20 flex flex-col items-center justify-center">
@@ -175,11 +152,10 @@ export function HeroSectionWithMultiColorBackground() {
             Book a call
           </button>
         </div>
-            <div ref={beamTargetRef} className="pointer-events-none absolute right-0 bottom-0 left-0 h-px" />
           </div>
         </div>
       </section>
-      <div className="relative z-20">
+      <div className="relative z-10">
         <TeamSectionWithLightBackground productFrameRef={productFrameRef} />
       </div>
       <SiteFooter />
@@ -187,9 +163,14 @@ export function HeroSectionWithMultiColorBackground() {
   );
 }
 
-function BackgroundGrids() {
+function BackgroundGrids({ className = "" }) {
   return (
-    <div className="pointer-events-none absolute inset-0 z-0 grid h-full w-full -rotate-45 transform-gpu grid-cols-2 gap-10 select-none md:grid-cols-4 [will-change:transform]">
+    <div
+      className={cn(
+        "pointer-events-none absolute inset-0 z-0 grid h-full w-full -rotate-45 transform-gpu grid-cols-2 gap-10 select-none md:grid-cols-4 [will-change:transform]",
+        className
+      )}
+    >
       <div className="relative h-full w-full">
         <GridLineVertical className="left-0" />
         <GridLineVertical className="right-0 left-auto" />
@@ -436,7 +417,17 @@ function TeamSectionWithLightBackground({ productFrameRef }) {
         layout="grid"
       />
       <DeploymentsMadeEasySection />
-      <GridFeatures items={JEWELRY_ITEMS} />
+      <div className="relative mx-auto mt-4 w-full max-w-7xl rounded-[32px] border border-neutral-700 bg-neutral-800/50 p-2 md:mt-6 md:p-4">
+        <div className="rounded-[24px] border border-neutral-700 bg-black p-2">
+          <GridFeatures
+            items={JEWELRY_ITEMS}
+            className="!mt-0 px-0 md:!mt-0 md:px-0"
+            frameClassName="border-0 p-0"
+            gridClassName="grid-cols-1 gap-4 p-2 sm:grid-cols-2 md:gap-6 md:p-3 lg:grid-cols-3"
+            itemClassName="aspect-square w-full"
+          />
+        </div>
+      </div>
       <ScalingSuccessfulCompanies />
     </section>
   );
@@ -914,11 +905,40 @@ function Grid() {
 function GlowingStarsSeparator({ className, seed = 0 }) {
   const filterId = useId();
   const dotCount = 18;
-  const glowingDotIndexes = [
-    (seed * 5 + 2) % dotCount,
-    (seed * 7 + 8) % dotCount,
-    (seed * 11 + 14) % dotCount,
-  ];
+  const [glowingDotIndexes, setGlowingDotIndexes] = useState(
+    () => new Set([(seed * 5 + 2) % dotCount])
+  );
+
+  useEffect(() => {
+    let timer;
+
+    const chooseNextStars = () => {
+      setGlowingDotIndexes((previousStars) => {
+        const nextStars = new Set();
+        const activeCount = 1 + Math.floor(Math.random() * 3);
+
+        while (nextStars.size < activeCount) {
+          nextStars.add(Math.floor(Math.random() * dotCount));
+        }
+
+        if (
+          nextStars.size === previousStars.size &&
+          [...nextStars].every((index) => previousStars.has(index))
+        ) {
+          const firstStar = nextStars.values().next().value;
+          nextStars.delete(firstStar);
+          nextStars.add((firstStar + 1 + Math.floor(Math.random() * (dotCount - 1))) % dotCount);
+        }
+
+        return nextStars;
+      });
+
+      timer = window.setTimeout(chooseNextStars, 2500 + Math.random() * 2000);
+    };
+
+    timer = window.setTimeout(chooseNextStars, 1500 + Math.random() * 1200);
+    return () => window.clearTimeout(timer);
+  }, [dotCount, seed]);
 
   return (
     <svg
@@ -950,24 +970,29 @@ function GlowingStarsSeparator({ className, seed = 0 }) {
         />
       ))}
 
-      {glowingDotIndexes.map((dotIndex, glowIndex) => (
+      {Array.from({ length: dotCount }).map((_, dotIndex) => {
+        const isGlowing = glowingDotIndexes.has(dotIndex);
+
+        return (
         <motion.circle
-          key={`${seed}-${dotIndex}`}
+          key={`glow-${seed}-${dotIndex}`}
           cx={8 + dotIndex * 13}
           cy="8"
           r="1.9"
           fill="#60a5fa"
           filter={`url(#${filterId})`}
-          initial={{ opacity: 0.25, scale: 0.8 }}
-          animate={{ opacity: [0.25, 1, 0.25], scale: [0.8, 1.35, 0.8] }}
+          initial={false}
+          animate={{
+            opacity: isGlowing ? 1 : 0,
+            scale: isGlowing ? 1.35 : 0.7,
+          }}
           transition={{
-            duration: 2.4 + ((seed + glowIndex) % 3) * 0.35,
-            delay: ((seed * 0.37 + glowIndex * 0.58) % 1.8),
-            repeat: Infinity,
+            duration: isGlowing ? 0.35 : 0.7,
             ease: "easeInOut",
           }}
         />
-      ))}
+        );
+      })}
     </svg>
   );
 }

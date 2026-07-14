@@ -1,16 +1,24 @@
-export function GridFeatures({ items = [] }) {
+export function GridFeatures({
+  items = [],
+  className = "",
+  frameClassName = "",
+  gridClassName = "",
+  itemClassName = "",
+}) {
+  const resolvedItemClassName = itemClassName || "h-[348px]";
+
   return (
-    <section className="relative mx-auto mt-20 w-full max-w-7xl overflow-hidden px-4 md:mt-24 md:px-8">
-      <div className="rounded-[24px] border border-neutral-700 p-2">
-        <div className="grid grid-cols-1 gap-1 sm:grid-cols-2 lg:grid-cols-3">
+    <section className={`relative mx-auto mt-20 w-full max-w-7xl overflow-hidden px-4 md:mt-24 md:px-8 ${className}`}>
+      <div className={`rounded-[24px] border border-neutral-700 p-2 ${frameClassName}`}>
+        <div className={`grid grid-cols-1 gap-1 sm:grid-cols-2 lg:grid-cols-3 ${gridClassName}`}>
           {items.map((item) => (
             <article
               key={item.title}
-              className="group h-[348px] [perspective:1200px]"
+              className={`group [perspective:1200px] ${resolvedItemClassName}`}
             >
               <div className="relative h-full w-full transition-transform duration-700 ease-in-out [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
                 <div className="absolute inset-0 rounded-3xl bg-neutral-900 p-1 [backface-visibility:hidden]">
-                  <div className="relative h-full overflow-hidden rounded-2xl bg-gradient-to-b from-neutral-900 to-neutral-950 shadow-sm ring-1 shadow-black/20 ring-black/20">
+                  <div className="relative h-full overflow-hidden rounded-2xl bg-gradient-to-b from-neutral-950 via-neutral-950 to-black shadow-sm ring-1 shadow-black/20 ring-black/20">
                     <div className="pointer-events-none absolute inset-0 z-0 h-full w-full bg-[radial-gradient(circle_at_0.5px_0.5px,rgba(255,255,255,0.3)_0.5px,transparent_0)] bg-repeat [background-size:8px_8px] [mask-image:radial-gradient(circle_at_center,white,transparent)]" />
                     <div className="relative z-10 flex h-full items-center justify-center p-7">
                     <img

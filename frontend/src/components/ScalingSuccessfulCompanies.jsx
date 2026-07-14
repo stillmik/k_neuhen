@@ -1,17 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { BarChart3, Bot, Cloud } from "lucide-react";
 import { SiFirebase, SiGoogle, SiRaycast, SiReact, SiSupabase } from "react-icons/si";
-import avatar1 from "../assets/scaling-success/avatar-1.webp";
-import avatar2 from "../assets/scaling-success/avatar-2.webp";
-import avatar3 from "../assets/scaling-success/avatar-3.webp";
-import avatar4 from "../assets/scaling-success/avatar-4.webp";
-
-const TEAM_TILES = [
-  null, null, null, null, null,
-  null, null, avatar1, "depth", null,
-  null, avatar2, null, avatar3, "depth",
-  null, "depth", avatar4, null, null,
-];
 
 const BRANDS = [
   { name: "Raycast", icon: SiRaycast, color: "#ff6b6b" },
@@ -29,27 +18,6 @@ const TECHNOLOGIES = [
   { icon: SiFirebase, color: "#ffca28", glow: "#e37400" },
 ];
 
-function TileGrid() {
-  return (
-    <div className="absolute inset-x-0 top-0 grid h-[66%] grid-cols-5 gap-3 p-7 [mask-image:linear-gradient(to_bottom,black_72%,transparent)]">
-      {TEAM_TILES.map((tile, index) => (
-        <div
-          key={index}
-          className={`min-h-0 overflow-hidden rounded-xl border transition duration-500 ${
-            tile === "depth"
-              ? "border-white/5 bg-white/[0.065] shadow-[inset_0_8px_18px_rgba(255,255,255,0.03),0_8px_18px_rgba(0,0,0,0.5)]"
-              : "border-white/[0.075] bg-white/[0.015] group-hover:border-white/15"
-          }`}
-        >
-          {tile && tile !== "depth" ? (
-            <img src={tile} alt="Team member" className="h-full w-full object-cover p-1.5 transition duration-500 group-hover:p-0" />
-          ) : null}
-        </div>
-      ))}
-    </div>
-  );
-}
-
 function AnimatedMetric() {
   const [value, setValue] = useState(1);
 
@@ -65,8 +33,13 @@ function AnimatedMetric() {
 function MetricGrid() {
   const cells = useMemo(() => Array.from({ length: 30 }), []);
   return (
-    <div className="absolute inset-0 grid grid-cols-6 grid-rows-5 opacity-60 [mask-image:radial-gradient(circle_at_70%_35%,black,transparent_76%)]">
-      {cells.map((_, index) => <span key={index} className="rounded-xl border border-white/[0.055]" />)}
+    <div className="absolute inset-0 z-[1] grid grid-cols-6 grid-rows-5 opacity-70 [mask-image:radial-gradient(circle_at_70%_35%,black,transparent_76%)]">
+      {cells.map((_, index) => (
+        <span
+          key={index}
+          className="rounded-xl border border-white/[0.06] transition-all duration-300 hover:z-10 hover:border-white/15 hover:bg-white/[0.07] hover:shadow-[inset_0_10px_22px_rgba(255,255,255,0.045),0_10px_24px_rgba(0,0,0,0.38)]"
+        />
+      ))}
     </div>
   );
 }
@@ -119,21 +92,10 @@ export function ScalingSuccessfulCompanies() {
     <section className="mx-auto mt-28 w-full max-w-7xl pb-4">
       <h2 className="mb-14 text-5xl font-semibold tracking-[-0.045em] text-white md:text-6xl">Scaling Successful Companies</h2>
 
-      <div className="grid min-h-[560px] grid-cols-3 gap-3">
-        <article className="group relative overflow-hidden rounded-3xl border border-white/10 bg-[#111212]">
-          <TileGrid />
-          <div className="absolute inset-x-0 bottom-0 z-10 flex flex-col items-start gap-5 p-8">
-            <p className="text-lg font-semibold text-white">Get to know our dream team</p>
-            <a href="/contact" className="rounded-xl bg-white px-5 py-3 text-base font-semibold text-black transition hover:bg-indigo-500 hover:text-white">
-              Chat with Alex
-            </a>
-          </div>
-        </article>
-
-        <div className="col-span-2 grid grid-cols-2 grid-rows-4 gap-3">
+      <div className="grid min-h-[560px] grid-cols-2 grid-rows-4 gap-3">
           <article className="relative row-span-3 flex overflow-hidden rounded-3xl border border-white/10 bg-[#111212] p-8">
             <MetricGrid />
-            <div className="relative z-10 flex h-full flex-col justify-between">
+            <div className="pointer-events-none relative z-10 flex h-full flex-col justify-between">
               <div>
                 <div className="text-[7rem] font-medium leading-none tracking-[-0.07em] text-white">{metric}+</div>
                 <p className="mt-4 text-xl font-medium text-zinc-400">Companies served</p>
@@ -160,7 +122,6 @@ export function ScalingSuccessfulCompanies() {
           <article className="col-span-2 overflow-hidden rounded-3xl border border-white/10 bg-[#111212]">
             <TechnologyRail />
           </article>
-        </div>
       </div>
     </section>
   );

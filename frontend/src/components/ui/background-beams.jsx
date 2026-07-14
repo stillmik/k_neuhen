@@ -27,6 +27,7 @@ const beamPaths = [
 
 export const BackgroundBeams = React.memo(function BackgroundBeams({
   className,
+  staticOnly = false,
 }) {
   return (
     <div
@@ -49,13 +50,13 @@ export const BackgroundBeams = React.memo(function BackgroundBeams({
           <path
             key={`${path}-base`}
             d={path}
-            stroke="url(#beam-base-gradient)"
-            strokeOpacity="0.08"
+            stroke={staticOnly ? "#9ca3af" : "url(#beam-base-gradient)"}
+            strokeOpacity={staticOnly ? "0.18" : "0.08"}
             strokeWidth="0.5"
           />
         ))}
 
-        {beamPaths.map((path, index) => (
+        {!staticOnly && beamPaths.map((path, index) => (
           <motion.path
             key={`${path}-beam`}
             d={path}
