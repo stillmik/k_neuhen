@@ -102,10 +102,10 @@ export function HeroSectionWithMultiColorBackground() {
       className="relative min-h-screen w-full overflow-hidden bg-neutral-900 text-white"
     >
       <SiteNavbar />
-      <section className="relative mx-4 mt-4 p-2 md:mx-8 md:p-4">
+      <section className="relative">
         <div
           ref={heroRef}
-          className="relative isolate overflow-hidden rounded-[24px] bg-black [contain:paint]"
+          className="relative isolate overflow-hidden bg-black [contain:paint]"
         >
           <BackgroundGrids />
           <CollisionMechanism
