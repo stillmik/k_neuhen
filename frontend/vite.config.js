@@ -13,6 +13,7 @@ export default defineConfig({
         jewelry: "jewelry/index.html",
         login: "login/index.html",
         register: "register/index.html",
+        item: "item/index.html",
       },
     },
   },

@@ -58,13 +58,14 @@ const JEWELRY_CATALOG = [
   { title: "Rivet Thorn", designation: "Charm Bracelet", price: 44, description: "A chunky silver bracelet punctuated by sharp hanging spike charms." },
 ];
 
-function createCollection(imageModules, type, basePrice, description, catalog = []) {
+function createCollection(imageModules, type, basePrice, description, catalog = [], idOffset = 0) {
   return Object.entries(imageModules)
     .sort(([firstPath], [secondPath]) => firstPath.localeCompare(secondPath))
     .map(([path, src], index) => {
       const details = catalog[index] || {};
 
       return {
+        id: idOffset + index + 1,
         title: details.title || `${type} ${String(index + 1).padStart(2, "0")}`,
         designation: details.designation || type,
         description: details.description || description,
@@ -75,12 +76,13 @@ function createCollection(imageModules, type, basePrice, description, catalog = 
     });
 }
 
-const PRODUCT_ITEMS = createCollection(
+export const PRODUCT_ITEMS = createCollection(
   clothingImages,
   "Clothing",
   49,
   "A distinctive streetwear piece made for expressive everyday styling.",
-  CLOTHING_CATALOG
+  CLOTHING_CATALOG,
+  0
 );
 
 export const JEWELRY_ITEMS = createCollection(
@@ -88,7 +90,8 @@ export const JEWELRY_ITEMS = createCollection(
   "Jewelry",
   29,
   "A polished jewelry piece designed to add character to any look.",
-  JEWELRY_CATALOG
+  JEWELRY_CATALOG,
+  100
 ).slice(0, 9);
 
 export function HeroSectionWithMultiColorBackground() {
@@ -692,7 +695,8 @@ function ProductCarousel({
                 const itemIndex = (currentPage + index) % PRODUCT_ITEMS.length;
 
                 return (
-              <motion.div
+              <motion.a
+                href={`/item/${member.id}`}
                 initial={{
                   opacity: 0,
                   y: 10,
@@ -744,7 +748,7 @@ function ProductCarousel({
                     {member.excerpt}
                   </p>
                 </div>
-              </motion.div>
+              </motion.a>
                 );
               })}
             </AnimatePresence>

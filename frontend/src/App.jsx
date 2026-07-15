@@ -27,6 +27,11 @@ const pages = {
       default: module.SimpleRegistrationWithGridLines,
     }))
   ),
+  item: lazy(() =>
+    import("./components/ItemPage").then((module) => ({
+      default: module.ItemPage,
+    }))
+  ),
   home: lazy(() =>
     import("./components/HeroSectionWithMultiColorBackground").then((module) => ({
       default: module.HeroSectionWithMultiColorBackground,

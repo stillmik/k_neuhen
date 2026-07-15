@@ -12,8 +12,9 @@ export function GridFeatures({
       <div className={`rounded-[24px] border border-neutral-700 p-2 ${frameClassName}`}>
         <div className={`grid grid-cols-1 gap-1 sm:grid-cols-2 lg:grid-cols-3 ${gridClassName}`}>
           {items.map((item) => (
-            <article
+            <a
               key={item.title}
+              href={`/item/${item.id}`}
               className={`group [perspective:1200px] ${resolvedItemClassName}`}
             >
               <div className="relative h-full w-full transition-transform duration-700 ease-in-out [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
@@ -49,7 +50,7 @@ export function GridFeatures({
                   </div>
                 </div>
               </div>
-            </article>
+            </a>
           ))}
         </div>
       </div>
