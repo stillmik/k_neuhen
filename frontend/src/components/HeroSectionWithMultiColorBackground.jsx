@@ -974,23 +974,23 @@ function GlowingStarsSeparator({ className, seed = 0 }) {
         const isGlowing = glowingDotIndexes.has(dotIndex);
 
         return (
-        <motion.circle
-          key={`glow-${seed}-${dotIndex}`}
-          cx={8 + dotIndex * 13}
-          cy="8"
-          r="1.9"
-          fill="#60a5fa"
-          filter={`url(#${filterId})`}
-          initial={false}
-          animate={{
-            opacity: isGlowing ? 1 : 0,
-            scale: isGlowing ? 1.35 : 0.7,
-          }}
-          transition={{
-            duration: isGlowing ? 0.35 : 0.7,
-            ease: "easeInOut",
-          }}
-        />
+          <motion.circle
+            key={`glow-${seed}-${dotIndex}`}
+            cx={8 + dotIndex * 13}
+            cy="8"
+            r="1.9"
+            fill="#60a5fa"
+            filter={`url(#${filterId})`}
+            initial={false}
+            animate={{
+              opacity: isGlowing ? 1 : 0,
+              scale: isGlowing ? 1.35 : 0.7,
+            }}
+            transition={{
+              duration: isGlowing ? 0.35 : 0.7,
+              ease: "easeInOut",
+            }}
+          />
         );
       })}
     </svg>
