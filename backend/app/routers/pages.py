@@ -10,6 +10,8 @@ FRONTEND_INDEX = APP_DIR.parent / "frontend" / "index.html"
 FRONTEND_ABOUT_US = APP_DIR.parent / "frontend" / "about-us" / "index.html"
 FRONTEND_NEW_DROPS = APP_DIR.parent / "frontend" / "new-drops" / "index.html"
 FRONTEND_JEWELRY = APP_DIR.parent / "frontend" / "jewelry" / "index.html"
+FRONTEND_LOGIN = APP_DIR.parent / "frontend" / "login" / "index.html"
+FRONTEND_REGISTER = APP_DIR.parent / "frontend" / "register" / "index.html"
 
 
 @router.get("/")
@@ -49,7 +51,7 @@ async def jewelry_page_no_slash():
 
 @router.get("/register")
 async def register_page():
-    return FileResponse(TEMPLATES_DIR / "register.html")
+    return FileResponse(FRONTEND_REGISTER)
 
 
 @router.get("/success")
@@ -59,7 +61,7 @@ async def success_page():
 
 @router.get("/login")
 async def login_page():
-    return FileResponse(TEMPLATES_DIR / "login.html")
+    return FileResponse(FRONTEND_LOGIN)
 
 
 @router.get("/login-success")

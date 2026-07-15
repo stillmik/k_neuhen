@@ -11,6 +11,8 @@ export default defineConfig({
         aboutUs: "about-us/index.html",
         newDrops: "new-drops/index.html",
         jewelry: "jewelry/index.html",
+        login: "login/index.html",
+        register: "register/index.html",
       },
     },
   },

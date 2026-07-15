@@ -17,6 +17,16 @@ const pages = {
       default: module.JewelryPage,
     }))
   ),
+  login: lazy(() =>
+    import("./components/SimpleLoginWithGridLines").then((module) => ({
+      default: module.SimpleLoginWithGridLines,
+    }))
+  ),
+  register: lazy(() =>
+    import("./components/SimpleRegistrationWithGridLines").then((module) => ({
+      default: module.SimpleRegistrationWithGridLines,
+    }))
+  ),
   home: lazy(() =>
     import("./components/HeroSectionWithMultiColorBackground").then((module) => ({
       default: module.HeroSectionWithMultiColorBackground,
